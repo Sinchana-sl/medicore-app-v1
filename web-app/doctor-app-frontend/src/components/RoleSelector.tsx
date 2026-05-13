@@ -1,6 +1,7 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
+import { C } from '../styles/theme';
 
 type Role = 'patient' | 'doctor';
 
@@ -9,51 +10,40 @@ interface RoleSelectorProps {
   onChange: (role: Role) => void;
 }
 
-const roles: { id: Role; label: string; icon: React.ReactNode }[] = [
-  { id: 'patient', label: 'Patient', icon: <PersonIcon /> },
-  { id: 'doctor', label: 'Doctor', icon: <MedicalInformationIcon /> },
+const roles: { id: Role; label: string; desc: string; icon: React.ReactNode }[] = [
+  { id: 'patient', label: 'Patient', desc: 'Book & manage appointments', icon: <PersonIcon sx={{ fontSize: 18 }} /> },
+  { id: 'doctor', label: 'Doctor', desc: 'Manage your clinic', icon: <MedicalInformationIcon sx={{ fontSize: 18 }} /> },
 ];
 
 export default function RoleSelector({ selected, onChange }: RoleSelectorProps) {
   return (
-    <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', mb: 3, width: '100%' }}>
-      {roles.map(({ id, label, icon }) => {
-        const isActive = selected === id;
+    <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, mb: 2 }}>
+      {roles.map(({ id, label, desc, icon }) => {
+        const active = selected === id;
         return (
-          <Button
+          <Box
             key={id}
+            component="button"
             onClick={() => onChange(id)}
-            variant="outlined"
             sx={{
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 1,
-              py: 1.5,
-              px: 2,
-              width: '100%',
-              minWidth: 0,
+              display: 'flex', flexDirection: 'column', alignItems: 'flex-start',
+              gap: 0.5, p: 1.25,
+              border: `1.5px solid ${active ? C.blue : C.border}`,
               borderRadius: 2,
-              borderWidth: '2px',
-              borderStyle: 'solid',
-              borderColor: isActive ? '#1a365d' : '#cbd5e0',
-              backgroundColor: isActive ? 'rgba(26,54,93,0.06)' : 'transparent',
-              color: isActive ? '#1a365d' : '#43474e',
-              fontFamily: 'Inter, sans-serif',
-              '&:hover': {
-                borderWidth: '2px',
-                borderColor: 'rgba(26,54,93,0.5)',
-                backgroundColor: 'rgba(26,54,93,0.03)',
-              },
+              backgroundColor: active ? C.blueLight : C.paper,
+              cursor: 'pointer', textAlign: 'left', width: '100%',
+              transition: 'all 0.15s',
+              '&:hover': { borderColor: active ? C.blue : C.subtle, backgroundColor: active ? C.blueLight : C.surface },
             }}
           >
-            {icon}
-            <Typography
-              component="span"
-              sx={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: '0.8rem', letterSpacing: '0.04em', textTransform: 'none' }}
-            >
+            <Box sx={{ color: active ? C.blue : C.slate }}>{icon}</Box>
+            <Typography sx={{ fontSize: '0.8125rem', fontWeight: 600, color: active ? C.blue : C.ink, fontFamily: 'Inter, sans-serif' }}>
               {label}
             </Typography>
-          </Button>
+            <Typography sx={{ fontSize: '0.6875rem', color: active ? C.blue : C.muted, fontFamily: 'Inter, sans-serif', lineHeight: 1.3 }}>
+              {desc}
+            </Typography>
+          </Box>
         );
       })}
     </Box>
