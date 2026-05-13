@@ -26,7 +26,7 @@ export function useStompChat({ conversationId, onMessage }: UseStompChatOptions)
 
     const client = new Client({
       // Native WebSocket — no SockJS, no `global` polyfill needed
-      brokerURL: 'ws://localhost:8080/ws',
+      brokerURL: `${import.meta.env.VITE_WS_BASE_URL ?? 'ws://localhost:8080'}/ws`,
       connectHeaders: { Authorization: `Bearer ${token}` },
       reconnectDelay: 5000,
       onConnect: () => {

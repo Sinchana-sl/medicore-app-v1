@@ -43,7 +43,7 @@ jwt:
   refresh-expiration-ms: 604800000
 
 cors:
-  allowed-origins: http://localhost:5173,http://localhost:5174,http://localhost:5175,https://medicore-v41j.onrender.com
+  allowed-origins: http://localhost:5173,http://localhost:5174,http://localhost:5175,https://medicore-app-v1.onrender.com,https://medicore-app-v1.vercel.app
 
 app:
   frontend-url: ${FRONTEND_URL:http://localhost:5173}
