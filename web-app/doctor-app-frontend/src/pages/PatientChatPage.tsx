@@ -11,6 +11,7 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutlined';
 import TopNavBar from '../components/TopNavBar';
 import SideNavBar from '../components/SideNavBar';
 import ChatBot from '../components/ChatBot';
+import { C } from '../styles/theme';
 import { getPatientProfile, type PatientProfile } from '../services/patientService';
 import {
   getConversations, getMessages, startConversation, markRead, getEligibleDoctors,
@@ -185,7 +186,7 @@ export default function PatientChatPage() {
     : '';
 
   return (
-    <Box sx={{ backgroundColor: '#FFFFFF', minHeight: '100vh' }}>
+    <Box sx={{ backgroundColor: C.paper, minHeight: '100vh' }}>
       <TopNavBar
         displayName={displayName}
         email={profile?.email}
@@ -199,19 +200,20 @@ export default function PatientChatPage() {
           component="main"
           sx={{
             ml: '240px',
+            mt: '52px',
             flex: 1,
             display: 'flex',
-            height: 'calc(100vh - 64px)',
+            height: 'calc(100vh - 52px)',
             overflow: 'hidden',
           }}
         >
           {/* Conversation list panel */}
           <Box
             sx={{
-              width: 300,
+              width: 280,
               flexShrink: 0,
-              borderRight: '1px solid #E9E9E7',
-              backgroundColor: '#ffffff',
+              borderRight: `1px solid ${C.border}`,
+              backgroundColor: C.surface,
               display: 'flex',
               flexDirection: 'column',
               height: '100%',
@@ -220,45 +222,42 @@ export default function PatientChatPage() {
             {/* Header */}
             <Box
               sx={{
-                px: 2.5,
-                py: 2,
-                borderBottom: '1px solid #E9E9E7',
+                px: 2, py: 1.75,
+                borderBottom: `1px solid ${C.border}`,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 flexShrink: 0,
               }}
             >
-              <Typography
-                sx={{ fontFamily: 'inherit', fontWeight: 700, fontSize: '1.125rem', color: '#37352F' }}
-              >
+              <Typography sx={{ fontWeight: 700, fontSize: '0.9375rem', color: C.ink }}>
                 Messages
               </Typography>
               <IconButton
                 size="small"
                 onClick={() => setNewChatOpen(true)}
-                sx={{ color: '#0D9488', '&:hover': { backgroundColor: '#eff6ff' } }}
+                sx={{ color: C.blue, '&:hover': { backgroundColor: C.blueLight } }}
               >
-                <AddCommentIcon />
+                <AddCommentIcon sx={{ fontSize: 18 }} />
               </IconButton>
             </Box>
 
             {/* Conversation items */}
             {loadingConvs ? (
               <Box sx={{ display: 'flex', justifyContent: 'center', pt: 4 }}>
-                <CircularProgress size={28} sx={{ color: '#0D9488' }} />
+                <CircularProgress size={24} sx={{ color: C.blue }} />
               </Box>
             ) : conversations.length === 0 ? (
               <Box sx={{ p: 3, textAlign: 'center' }}>
-                <ChatBubbleOutlineIcon sx={{ color: '#94a3b8', fontSize: 40, mb: 1 }} />
-                <Typography sx={{ color: '#94a3b8', fontSize: '0.875rem', fontFamily: 'inherit' }}>
+                <ChatBubbleOutlineIcon sx={{ color: C.subtle, fontSize: 36, mb: 1 }} />
+                <Typography sx={{ color: C.muted, fontSize: '0.8125rem', fontWeight: 500 }}>
                   No conversations yet
                 </Typography>
                 <Button
-                  startIcon={<AddCommentIcon />}
+                  startIcon={<AddCommentIcon sx={{ fontSize: 14 }} />}
                   size="small"
                   onClick={() => setNewChatOpen(true)}
-                  sx={{ mt: 1.5, color: '#0D9488', fontFamily: 'inherit', textTransform: 'none', fontWeight: 600 }}
+                  sx={{ mt: 1.5, color: C.blue, textTransform: 'none', fontWeight: 600, fontSize: '0.8rem' }}
                 >
                   Start a chat
                 </Button>
@@ -271,22 +270,18 @@ export default function PatientChatPage() {
                       selected={conv.id === selectedConvId}
                       onClick={() => setSelectedConvId(conv.id)}
                       sx={{
-                        px: 2,
-                        py: 1.5,
+                        px: 2, py: 1.25,
                         alignItems: 'flex-start',
-                        '&.Mui-selected': { backgroundColor: '#eff6ff' },
-                        '&.Mui-selected:hover': { backgroundColor: '#eff6ff' },
-                        '&:hover': { backgroundColor: '#F7F7F5' },
+                        '&.Mui-selected': { backgroundColor: C.blueLight },
+                        '&.Mui-selected:hover': { backgroundColor: C.blueLight },
+                        '&:hover': { backgroundColor: C.borderSub },
                       }}
                     >
-                      <ListItemAvatar sx={{ minWidth: 44 }}>
+                      <ListItemAvatar sx={{ minWidth: 42 }}>
                         <Avatar
                           sx={{
-                            width: 40,
-                            height: 40,
-                            backgroundColor: '#0D9488',
-                            fontSize: '0.875rem',
-                            fontWeight: 700,
+                            width: 36, height: 36, borderRadius: '8px',
+                            backgroundColor: C.blue, fontSize: '0.8125rem', fontWeight: 700,
                           }}
                         >
                           {getInitials(conv.otherUserName)}
@@ -297,19 +292,15 @@ export default function PatientChatPage() {
                           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <Typography
                               sx={{
-                                fontFamily: 'inherit',
                                 fontWeight: conv.unreadCount > 0 ? 700 : 600,
-                                fontSize: '0.875rem',
-                                color: '#1e293b',
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                                whiteSpace: 'nowrap',
-                                maxWidth: 140,
+                                fontSize: '0.8125rem', color: C.ink,
+                                overflow: 'hidden', textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap', maxWidth: 130,
                               }}
                             >
                               {conv.otherUserName}
                             </Typography>
-                            <Typography sx={{ fontSize: '0.7rem', color: '#94a3b8', flexShrink: 0, ml: 0.5 }}>
+                            <Typography sx={{ fontSize: '0.68rem', color: C.muted, flexShrink: 0, ml: 0.5 }}>
                               {formatTime(conv.lastMessageAt)}
                             </Typography>
                           </Box>
@@ -318,14 +309,11 @@ export default function PatientChatPage() {
                           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 0.25 }}>
                             <Typography
                               sx={{
-                                fontSize: '0.8rem',
-                                color: conv.unreadCount > 0 ? '#475569' : '#94a3b8',
+                                fontSize: '0.75rem',
+                                color: conv.unreadCount > 0 ? C.inkMid : C.muted,
                                 fontWeight: conv.unreadCount > 0 ? 600 : 400,
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                                whiteSpace: 'nowrap',
-                                maxWidth: 160,
-                                fontFamily: 'Inter, sans-serif',
+                                overflow: 'hidden', textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap', maxWidth: 150,
                               }}
                             >
                               {conv.lastMessage ?? 'No messages yet'}
@@ -335,11 +323,8 @@ export default function PatientChatPage() {
                                 badgeContent={conv.unreadCount}
                                 sx={{
                                   '& .MuiBadge-badge': {
-                                    backgroundColor: '#0D9488',
-                                    color: '#fff',
-                                    fontSize: '0.65rem',
-                                    minWidth: 18,
-                                    height: 18,
+                                    backgroundColor: C.blue, color: '#fff',
+                                    fontSize: '0.6rem', minWidth: 17, height: 17,
                                   },
                                 }}
                               />
@@ -349,7 +334,7 @@ export default function PatientChatPage() {
                         disableTypography
                       />
                     </ListItemButton>
-                    <Divider component="li" sx={{ ml: 7 }} />
+                    <Divider component="li" sx={{ ml: 7, borderColor: C.border }} />
                   </Box>
                 ))}
               </List>
@@ -359,29 +344,24 @@ export default function PatientChatPage() {
           {/* Message area */}
           <Box
             sx={{
-              flex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              height: '100%',
-              backgroundColor: '#FFFFFF',
+              flex: 1, display: 'flex', flexDirection: 'column',
+              height: '100%', backgroundColor: C.paper,
             }}
           >
             {!selectedConvId ? (
               <Box
                 sx={{
-                  flex: 1,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 2,
+                  flex: 1, display: 'flex', flexDirection: 'column',
+                  alignItems: 'center', justifyContent: 'center', gap: 1.5,
                 }}
               >
-                <ChatBubbleOutlineIcon sx={{ fontSize: 64, color: '#cbd5e1' }} />
-                <Typography sx={{ color: '#94a3b8', fontFamily: 'inherit', fontSize: '1.125rem', fontWeight: 600 }}>
+                <Box sx={{ width: 56, height: 56, borderRadius: '12px', backgroundColor: C.borderSub, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <ChatBubbleOutlineIcon sx={{ fontSize: 28, color: C.subtle }} />
+                </Box>
+                <Typography sx={{ color: C.inkMid, fontSize: '0.9375rem', fontWeight: 600 }}>
                   Select a conversation
                 </Typography>
-                <Typography sx={{ color: '#cbd5e1', fontSize: '0.875rem' }}>
+                <Typography sx={{ color: C.muted, fontSize: '0.8125rem' }}>
                   or start a new chat with your doctor
                 </Typography>
               </Box>
@@ -390,27 +370,23 @@ export default function PatientChatPage() {
                 {/* Chat header */}
                 <Box
                   sx={{
-                    px: 3,
-                    py: 2,
-                    borderBottom: '1px solid #E9E9E7',
-                    backgroundColor: '#ffffff',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 1.5,
-                    flexShrink: 0,
+                    px: 3, py: 1.75,
+                    borderBottom: `1px solid ${C.border}`,
+                    backgroundColor: C.paper,
+                    display: 'flex', alignItems: 'center', gap: 1.5, flexShrink: 0,
                   }}
                 >
-                  <Avatar sx={{ width: 38, height: 38, backgroundColor: '#0D9488', fontSize: '0.875rem', fontWeight: 700 }}>
+                  <Avatar sx={{ width: 36, height: 36, borderRadius: '8px', backgroundColor: C.blue, fontSize: '0.8125rem', fontWeight: 700 }}>
                     {getInitials(selectedConv?.otherUserName ?? '')}
                   </Avatar>
                   <Box>
-                    <Typography sx={{ fontFamily: 'inherit', fontWeight: 700, fontSize: '0.9375rem', color: '#1e293b' }}>
+                    <Typography sx={{ fontWeight: 700, fontSize: '0.9375rem', color: C.ink }}>
                       {selectedConv?.otherUserName}
                     </Typography>
                     <Chip
                       label="Doctor"
                       size="small"
-                      sx={{ height: 18, fontSize: '0.65rem', backgroundColor: '#eff6ff', color: '#0D9488', fontWeight: 600 }}
+                      sx={{ height: 17, fontSize: '0.6rem', backgroundColor: C.blueLight, color: C.blue, fontWeight: 600, mt: 0.25 }}
                     />
                   </Box>
                 </Box>
@@ -418,22 +394,18 @@ export default function PatientChatPage() {
                 {/* Messages */}
                 <Box
                   sx={{
-                    flex: 1,
-                    overflowY: 'auto',
-                    px: 3,
-                    py: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 1,
+                    flex: 1, overflowY: 'auto', px: 3, py: 2,
+                    display: 'flex', flexDirection: 'column', gap: 1,
+                    backgroundColor: C.surface,
                   }}
                 >
                   {loadingMsgs ? (
                     <Box sx={{ display: 'flex', justifyContent: 'center', pt: 4 }}>
-                      <CircularProgress size={28} sx={{ color: '#0D9488' }} />
+                      <CircularProgress size={24} sx={{ color: C.blue }} />
                     </Box>
                   ) : messages.length === 0 ? (
                     <Box sx={{ textAlign: 'center', pt: 6 }}>
-                      <Typography sx={{ color: '#94a3b8', fontSize: '0.875rem' }}>
+                      <Typography sx={{ color: C.muted, fontSize: '0.875rem' }}>
                         No messages yet. Say hello!
                       </Typography>
                     </Box>
@@ -441,33 +413,23 @@ export default function PatientChatPage() {
                     messages.map((msg) => {
                       const isMine = msg.senderId === myUserId;
                       return (
-                        <Box
-                          key={msg.id}
-                          sx={{
-                            display: 'flex',
-                            justifyContent: isMine ? 'flex-end' : 'flex-start',
-                          }}
-                        >
+                        <Box key={msg.id} sx={{ display: 'flex', justifyContent: isMine ? 'flex-end' : 'flex-start' }}>
                           <Box
                             sx={{
-                              maxWidth: '70%',
-                              px: 2,
-                              py: 1.25,
-                              borderRadius: isMine ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
-                              backgroundColor: isMine ? '#0D9488' : '#ffffff',
-                              color: isMine ? '#ffffff' : '#1e293b',
-                              boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+                              maxWidth: '68%', px: 2, py: 1.25,
+                              borderRadius: isMine ? '14px 14px 4px 14px' : '4px 14px 14px 14px',
+                              backgroundColor: isMine ? C.blue : C.paper,
+                              color: isMine ? '#fff' : C.ink,
+                              border: isMine ? 'none' : `1px solid ${C.border}`,
                             }}
                           >
-                            <Typography sx={{ fontSize: '0.875rem', lineHeight: 1.5, fontFamily: 'Inter, sans-serif', wordBreak: 'break-word' }}>
+                            <Typography sx={{ fontSize: '0.875rem', lineHeight: 1.55, wordBreak: 'break-word' }}>
                               {msg.content}
                             </Typography>
                             <Typography
                               sx={{
-                                fontSize: '0.7rem',
-                                mt: 0.5,
-                                color: isMine ? 'rgba(255,255,255,0.7)' : '#94a3b8',
-                                textAlign: 'right',
+                                fontSize: '0.68rem', mt: 0.5, textAlign: 'right',
+                                color: isMine ? 'rgba(255,255,255,0.65)' : C.muted,
                               }}
                             >
                               {formatTime(msg.createdAt)}
@@ -483,31 +445,24 @@ export default function PatientChatPage() {
                 {/* Input */}
                 <Box
                   sx={{
-                    px: 3,
-                    py: 2,
-                    borderTop: '1px solid #E9E9E7',
-                    backgroundColor: '#ffffff',
-                    display: 'flex',
-                    gap: 1.5,
-                    alignItems: 'flex-end',
-                    flexShrink: 0,
+                    px: 2.5, py: 1.75,
+                    borderTop: `1px solid ${C.border}`,
+                    backgroundColor: C.paper,
+                    display: 'flex', gap: 1.25, alignItems: 'flex-end', flexShrink: 0,
                   }}
                 >
                   <TextField
-                    fullWidth
-                    multiline
-                    maxRows={4}
-                    size="small"
+                    fullWidth multiline maxRows={4} size="small"
                     placeholder="Type a message…"
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
                     onKeyDown={handleKeyDown}
                     sx={{
                       '& .MuiOutlinedInput-root': {
-                        borderRadius: '8px',
-                        backgroundColor: '#F7F7F5',
-                        fontFamily: 'Inter, sans-serif',
-                        fontSize: '0.875rem',
+                        borderRadius: '8px', backgroundColor: C.surface, fontSize: '0.875rem',
+                        '& fieldset': { borderColor: C.border },
+                        '&:hover fieldset': { borderColor: C.subtle },
+                        '&.Mui-focused fieldset': { borderColor: C.blue },
                       },
                     }}
                   />
@@ -515,16 +470,13 @@ export default function PatientChatPage() {
                     onClick={handleSend}
                     disabled={!inputText.trim()}
                     sx={{
-                      backgroundColor: '#0D9488',
-                      color: '#fff',
-                      width: 40,
-                      height: 40,
-                      flexShrink: 0,
-                      '&:hover': { backgroundColor: '#004f87' },
-                      '&.Mui-disabled': { backgroundColor: '#e2e8f0', color: '#94a3b8' },
+                      backgroundColor: C.blue, color: '#fff',
+                      width: 38, height: 38, borderRadius: '8px', flexShrink: 0,
+                      '&:hover': { backgroundColor: C.blueDark },
+                      '&.Mui-disabled': { backgroundColor: C.borderSub, color: C.muted },
                     }}
                   >
-                    <SendIcon sx={{ fontSize: 18 }} />
+                    <SendIcon sx={{ fontSize: 17 }} />
                   </IconButton>
                 </Box>
               </>
@@ -534,20 +486,21 @@ export default function PatientChatPage() {
       </Box>
 
       {/* New Chat Dialog */}
-      <Dialog open={newChatOpen} onClose={() => setNewChatOpen(false)} maxWidth="sm" fullWidth>
-        <DialogTitle sx={{ fontFamily: 'inherit', fontWeight: 700, color: '#37352F' }}>
+      <Dialog open={newChatOpen} onClose={() => setNewChatOpen(false)} maxWidth="xs" fullWidth
+        PaperProps={{ sx: { borderRadius: '12px', border: `1px solid ${C.border}`, boxShadow: '0 8px 32px rgba(0,0,0,0.1)' } }}>
+        <DialogTitle sx={{ fontWeight: 700, color: C.ink, fontSize: '1rem', pb: 1 }}>
           New Conversation
         </DialogTitle>
         <DialogContent>
-          <Typography sx={{ fontSize: '0.875rem', color: '#64748b', mb: 2, fontFamily: 'Inter, sans-serif' }}>
+          <Typography sx={{ fontSize: '0.8125rem', color: C.slate, mb: 2 }}>
             You can message doctors you've had a confirmed in-person appointment with.
           </Typography>
           {loadingEligible ? (
             <Box sx={{ display: 'flex', justifyContent: 'center', py: 3 }}>
-              <CircularProgress size={28} sx={{ color: '#0D9488' }} />
+              <CircularProgress size={24} sx={{ color: C.blue }} />
             </Box>
           ) : eligibleDoctors.length === 0 ? (
-            <Typography sx={{ textAlign: 'center', color: '#94a3b8', py: 3, fontSize: '0.875rem', fontFamily: 'Inter, sans-serif' }}>
+            <Typography sx={{ textAlign: 'center', color: C.muted, py: 3, fontSize: '0.8125rem' }}>
               No eligible doctors found. Book an in-person appointment first.
             </Typography>
           ) : (
@@ -557,20 +510,21 @@ export default function PatientChatPage() {
                   key={doc.profileId}
                   onClick={() => handleStartConversation(doc)}
                   disabled={startingConv}
-                  sx={{ borderRadius: '6px', mb: 0.5, border: '1px solid #E9E9E7' }}
+                  sx={{ borderRadius: '8px', mb: 0.5, border: `1px solid ${C.border}`, '&:hover': { backgroundColor: C.blueLight, borderColor: C.blue } }}
                 >
                   <ListItemAvatar>
-                    <Avatar sx={{ backgroundColor: '#0D9488', fontWeight: 700 }}>
+                    <Avatar sx={{ backgroundColor: C.blue, fontWeight: 700, borderRadius: '8px', fontSize: '0.875rem' }}>
                       {getInitials(`${doc.firstName} ${doc.lastName}`)}
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
                     primary={
-                      <Typography sx={{ fontFamily: 'inherit', fontWeight: 600, fontSize: '0.9rem' }}>
+                      <Typography sx={{ fontWeight: 600, fontSize: '0.875rem', color: C.ink }}>
                         Dr. {doc.firstName} {doc.lastName}
                       </Typography>
                     }
-                    secondary={doc.specialization ?? 'General Practitioner'}
+                    secondary={<Typography sx={{ fontSize: '0.75rem', color: C.slate }}>{doc.specialization ?? 'General Practitioner'}</Typography>}
+                    disableTypography
                   />
                 </ListItemButton>
               ))}
@@ -578,7 +532,8 @@ export default function PatientChatPage() {
           )}
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button onClick={() => setNewChatOpen(false)} sx={{ color: '#64748b', textTransform: 'none' }}>
+          <Button onClick={() => setNewChatOpen(false)}
+            sx={{ color: C.slate, textTransform: 'none', fontWeight: 600, '&:hover': { backgroundColor: C.borderSub } }}>
             Cancel
           </Button>
         </DialogActions>
