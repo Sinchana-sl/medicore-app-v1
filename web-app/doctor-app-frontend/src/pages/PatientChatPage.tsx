@@ -16,7 +16,7 @@ import {
   getConversations, getMessages, startConversation, markRead, getEligibleDoctors,
   type ConversationDTO, type ChatMessageDTO, type EligibleDoctorDTO,
 } from '../services/chatService';
-import { useStompChat } from '../hooks/useStompChat';//hey
+import { useStompChat } from '../hooks/useStompChat';
 import { useToast } from '../contexts/ToastContext';
 
 function formatTime(iso: string | null): string {
