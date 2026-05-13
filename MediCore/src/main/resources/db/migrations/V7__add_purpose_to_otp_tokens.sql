@@ -1,0 +1,2 @@
+ALTER TABLE auth_otp_tokens
+    ADD COLUMN purpose VARCHAR(32) NOT NULL DEFAULT 'LOGIN';

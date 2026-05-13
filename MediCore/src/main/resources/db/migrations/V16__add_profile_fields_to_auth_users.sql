@@ -1,0 +1,5 @@
+ALTER TABLE auth_users
+    ADD COLUMN IF NOT EXISTS phone        VARCHAR(20),
+    ADD COLUMN IF NOT EXISTS date_of_birth DATE,
+    ADD COLUMN IF NOT EXISTS gender       VARCHAR(20),
+    ADD COLUMN IF NOT EXISTS blood_type   VARCHAR(10);

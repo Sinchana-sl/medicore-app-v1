@@ -1,0 +1,7 @@
+ALTER TABLE app_appointments
+    ADD COLUMN IF NOT EXISTS is_for_self      BOOLEAN      NOT NULL DEFAULT TRUE,
+    ADD COLUMN IF NOT EXISTS patient_name     VARCHAR(200),
+    ADD COLUMN IF NOT EXISTS patient_phone    VARCHAR(20),
+    ADD COLUMN IF NOT EXISTS patient_age      INT,
+    ADD COLUMN IF NOT EXISTS patient_gender   VARCHAR(20),
+    ADD COLUMN IF NOT EXISTS whatsapp_updates BOOLEAN      NOT NULL DEFAULT FALSE;
