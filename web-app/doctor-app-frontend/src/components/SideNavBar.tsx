@@ -1,86 +1,145 @@
-import { Box, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-import ForumIcon from '@mui/icons-material/Forum';
-import AssessmentIcon from '@mui/icons-material/Assessment';
-import SettingsIcon from '@mui/icons-material/Settings';
+import { Box, Typography } from '@mui/material';
+import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
+import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
+import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
+import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
+import FolderOpenRoundedIcon from '@mui/icons-material/FolderOpenRounded';
+import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { COLORS } from '../styles/theme';
+import { alpha } from '@mui/material/styles';
+
+interface NavItem {
+  label: string;
+  icon: React.ReactNode;
+  path: string | null;
+  section?: string;
+}
+
+const navItems: NavItem[] = [
+  { label: 'Dashboard',    icon: <DashboardRoundedIcon sx={{ fontSize: 20 }} />,      path: '/dashboard',      section: 'Main' },
+  { label: 'Appointments', icon: <CalendarMonthRoundedIcon sx={{ fontSize: 20 }} />,  path: '/appointments' },
+  { label: 'AI Assistant', icon: <AutoAwesomeRoundedIcon sx={{ fontSize: 20 }} />,    path: null },
+  { label: 'Messages',     icon: <ForumRoundedIcon sx={{ fontSize: 20 }} />,          path: '/chat',           section: 'Communication' },
+  { label: 'Reports',      icon: <FolderOpenRoundedIcon sx={{ fontSize: 20 }} />,     path: '/reports',        section: 'Health' },
+  { label: 'Settings',     icon: <TuneRoundedIcon sx={{ fontSize: 20 }} />,           path: '/settings' },
+];
 
 interface Props {
   onChatClick?: () => void;
   chatActive?: boolean;
 }
 
-// path: null  → handled by onClick logic (not a route)
-const navItems = [
-  { label: 'Dashboard',    icon: <DashboardIcon />,     path: '/dashboard' },
-  { label: 'Appointments', icon: <CalendarTodayIcon />, path: '/appointments' },
-  { label: 'Chat',         icon: <ChatBubbleIcon />,    path: null },          // AI ChatBot
-  { label: 'Messages',     icon: <ForumIcon />,         path: '/chat' },       // Real-time doctor chat
-  { label: 'Reports',      icon: <AssessmentIcon />,    path: '/reports' },
-  { label: 'Settings',     icon: <SettingsIcon />,      path: '/settings' },
-];
-
 export default function SideNavBar({ onChatClick, chatActive = false }: Props) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
+  const renderSection = (label: string) => (
+    <Typography
+      key={`section-${label}`}
+      sx={{
+        fontSize: '0.6875rem', fontWeight: 700, letterSpacing: '0.08em',
+        textTransform: 'uppercase', color: COLORS.textMuted,
+        px: 2, pt: 2.5, pb: 0.75,
+      }}
+    >
+      {label}
+    </Typography>
+  );
+
+  let lastSection = '';
 
   return (
     <Box
       component="nav"
       sx={{
-        width: 240,
+        width: 248,
         flexShrink: 0,
         position: 'fixed',
         top: 64,
         left: 0,
         height: 'calc(100vh - 64px)',
-        backgroundColor: '#ffffff',
-        borderRight: '1px solid #e2e8f0',
-        pt: 2,
+        backgroundColor: '#fff',
+        borderRight: `1px solid ${COLORS.border}`,
+        pt: 1.5,
         pb: 3,
         px: 1.5,
         zIndex: 40,
+        overflowY: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
-      <List disablePadding sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
-        {navItems.map(({ label, icon, path }) => {
-          const isActive = path ? pathname === path : (label === 'Chat' && chatActive);
+      <Box sx={{ flex: 1 }}>
+        {navItems.map(({ label, icon, path, section }) => {
+          const isActive = path ? pathname === path : (label === 'AI Assistant' && chatActive);
+          const showSection = section && section !== lastSection;
+          if (section) lastSection = section;
+
           return (
-            <ListItemButton
-              key={label}
-              onClick={() => {
-                if (label === 'Chat') {
-                  if (onChatClick) {
-                    onChatClick();
-                  } else {
-                    navigate('/dashboard', { state: { openChat: true } });
+            <Box key={label}>
+              {showSection && renderSection(section!)}
+              <Box
+                component="button"
+                onClick={() => {
+                  if (label === 'AI Assistant') {
+                    if (onChatClick) onChatClick();
+                    else navigate('/dashboard', { state: { openChat: true } });
+                  } else if (path) {
+                    navigate(path);
                   }
-                } else if (path) {
-                  navigate(path);
-                }
-              }}
-              sx={{
-                borderRadius: 2,
-                px: 2,
-                py: 1.5,
-                backgroundColor: isActive ? '#eff6ff' : 'transparent',
-                color: isActive ? '#1e3a8a' : '#64748b',
-                fontFamily: 'Manrope, sans-serif',
-                fontWeight: 600,
-                '&:hover': { backgroundColor: isActive ? '#eff6ff' : '#f8fafc' },
-              }}
-            >
-              <ListItemIcon sx={{ minWidth: 36, color: 'inherit' }}>{icon}</ListItemIcon>
-              <ListItemText
-                primary={label}
-                primaryTypographyProps={{ fontSize: '0.875rem', fontWeight: 600, fontFamily: 'Manrope, sans-serif' }}
-              />
-            </ListItemButton>
+                }}
+                sx={{
+                  display: 'flex', alignItems: 'center', gap: 1.5,
+                  width: '100%', px: 1.5, py: 1.125,
+                  border: 'none', cursor: 'pointer', textAlign: 'left',
+                  borderRadius: 2.5,
+                  position: 'relative',
+                  backgroundColor: isActive ? alpha(COLORS.primary, 0.08) : 'transparent',
+                  color: isActive ? COLORS.primary : COLORS.textSecondary,
+                  transition: 'all 0.15s',
+                  mb: 0.25,
+                  '&:hover': {
+                    backgroundColor: isActive ? alpha(COLORS.primary, 0.1) : COLORS.surface,
+                    color: isActive ? COLORS.primaryDark : COLORS.textPrimary,
+                  },
+                  '&::before': isActive ? {
+                    content: '""',
+                    position: 'absolute',
+                    left: 0, top: '20%', bottom: '20%',
+                    width: 3, borderRadius: '0 3px 3px 0',
+                    backgroundColor: COLORS.primary,
+                    marginLeft: -6,
+                  } : {},
+                }}
+              >
+                <Box
+                  sx={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    width: 32, height: 32, borderRadius: 2, flexShrink: 0,
+                    color: 'inherit',
+                    backgroundColor: isActive ? alpha(COLORS.primary, 0.12) : 'transparent',
+                    transition: 'background 0.15s',
+                  }}
+                >
+                  {icon}
+                </Box>
+                <Typography
+                  sx={{
+                    fontSize: '0.875rem',
+                    fontWeight: isActive ? 700 : 500,
+                    fontFamily: 'Inter, sans-serif',
+                    color: 'inherit',
+                    lineHeight: 1,
+                  }}
+                >
+                  {label}
+                </Typography>
+              </Box>
+            </Box>
           );
         })}
-      </List>
+      </Box>
     </Box>
   );
 }

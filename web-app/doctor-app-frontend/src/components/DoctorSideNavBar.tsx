@@ -1,69 +1,157 @@
-import { Box, List, ListItemButton, ListItemIcon, ListItemText, Button, Typography } from '@mui/material';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import PersonIcon from '@mui/icons-material/Person';
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import GridViewIcon from '@mui/icons-material/GridView';
+import { Box, Typography } from '@mui/material';
+import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
+import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
+import EventAvailableRoundedIcon from '@mui/icons-material/EventAvailableRounded';
+import LocalHospitalRoundedIcon from '@mui/icons-material/LocalHospitalRounded';
+import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
+import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
+import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
+import HelpOutlineRoundedIcon from '@mui/icons-material/HelpOutlineRounded';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { COLORS } from '../styles/theme';
+import { alpha } from '@mui/material/styles';
 
-const navItems = [
-  { label: 'Dashboard',    icon: <DashboardIcon />,        path: '/doctor-dashboard' },
-  { label: 'Appointments', icon: <CalendarTodayIcon />,    path: '/doctor/appointments' },
-  { label: 'Clinics',      icon: <LocalHospitalIcon />,    path: '/doctor/clinics' },
-  { label: 'Availability', icon: <EventAvailableIcon />,   path: '/doctor/availability' },
-  { label: 'Slots',        icon: <GridViewIcon />,          path: '/doctor/slots' },
-  { label: 'Schedule',     icon: <AccessTimeIcon />,        path: '/doctor/schedule' },
-  { label: 'Chat',         icon: <ChatBubbleIcon />,        path: '/doctor/chat' },
-  { label: 'Profile',      icon: <PersonIcon />,            path: '/doctor/profile' },
+interface NavItem {
+  label: string;
+  icon: React.ReactNode;
+  path: string;
+  section?: string;
+}
+
+const navItems: NavItem[] = [
+  { label: 'Dashboard',    icon: <DashboardRoundedIcon sx={{ fontSize: 20 }} />,      path: '/doctor-dashboard', section: 'Overview' },
+  { label: 'Appointments', icon: <CalendarMonthRoundedIcon sx={{ fontSize: 20 }} />,  path: '/doctor/appointments' },
+  { label: 'Schedule',     icon: <AccessTimeRoundedIcon sx={{ fontSize: 20 }} />,     path: '/doctor/schedule',   section: 'Practice' },
+  { label: 'Availability', icon: <EventAvailableRoundedIcon sx={{ fontSize: 20 }} />, path: '/doctor/availability' },
+  { label: 'Slots',        icon: <GridViewRoundedIcon sx={{ fontSize: 20 }} />,       path: '/doctor/slots' },
+  { label: 'Clinics',      icon: <LocalHospitalRoundedIcon sx={{ fontSize: 20 }} />,  path: '/doctor/clinics' },
+  { label: 'Messages',     icon: <ForumRoundedIcon sx={{ fontSize: 20 }} />,          path: '/doctor/chat',       section: 'Communication' },
+  { label: 'Profile',      icon: <PersonRoundedIcon sx={{ fontSize: 20 }} />,         path: '/doctor/profile',    section: 'Account' },
 ];
 
 export default function DoctorSideNavBar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  const renderSection = (label: string) => (
+    <Typography
+      key={`section-${label}`}
+      sx={{
+        fontSize: '0.6875rem', fontWeight: 700, letterSpacing: '0.08em',
+        textTransform: 'uppercase', color: COLORS.textMuted,
+        px: 2, pt: 2.5, pb: 0.75,
+      }}
+    >
+      {label}
+    </Typography>
+  );
+
+  let lastSection = '';
+
   return (
     <Box
       component="nav"
       sx={{
-        width: 240, flexShrink: 0, position: 'fixed',
+        width: 248, flexShrink: 0, position: 'fixed',
         top: 64, left: 0, height: 'calc(100vh - 64px)',
-        backgroundColor: '#ffffff', borderRight: '1px solid #e2e8f0',
-        pt: 2, pb: 3, px: 1.5,
+        backgroundColor: '#fff', borderRight: `1px solid ${COLORS.border}`,
+        pt: 1.5, pb: 3, px: 1.5,
         display: { xs: 'none', md: 'flex' }, flexDirection: 'column',
-        zIndex: 40,
+        zIndex: 40, overflowY: 'auto',
       }}
     >
-      <List disablePadding sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, flex: 1 }}>
-        {navItems.map(({ label, icon, path }) => {
-          const isActive = pathname === path;
+      <Box sx={{ flex: 1 }}>
+        {navItems.map(({ label, icon, path, section }) => {
+          const isActive = pathname === path || (pathname.startsWith(path) && path !== '/doctor-dashboard');
+          const showSection = section && section !== lastSection;
+          if (section) lastSection = section;
+
           return (
-            <ListItemButton
-              key={label}
-              onClick={() => navigate(path)}
-              sx={{
-                borderRadius: 2, px: 2, py: 1.5,
-                backgroundColor: isActive ? '#eff6ff' : 'transparent',
-                color: isActive ? '#1e3a8a' : '#64748b',
-                '&:hover': { backgroundColor: isActive ? '#eff6ff' : '#f8fafc' },
-              }}
-            >
-              <ListItemIcon sx={{ minWidth: 36, color: 'inherit' }}>{icon}</ListItemIcon>
-              <ListItemText primary={label} primaryTypographyProps={{ fontSize: '0.875rem', fontWeight: 600, fontFamily: 'Manrope, sans-serif' }} />
-            </ListItemButton>
+            <Box key={label}>
+              {showSection && renderSection(section!)}
+              <Box
+                component="button"
+                onClick={() => navigate(path)}
+                sx={{
+                  display: 'flex', alignItems: 'center', gap: 1.5,
+                  width: '100%', px: 1.5, py: 1.125,
+                  border: 'none', cursor: 'pointer', textAlign: 'left',
+                  borderRadius: 2.5, position: 'relative',
+                  backgroundColor: isActive ? alpha(COLORS.primary, 0.08) : 'transparent',
+                  color: isActive ? COLORS.primary : COLORS.textSecondary,
+                  transition: 'all 0.15s',
+                  mb: 0.25,
+                  '&:hover': {
+                    backgroundColor: isActive ? alpha(COLORS.primary, 0.1) : COLORS.surface,
+                    color: isActive ? COLORS.primaryDark : COLORS.textPrimary,
+                  },
+                  '&::before': isActive ? {
+                    content: '""',
+                    position: 'absolute',
+                    left: 0, top: '20%', bottom: '20%',
+                    width: 3, borderRadius: '0 3px 3px 0',
+                    backgroundColor: COLORS.primary,
+                    marginLeft: -6,
+                  } : {},
+                }}
+              >
+                <Box
+                  sx={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    width: 32, height: 32, borderRadius: 2, flexShrink: 0, color: 'inherit',
+                    backgroundColor: isActive ? alpha(COLORS.primary, 0.12) : 'transparent',
+                    transition: 'background 0.15s',
+                  }}
+                >
+                  {icon}
+                </Box>
+                <Typography
+                  sx={{
+                    fontSize: '0.875rem',
+                    fontWeight: isActive ? 700 : 500,
+                    fontFamily: 'Inter, sans-serif',
+                    color: 'inherit', lineHeight: 1,
+                  }}
+                >
+                  {label}
+                </Typography>
+              </Box>
+            </Box>
           );
         })}
-      </List>
+      </Box>
 
-      <Box sx={{ p: 2, backgroundColor: '#1a365d', borderRadius: 3, mt: 2 }}>
-        <Typography sx={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.7)', mb: 1.5, fontFamily: 'Inter, sans-serif' }}>
-          Clinical Portal v2.4
-        </Typography>
-        <Button fullWidth sx={{ backgroundColor: '#2d476f', color: '#ffffff', borderRadius: 2, fontSize: '0.8125rem', fontWeight: 600, fontFamily: 'Manrope, sans-serif', py: 1, '&:hover': { backgroundColor: '#1e3a8a' } }}>
-          Support Center
-        </Button>
+      {/* Footer card */}
+      <Box
+        sx={{
+          mt: 2, p: 2, borderRadius: 3,
+          background: `linear-gradient(135deg, ${COLORS.navy} 0%, #1E3A5F 100%)`,
+          border: '1px solid rgba(255,255,255,0.06)',
+        }}
+      >
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
+          <HelpOutlineRoundedIcon sx={{ color: 'rgba(255,255,255,0.5)', fontSize: 16 }} />
+          <Typography sx={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', fontWeight: 600 }}>
+            Clinical Portal v2.4
+          </Typography>
+        </Box>
+        <Box
+          component="button"
+          sx={{
+            width: '100%', py: 1, px: 1.5,
+            borderRadius: 2, border: '1px solid rgba(255,255,255,0.12)',
+            backgroundColor: 'rgba(255,255,255,0.08)',
+            color: 'rgba(255,255,255,0.85)',
+            fontSize: '0.8125rem', fontWeight: 600,
+            fontFamily: 'Inter, sans-serif',
+            cursor: 'pointer',
+            transition: 'background 0.15s',
+            '&:hover': { backgroundColor: 'rgba(255,255,255,0.14)' },
+          }}
+        >
+          Contact Support
+        </Box>
       </Box>
     </Box>
   );
