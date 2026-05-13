@@ -121,45 +121,45 @@ export default function PatientAppointmentsPage() {
   };
 
   const tabDefs = [
-    { label: 'All',             count: counts.all,       color: '#0061a5' },
-    { label: 'Upcoming',        count: counts.upcoming,  color: '#0891b2' },
+    { label: 'All',             count: counts.all,       color: '#0D9488' },
+    { label: 'Upcoming',        count: counts.upcoming,  color: '#0D9488' },
     { label: 'Confirmed',       count: counts.confirmed, color: '#16a34a' },
     { label: 'Pending Payment', count: counts.pending,   color: '#d97706' },
-    { label: 'Past',            count: counts.past,      color: '#64748b' },
+    { label: 'Past',            count: counts.past,      color: '#73726E' },
     { label: 'Cancelled',       count: counts.cancelled, color: '#dc2626' },
   ];
 
   // ── card style ─────────────────────────────────────────────────────────────
 
   const statCard = (icon: React.ReactNode, label: string, value: number | string, bg: string, color: string) => (
-    <Box sx={{ backgroundColor: '#fff', borderRadius: 3, border: '1px solid #eaecf0', p: 2.5, display: 'flex', alignItems: 'center', gap: 2 }}>
-      <Box sx={{ width: 44, height: 44, borderRadius: 2, backgroundColor: bg, display: 'flex', alignItems: 'center', justifyContent: 'center', color, flexShrink: 0 }}>
+    <Box sx={{ backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #E9E9E7', p: 2.5, display: 'flex', alignItems: 'center', gap: 2 }}>
+      <Box sx={{ width: 44, height: 44, borderRadius: '6px', backgroundColor: bg, display: 'flex', alignItems: 'center', justifyContent: 'center', color, flexShrink: 0 }}>
         {icon}
       </Box>
       <Box>
-        <Typography sx={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', fontFamily: 'Manrope, sans-serif', lineHeight: 1 }}>{value}</Typography>
-        <Typography sx={{ fontSize: '0.75rem', color: '#64748b', mt: 0.25 }}>{label}</Typography>
+        <Typography sx={{ fontSize: '1.4rem', fontWeight: 800, color: '#37352F', fontFamily: 'inherit', lineHeight: 1 }}>{value}</Typography>
+        <Typography sx={{ fontSize: '0.75rem', color: '#73726E', mt: 0.25 }}>{label}</Typography>
       </Box>
     </Box>
   );
 
   return (
-    <Box sx={{ backgroundColor: '#f4f6fb', minHeight: '100vh' }}>
+    <Box sx={{ backgroundColor: '#FFFFFF', minHeight: '100vh' }}>
       <TopNavBar displayName={displayName} email={profile?.email} />
 
       <Box sx={{ display: 'flex' }}>
         <SideNavBar />
 
-        <Box component="main" sx={{ ml: '240px', flex: 1, p: { xs: 3, md: 4 } }}>
+        <Box component="main" sx={{ ml: '240px', flex: 1, mt: '52px', p: { xs: 3, md: 4 } }}>
           <Box sx={{ maxWidth: 1280, mx: 'auto' }}>
 
             {/* ── Page header ── */}
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 3 }}>
               <Box>
-                <Typography sx={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', fontFamily: 'Manrope, sans-serif', letterSpacing: '-0.02em' }}>
+                <Typography sx={{ fontSize: '1.5rem', fontWeight: 800, color: '#37352F', fontFamily: 'inherit', letterSpacing: '-0.02em' }}>
                   My Appointments
                 </Typography>
-                <Typography sx={{ fontSize: '0.875rem', color: '#64748b', mt: 0.25 }}>
+                <Typography sx={{ fontSize: '0.875rem', color: '#73726E', mt: 0.25 }}>
                   View and manage all your appointments
                 </Typography>
               </Box>
@@ -168,10 +168,10 @@ export default function PatientAppointmentsPage() {
                 startIcon={<AddIcon />}
                 onClick={() => setBookOpen(true)}
                 sx={{
-                  background: 'linear-gradient(135deg, #0061a5, #0891b2)',
-                  borderRadius: 2.5, fontWeight: 700, px: 2.5, py: 1.1,
-                  boxShadow: '0 4px 14px rgba(0,97,165,0.3)',
-                  '&:hover': { boxShadow: '0 6px 20px rgba(0,97,165,0.4)' },
+                  backgroundColor: '#0D9488',
+                  borderRadius: '8px', fontWeight: 700, px: 2.5, py: 1.1,
+                  boxShadow: 'none',
+                  '&:hover': { boxShadow: 'none' },
                 }}
               >
                 Book Appointment
@@ -184,7 +184,7 @@ export default function PatientAppointmentsPage() {
             {!loading && (
               <Grid container spacing={2} sx={{ mb: 3 }}>
                 {[
-                  { icon: <CalendarTodayIcon />,        label: 'Total',           value: counts.all,       bg: '#eff6ff', color: '#0061a5' },
+                  { icon: <CalendarTodayIcon />,        label: 'Total',           value: counts.all,       bg: '#eff6ff', color: '#0D9488' },
                   { icon: <EventAvailableIcon />,       label: 'Confirmed',       value: counts.confirmed,  bg: '#f0fdf4', color: '#16a34a' },
                   { icon: <PendingActionsIcon />,       label: 'Pending Payment', value: counts.pending,    bg: '#fffbeb', color: '#d97706' },
                   { icon: <EventBusyIcon />,            label: 'Cancelled',       value: counts.cancelled,  bg: '#fef2f2', color: '#dc2626' },
@@ -197,7 +197,7 @@ export default function PatientAppointmentsPage() {
             )}
 
             {/* ── Filter bar ── */}
-            <Box sx={{ backgroundColor: '#fff', borderRadius: 3, border: '1px solid #eaecf0', mb: 3, overflow: 'hidden' }}>
+            <Box sx={{ backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #E9E9E7', mb: 3, overflow: 'hidden' }}>
               {/* Tabs */}
               <Tabs
                 value={tab}
@@ -205,10 +205,10 @@ export default function PatientAppointmentsPage() {
                 variant="scrollable"
                 scrollButtons="auto"
                 sx={{
-                  px: 2, borderBottom: '1px solid #f1f5f9',
-                  '& .MuiTab-root': { minHeight: 48, fontSize: '0.8rem', fontWeight: 700, textTransform: 'none', fontFamily: 'Manrope, sans-serif' },
-                  '& .Mui-selected': { color: '#0061a5' },
-                  '& .MuiTabs-indicator': { backgroundColor: '#0061a5' },
+                  px: 2, borderBottom: '1px solid #E9E9E7',
+                  '& .MuiTab-root': { minHeight: 48, fontSize: '0.8rem', fontWeight: 700, textTransform: 'none', fontFamily: 'inherit' },
+                  '& .Mui-selected': { color: '#0D9488' },
+                  '& .MuiTabs-indicator': { backgroundColor: '#0D9488' },
                 }}
               >
                 {tabDefs.map((t, i) => (
@@ -223,8 +223,8 @@ export default function PatientAppointmentsPage() {
                             size="small"
                             sx={{
                               height: 18, fontSize: '0.65rem', fontWeight: 700,
-                              backgroundColor: tab === i ? '#eff6ff' : '#f1f5f9',
-                              color: tab === i ? '#0061a5' : '#64748b',
+                              backgroundColor: tab === i ? '#eff6ff' : '#F1F0EF',
+                              color: tab === i ? '#0D9488' : '#64748b',
                               '& .MuiChip-label': { px: 0.75 },
                             }}
                           />
@@ -249,7 +249,7 @@ export default function PatientAppointmentsPage() {
                   size="small"
                   startIcon={<FilterListIcon />}
                   onClick={e => setSortAnchor(e.currentTarget)}
-                  sx={{ borderRadius: 2, border: '1px solid #e2e8f0', color: '#475569', fontWeight: 600, fontSize: '0.78rem', whiteSpace: 'nowrap', px: 1.5 }}
+                  sx={{ borderRadius: '6px', border: '1px solid #E9E9E7', color: '#475569', fontWeight: 600, fontSize: '0.78rem', whiteSpace: 'nowrap', px: 1.5 }}
                 >
                   {sortOrder === 'desc' ? 'Newest First' : 'Oldest First'}
                 </Button>
@@ -263,17 +263,17 @@ export default function PatientAppointmentsPage() {
             {/* ── Content ── */}
             {loading ? (
               <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
-                <CircularProgress sx={{ color: '#0061a5' }} />
+                <CircularProgress sx={{ color: '#0D9488' }} />
               </Box>
             ) : filtered.length === 0 ? (
-              <Box sx={{ textAlign: 'center', py: 12, backgroundColor: '#fff', borderRadius: 3, border: '1px solid #eaecf0' }}>
+              <Box sx={{ textAlign: 'center', py: 12, backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #E9E9E7' }}>
                 <Typography sx={{ fontSize: '2.5rem', mb: 1.5 }}>
                   {tab === TAB_CANCELLED ? '🚫' : tab === TAB_PENDING ? '💳' : '📅'}
                 </Typography>
-                <Typography sx={{ fontWeight: 700, fontSize: '1rem', color: '#0f172a', fontFamily: 'Manrope, sans-serif' }}>
+                <Typography sx={{ fontWeight: 700, fontSize: '1rem', color: '#37352F', fontFamily: 'inherit' }}>
                   {search ? 'No appointments match your search' : 'No appointments here yet'}
                 </Typography>
-                <Typography sx={{ fontSize: '0.85rem', color: '#64748b', mt: 0.5 }}>
+                <Typography sx={{ fontSize: '0.85rem', color: '#73726E', mt: 0.5 }}>
                   {search ? 'Try a different search term' : 'Book a new appointment to get started'}
                 </Typography>
                 {!search && (
@@ -281,7 +281,7 @@ export default function PatientAppointmentsPage() {
                     variant="contained"
                     startIcon={<AddIcon />}
                     onClick={() => setBookOpen(true)}
-                    sx={{ mt: 2.5, background: 'linear-gradient(135deg,#0061a5,#0891b2)', borderRadius: 2.5, fontWeight: 700, boxShadow: 'none' }}
+                    sx={{ mt: 2.5, background: 'linear-gradient(135deg,#0D9488,#0D9488)', borderRadius: '8px', fontWeight: 700, boxShadow: 'none' }}
                   >
                     Book Appointment
                   </Button>
@@ -317,7 +317,7 @@ export default function PatientAppointmentsPage() {
       {/* ── Cancel confirmation dialog ── */}
       <Dialog open={Boolean(cancelTarget)} onClose={() => setCancelTarget(null)} maxWidth="xs" fullWidth
         PaperProps={{ sx: { borderRadius: 3 } }}>
-        <DialogTitle sx={{ fontWeight: 800, fontFamily: 'Manrope, sans-serif', pb: 1 }}>
+        <DialogTitle sx={{ fontWeight: 800, fontFamily: 'inherit', pb: 1 }}>
           Cancel Appointment?
         </DialogTitle>
         <DialogContent>
@@ -326,10 +326,10 @@ export default function PatientAppointmentsPage() {
               <Typography sx={{ fontSize: '0.875rem', color: '#475569', mb: 2 }}>
                 Are you sure you want to cancel your appointment with
               </Typography>
-              <Box sx={{ backgroundColor: '#f8fafc', borderRadius: 2, p: 2, border: '1px solid #e2e8f0' }}>
-                <Typography sx={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a' }}>{cancelTarget.doctorName}</Typography>
-                <Typography sx={{ fontSize: '0.8rem', color: '#0061a5', fontWeight: 600 }}>{cancelTarget.doctorSpecialty}</Typography>
-                <Typography sx={{ fontSize: '0.78rem', color: '#64748b', mt: 0.5 }}>
+              <Box sx={{ backgroundColor: '#F7F7F5', borderRadius: '6px', p: 2, border: '1px solid #E9E9E7' }}>
+                <Typography sx={{ fontWeight: 700, fontSize: '0.9rem', color: '#37352F' }}>{cancelTarget.doctorName}</Typography>
+                <Typography sx={{ fontSize: '0.8rem', color: '#0D9488', fontWeight: 600 }}>{cancelTarget.doctorSpecialty}</Typography>
+                <Typography sx={{ fontSize: '0.78rem', color: '#73726E', mt: 0.5 }}>
                   {cancelTarget.appointmentDate} · {cancelTarget.startTime}
                 </Typography>
               </Box>
@@ -341,12 +341,12 @@ export default function PatientAppointmentsPage() {
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2.5, gap: 1 }}>
           <Button onClick={() => setCancelTarget(null)} variant="outlined"
-            sx={{ borderRadius: 2, fontWeight: 600, borderColor: '#e2e8f0', color: '#475569' }}>
+            sx={{ borderRadius: '6px', fontWeight: 600, borderColor: '#E9E9E7', color: '#475569' }}>
             Keep Appointment
           </Button>
           <Button onClick={handleCancel} variant="contained" disabled={cancelling}
             startIcon={cancelling ? <CircularProgress size={14} color="inherit" /> : undefined}
-            sx={{ borderRadius: 2, fontWeight: 700, backgroundColor: '#dc2626', '&:hover': { backgroundColor: '#b91c1c' } }}>
+            sx={{ borderRadius: '6px', fontWeight: 700, backgroundColor: '#dc2626', '&:hover': { backgroundColor: '#b91c1c' } }}>
             Yes, Cancel
           </Button>
         </DialogActions>

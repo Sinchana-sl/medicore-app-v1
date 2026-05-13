@@ -93,11 +93,11 @@ export default function DoctorProfilePage() {
           <Grid container spacing={3}>
             {/* Left column – avatar + availability */}
             <Grid item xs={12} md={4} lg={3}>
-              <Box sx={{ backgroundColor: '#fff', p: 3, borderRadius: 3, border: '1px solid #f1f5f9', boxShadow: '0 4px 20px -4px rgba(26,54,93,0.06)', textAlign: 'center' }}>
-                <Avatar sx={{ width: 96, height: 96, backgroundColor: '#0061a5', fontSize: '2rem', fontWeight: 700, mx: 'auto', mb: 2, border: '3px solid #e2e8f0' }}>
+              <Box sx={{ backgroundColor: '#fff', p: 3, borderRadius: '8px', border: '1px solid #E9E9E7', boxShadow: 'none', textAlign: 'center' }}>
+                <Avatar sx={{ width: 96, height: 96, backgroundColor: '#0D9488', fontSize: '2rem', fontWeight: 700, mx: 'auto', mb: 2, border: '3px solid #e2e8f0' }}>
                   {displayName ? getInitials(displayName) : <PersonIcon sx={{ fontSize: 48 }} />}
                 </Avatar>
-                <Typography sx={{ fontWeight: 700, fontSize: '1.125rem', color: '#002045', fontFamily: 'Manrope, sans-serif' }}>{displayName || '—'}</Typography>
+                <Typography sx={{ fontWeight: 700, fontSize: '1.125rem', color: '#37352F', fontFamily: 'inherit' }}>{displayName || '—'}</Typography>
                 <Typography sx={{ fontSize: '0.8125rem', color: '#64748b', mb: 2 }}>{profile?.email}</Typography>
                 <Divider sx={{ mb: 2 }} />
                 <FormControlLabel
@@ -117,7 +117,7 @@ export default function DoctorProfilePage() {
 
             {/* Right column – form fields */}
             <Grid item xs={12} md={8} lg={9}>
-              <Box sx={{ backgroundColor: '#fff', p: 3, borderRadius: 3, border: '1px solid #f1f5f9', boxShadow: '0 4px 20px -4px rgba(26,54,93,0.06)' }}>
+              <Box sx={{ backgroundColor: '#fff', p: 3, borderRadius: '8px', border: '1px solid #E9E9E7', boxShadow: 'none' }}>
                 <SectionLabel>Personal Information</SectionLabel>
                 <Grid container spacing={2} sx={{ mb: 3 }}>
                   <Grid item xs={12} sm={6}>
@@ -153,7 +153,7 @@ export default function DoctorProfilePage() {
 
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                   <Button type="submit" variant="contained" disabled={saving}
-                    sx={{ px: 4, py: 1.5, backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#002045' }, borderRadius: 2, fontWeight: 600 }}>
+                    sx={{ px: 4, py: 1.5, backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#37352F' }, borderRadius: '6px', fontWeight: 600 }}>
                     {saving ? 'Saving…' : 'Save Profile'}
                   </Button>
                 </Box>

@@ -134,10 +134,10 @@ export default function DoctorChatPage() {
       sx={{
         display: 'flex',
         height: 'calc(100vh - 64px - 80px)',
-        backgroundColor: '#f4f6fb',
-        borderRadius: 3,
+        backgroundColor: '#FFFFFF',
+        borderRadius: '8px',
         overflow: 'hidden',
-        border: '1px solid #e2e8f0',
+        border: '1px solid #E9E9E7',
         boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
       }}
     >
@@ -146,27 +146,27 @@ export default function DoctorChatPage() {
         sx={{
           width: 280,
           flexShrink: 0,
-          borderRight: '1px solid #e2e8f0',
+          borderRight: '1px solid #E9E9E7',
           backgroundColor: '#ffffff',
           display: 'flex',
           flexDirection: 'column',
           height: '100%',
         }}
       >
-        <Box sx={{ px: 2.5, py: 2, borderBottom: '1px solid #e2e8f0', flexShrink: 0 }}>
-          <Typography sx={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, fontSize: '1rem', color: '#002045' }}>
+        <Box sx={{ px: 2.5, py: 2, borderBottom: '1px solid #E9E9E7', flexShrink: 0 }}>
+          <Typography sx={{ fontFamily: 'inherit', fontWeight: 700, fontSize: '1rem', color: '#37352F' }}>
             Patient Conversations
           </Typography>
         </Box>
 
         {loadingConvs ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', pt: 4 }}>
-            <CircularProgress size={28} sx={{ color: '#0061a5' }} />
+            <CircularProgress size={28} sx={{ color: '#0D9488' }} />
           </Box>
         ) : conversations.length === 0 ? (
           <Box sx={{ p: 3, textAlign: 'center' }}>
             <ChatBubbleOutlineIcon sx={{ color: '#94a3b8', fontSize: 40, mb: 1 }} />
-            <Typography sx={{ color: '#94a3b8', fontSize: '0.875rem', fontFamily: 'Manrope, sans-serif' }}>
+            <Typography sx={{ color: '#94a3b8', fontSize: '0.875rem', fontFamily: 'inherit' }}>
               No patient conversations yet
             </Typography>
           </Box>
@@ -183,7 +183,7 @@ export default function DoctorChatPage() {
                     alignItems: 'flex-start',
                     '&.Mui-selected': { backgroundColor: '#eff6ff' },
                     '&.Mui-selected:hover': { backgroundColor: '#eff6ff' },
-                    '&:hover': { backgroundColor: '#f8fafc' },
+                    '&:hover': { backgroundColor: '#F7F7F5' },
                   }}
                 >
                   <ListItemAvatar sx={{ minWidth: 44 }}>
@@ -196,7 +196,7 @@ export default function DoctorChatPage() {
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <Typography
                           sx={{
-                            fontFamily: 'Manrope, sans-serif',
+                            fontFamily: 'inherit',
                             fontWeight: conv.unreadCount > 0 ? 700 : 600,
                             fontSize: '0.875rem',
                             color: '#1e293b',
@@ -234,7 +234,7 @@ export default function DoctorChatPage() {
                             badgeContent={conv.unreadCount}
                             sx={{
                               '& .MuiBadge-badge': {
-                                backgroundColor: '#0061a5',
+                                backgroundColor: '#0D9488',
                                 color: '#fff',
                                 fontSize: '0.65rem',
                                 minWidth: 18,
@@ -256,11 +256,11 @@ export default function DoctorChatPage() {
       </Box>
 
       {/* Message area */}
-      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%', backgroundColor: '#f4f6fb' }}>
+      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%', backgroundColor: '#FFFFFF' }}>
         {!selectedConvId ? (
           <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
             <ChatBubbleOutlineIcon sx={{ fontSize: 64, color: '#cbd5e1' }} />
-            <Typography sx={{ color: '#94a3b8', fontFamily: 'Manrope, sans-serif', fontSize: '1.125rem', fontWeight: 600 }}>
+            <Typography sx={{ color: '#94a3b8', fontFamily: 'inherit', fontSize: '1.125rem', fontWeight: 600 }}>
               Select a conversation
             </Typography>
           </Box>
@@ -271,7 +271,7 @@ export default function DoctorChatPage() {
               sx={{
                 px: 3,
                 py: 2,
-                borderBottom: '1px solid #e2e8f0',
+                borderBottom: '1px solid #E9E9E7',
                 backgroundColor: '#ffffff',
                 display: 'flex',
                 alignItems: 'center',
@@ -283,7 +283,7 @@ export default function DoctorChatPage() {
                 {getInitials(selectedConv?.otherUserName ?? '')}
               </Avatar>
               <Box>
-                <Typography sx={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, fontSize: '0.9375rem', color: '#1e293b' }}>
+                <Typography sx={{ fontFamily: 'inherit', fontWeight: 700, fontSize: '0.9375rem', color: '#1e293b' }}>
                   {selectedConv?.otherUserName}
                 </Typography>
                 <Chip
@@ -298,7 +298,7 @@ export default function DoctorChatPage() {
             <Box sx={{ flex: 1, overflowY: 'auto', px: 3, py: 2, display: 'flex', flexDirection: 'column', gap: 1 }}>
               {loadingMsgs ? (
                 <Box sx={{ display: 'flex', justifyContent: 'center', pt: 4 }}>
-                  <CircularProgress size={28} sx={{ color: '#0061a5' }} />
+                  <CircularProgress size={28} sx={{ color: '#0D9488' }} />
                 </Box>
               ) : messages.length === 0 ? (
                 <Box sx={{ textAlign: 'center', pt: 6 }}>
@@ -317,7 +317,7 @@ export default function DoctorChatPage() {
                           px: 2,
                           py: 1.25,
                           borderRadius: isMine ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
-                          backgroundColor: isMine ? '#0061a5' : '#ffffff',
+                          backgroundColor: isMine ? '#0D9488' : '#ffffff',
                           color: isMine ? '#ffffff' : '#1e293b',
                           boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
                         }}
@@ -348,7 +348,7 @@ export default function DoctorChatPage() {
               sx={{
                 px: 3,
                 py: 2,
-                borderTop: '1px solid #e2e8f0',
+                borderTop: '1px solid #E9E9E7',
                 backgroundColor: '#ffffff',
                 display: 'flex',
                 gap: 1.5,
@@ -367,8 +367,8 @@ export default function DoctorChatPage() {
                 onKeyDown={handleKeyDown}
                 sx={{
                   '& .MuiOutlinedInput-root': {
-                    borderRadius: 3,
-                    backgroundColor: '#f8fafc',
+                    borderRadius: '8px',
+                    backgroundColor: '#F7F7F5',
                     fontFamily: 'Inter, sans-serif',
                     fontSize: '0.875rem',
                   },
@@ -378,7 +378,7 @@ export default function DoctorChatPage() {
                 onClick={handleSend}
                 disabled={!inputText.trim()}
                 sx={{
-                  backgroundColor: '#0061a5',
+                  backgroundColor: '#0D9488',
                   color: '#fff',
                   width: 40,
                   height: 40,

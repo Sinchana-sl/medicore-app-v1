@@ -11,7 +11,7 @@ import { useToast } from '../../contexts/ToastContext';
 
 const STATUS_STYLE: Record<string, { label: string; bg: string; color: string }> = {
   AVAILABLE: { label: 'Available', bg: '#f0fdf4', color: '#16a34a' },
-  BOOKED:    { label: 'Booked',    bg: '#eff6ff', color: '#1d4ed8' },
+  BOOKED:    { label: 'Booked',    bg: '#eff6ff', color: '#0D9488' },
   BLOCKED:   { label: 'Blocked',   bg: '#fef2f2', color: '#dc2626' },
 };
 
@@ -20,15 +20,15 @@ function today(): string {
 }
 
 function SlotRow({ slot, onBlock }: { slot: Slot; onBlock: () => void }) {
-  const s = STATUS_STYLE[slot.status] ?? { label: slot.status, bg: '#f1f5f9', color: '#475569' };
+  const s = STATUS_STYLE[slot.status] ?? { label: slot.status, bg: '#F1F0EF', color: '#475569' };
   return (
     <Box sx={{
-      display: 'flex', alignItems: 'center', gap: 2, p: 2, borderRadius: 2,
-      border: '1px solid #f1f5f9', backgroundColor: '#fff',
+      display: 'flex', alignItems: 'center', gap: 2, p: 2, borderRadius: '6px',
+      border: '1px solid #E9E9E7', backgroundColor: '#fff',
       '&:hover': { boxShadow: '0 2px 8px -2px rgba(26,54,93,0.08)' },
     }}>
-      <Box sx={{ minWidth: 100, textAlign: 'center', backgroundColor: '#f8fafc', borderRadius: 1.5, px: 2, py: 1 }}>
-        <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#002045', fontFamily: 'Manrope, sans-serif' }}>
+      <Box sx={{ minWidth: 100, textAlign: 'center', backgroundColor: '#F7F7F5', borderRadius: 1.5, px: 2, py: 1 }}>
+        <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#37352F', fontFamily: 'inherit' }}>
           {String(slot.startTime).slice(0, 5)}
         </Typography>
         <Typography sx={{ fontSize: '0.6875rem', color: '#94a3b8' }}>
@@ -45,7 +45,7 @@ function SlotRow({ slot, onBlock }: { slot: Slot; onBlock: () => void }) {
 
       {slot.status === 'AVAILABLE' && (
         <Button size="small" startIcon={<LockIcon sx={{ fontSize: '0.875rem !important' }} />} onClick={onBlock}
-          sx={{ color: '#64748b', borderColor: '#e2e8f0', border: '1px solid', borderRadius: 1.5, fontSize: '0.75rem', px: 1.5, py: 0.5, '&:hover': { backgroundColor: '#fef2f2', color: '#dc2626', borderColor: '#fca5a5' } }}>
+          sx={{ color: '#64748b', borderColor: '#E9E9E7', border: '1px solid', borderRadius: 1.5, fontSize: '0.75rem', px: 1.5, py: 0.5, '&:hover': { backgroundColor: '#fef2f2', color: '#dc2626', borderColor: '#fca5a5' } }}>
           Block
         </Button>
       )}
@@ -118,8 +118,8 @@ export default function DoctorSlotsPage() {
       <Grid container spacing={3}>
         {/* Generate section */}
         <Grid item xs={12} lg={4}>
-          <Box sx={{ backgroundColor: '#fff', p: 3, borderRadius: 3, border: '1px solid #f1f5f9', boxShadow: '0 4px 20px -4px rgba(26,54,93,0.06)' }}>
-            <Typography sx={{ fontWeight: 700, fontSize: '1rem', color: '#002045', fontFamily: 'Manrope, sans-serif', mb: 0.5 }}>Generate Slots</Typography>
+          <Box sx={{ backgroundColor: '#fff', p: 3, borderRadius: '8px', border: '1px solid #E9E9E7', boxShadow: 'none' }}>
+            <Typography sx={{ fontWeight: 700, fontSize: '1rem', color: '#37352F', fontFamily: 'inherit', mb: 0.5 }}>Generate Slots</Typography>
             <Typography sx={{ fontSize: '0.8125rem', color: '#64748b', mb: 3 }}>Creates slots based on your availability schedule.</Typography>
 
             {genResult && <Alert severity="success" sx={{ mb: 2 }} onClose={() => setGenResult(null)}>{genResult}</Alert>}
@@ -135,7 +135,7 @@ export default function DoctorSlotsPage() {
                 </TextField>
               )}
               <Button type="submit" variant="contained" disabled={generating}
-                sx={{ mt: 1, py: 1.25, backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#002045' }, borderRadius: 2, fontWeight: 600 }}>
+                sx={{ mt: 1, py: 1.25, backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#37352F' }, borderRadius: '6px', fontWeight: 600 }}>
                 {generating ? 'Generating…' : 'Generate Slots'}
               </Button>
             </Box>
@@ -144,9 +144,9 @@ export default function DoctorSlotsPage() {
 
         {/* View section */}
         <Grid item xs={12} lg={8}>
-          <Box sx={{ backgroundColor: '#fff', p: 3, borderRadius: 3, border: '1px solid #f1f5f9', boxShadow: '0 4px 20px -4px rgba(26,54,93,0.06)' }}>
+          <Box sx={{ backgroundColor: '#fff', p: 3, borderRadius: '8px', border: '1px solid #E9E9E7', boxShadow: 'none' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, mb: 3, flexWrap: 'wrap' }}>
-              <Typography sx={{ fontWeight: 700, fontSize: '1rem', color: '#002045', fontFamily: 'Manrope, sans-serif' }}>Slots for Date</Typography>
+              <Typography sx={{ fontWeight: 700, fontSize: '1rem', color: '#37352F', fontFamily: 'inherit' }}>Slots for Date</Typography>
               <TextField type="date" value={viewDate} onChange={(e) => setViewDate(e.target.value)} size="small" sx={{ maxWidth: 180 }} />
             </Box>
 
@@ -154,7 +154,7 @@ export default function DoctorSlotsPage() {
             {!slotsLoading && slots.length > 0 && (
               <Box sx={{ display: 'flex', gap: 1, mb: 3, flexWrap: 'wrap' }}>
                 <Chip label={`${available} Available`} size="small" sx={{ backgroundColor: '#f0fdf4', color: '#16a34a', fontWeight: 600 }} />
-                <Chip label={`${booked} Booked`}       size="small" sx={{ backgroundColor: '#eff6ff', color: '#1d4ed8', fontWeight: 600 }} />
+                <Chip label={`${booked} Booked`}       size="small" sx={{ backgroundColor: '#eff6ff', color: '#0D9488', fontWeight: 600 }} />
                 <Chip label={`${blocked} Blocked`}     size="small" sx={{ backgroundColor: '#fef2f2', color: '#dc2626', fontWeight: 600 }} />
               </Box>
             )}

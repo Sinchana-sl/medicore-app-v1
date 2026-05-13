@@ -19,7 +19,7 @@ const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
 const SLOT_DURATIONS = [10, 15, 20, 30, 45, 60];
 const DAY_COLORS: Record<number, { bg: string; color: string }> = {
   0: { bg: '#fef3c7', color: '#92400e' },
-  1: { bg: '#eff6ff', color: '#1d4ed8' },
+  1: { bg: '#eff6ff', color: '#0D9488' },
   2: { bg: '#f0fdf4', color: '#15803d' },
   3: { bg: '#fdf4ff', color: '#7e22ce' },
   4: { bg: '#fff7ed', color: '#c2410c' },
@@ -39,9 +39,9 @@ const emptyForm = (): AvailForm => ({ clinicId: '', dayOfWeek: 1, startTime: '09
 function RuleCard({ rule, onEdit, onDelete }: { rule: Availability; onEdit: () => void; onDelete: () => void }) {
   const dc = DAY_COLORS[rule.dayOfWeek];
   return (
-    <Box sx={{ backgroundColor: '#fff', p: 2.5, borderRadius: 2, border: '1px solid #f1f5f9', boxShadow: '0 2px 8px -2px rgba(26,54,93,0.06)', display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+    <Box sx={{ backgroundColor: '#fff', p: 2.5, borderRadius: '6px', border: '1px solid #E9E9E7', boxShadow: '0 2px 8px -2px rgba(26,54,93,0.06)', display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
       <Chip label={rule.dayName} size="small" sx={{ backgroundColor: dc.bg, color: dc.color, fontWeight: 700, fontSize: '0.75rem', minWidth: 90 }} />
-      <Typography sx={{ fontSize: '0.9375rem', fontWeight: 600, color: '#002045', fontFamily: 'Manrope, sans-serif' }}>
+      <Typography sx={{ fontSize: '0.9375rem', fontWeight: 600, color: '#37352F', fontFamily: 'inherit' }}>
         {rule.startTime.slice(0, 5)} – {rule.endTime.slice(0, 5)}
       </Typography>
       <Typography sx={{ fontSize: '0.8125rem', color: '#64748b' }}>
@@ -52,7 +52,7 @@ function RuleCard({ rule, onEdit, onDelete }: { rule: Availability; onEdit: () =
       )}
       {!rule.isActive && <Chip label="Inactive" size="small" sx={{ backgroundColor: '#fef2f2', color: '#dc2626', fontSize: '0.625rem' }} />}
       <Box sx={{ ml: 'auto', display: 'flex', gap: 0.5 }}>
-        <IconButton size="small" onClick={onEdit} sx={{ color: '#64748b', '&:hover': { color: '#002045', backgroundColor: '#eff6ff' } }}><EditIcon fontSize="small" /></IconButton>
+        <IconButton size="small" onClick={onEdit} sx={{ color: '#64748b', '&:hover': { color: '#37352F', backgroundColor: '#eff6ff' } }}><EditIcon fontSize="small" /></IconButton>
         <IconButton size="small" onClick={onDelete} sx={{ color: '#64748b', '&:hover': { color: '#dc2626', backgroundColor: '#fef2f2' } }}><DeleteIcon fontSize="small" /></IconButton>
       </Box>
     </Box>
@@ -95,7 +95,7 @@ function AvailDialog({ open, onClose, onSaved, clinics, initial, ruleId }: {
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm" PaperProps={{ sx: { borderRadius: 3 } }}>
-      <DialogTitle sx={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, color: '#002045', pb: 1 }}>
+      <DialogTitle sx={{ fontFamily: 'inherit', fontWeight: 700, color: '#37352F', pb: 1 }}>
         {ruleId ? 'Edit Schedule' : 'Add Schedule'}
       </DialogTitle>
       <DialogContent sx={{ pt: '12px !important' }}>
@@ -130,7 +130,7 @@ function AvailDialog({ open, onClose, onSaved, clinics, initial, ruleId }: {
       <DialogActions sx={{ px: 3, pb: 3 }}>
         <Button onClick={onClose} sx={{ color: '#64748b' }}>Cancel</Button>
         <Button variant="contained" onClick={handleSave} disabled={saving}
-          sx={{ backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#002045' }, borderRadius: 2, px: 3 }}>
+          sx={{ backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#37352F' }, borderRadius: '6px', px: 3 }}>
           {saving ? 'Saving…' : ruleId ? 'Save Changes' : 'Add Schedule'}
         </Button>
       </DialogActions>
@@ -179,7 +179,7 @@ export default function DoctorAvailabilityPage() {
     <DoctorPageLayout title="Availability Schedule" subtitle="Set your weekly working hours and slot durations">
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 3 }}>
         <Button variant="contained" startIcon={<AddIcon />} onClick={openAdd}
-          sx={{ backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#002045' }, borderRadius: 2, px: 3, py: 1.25, fontWeight: 600 }}>
+          sx={{ backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#37352F' }, borderRadius: '6px', px: 3, py: 1.25, fontWeight: 600 }}>
           Add Schedule
         </Button>
       </Box>
@@ -187,13 +187,13 @@ export default function DoctorAvailabilityPage() {
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}><CircularProgress /></Box>
       ) : rules.length === 0 ? (
-        <Box sx={{ backgroundColor: '#fff', p: 6, borderRadius: 3, border: '1px solid #f1f5f9', textAlign: 'center' }}>
+        <Box sx={{ backgroundColor: '#fff', p: 6, borderRadius: '8px', border: '1px solid #E9E9E7', textAlign: 'center' }}>
           <EventAvailableIcon sx={{ fontSize: 48, color: '#cbd5e1', mb: 2 }} />
           <Typography sx={{ color: '#64748b', mb: 2 }}>No availability schedule set up yet.</Typography>
-          <Button variant="outlined" onClick={openAdd} sx={{ borderColor: '#002045', color: '#002045', borderRadius: 2 }}>Add your first schedule</Button>
+          <Button variant="outlined" onClick={openAdd} sx={{ borderColor: '#37352F', color: '#37352F', borderRadius: 2 }}>Add your first schedule</Button>
         </Box>
       ) : (
-        <Box sx={{ backgroundColor: '#fff', borderRadius: 3, border: '1px solid #f1f5f9', boxShadow: '0 4px 20px -4px rgba(26,54,93,0.06)', overflow: 'hidden' }}>
+        <Box sx={{ backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #E9E9E7', boxShadow: 'none', overflow: 'hidden' }}>
           {DAYS.map((dayName, dow) => {
             const dayRules = byDay[dow];
             if (!dayRules?.length) return null;
@@ -201,7 +201,7 @@ export default function DoctorAvailabilityPage() {
             return (
               <Box key={dow}>
                 <Box sx={{ px: 3, py: 2, backgroundColor: dc.bg, display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <Typography sx={{ fontWeight: 700, fontSize: '0.875rem', color: dc.color, fontFamily: 'Manrope, sans-serif' }}>{dayName}</Typography>
+                  <Typography sx={{ fontWeight: 700, fontSize: '0.875rem', color: dc.color, fontFamily: 'inherit' }}>{dayName}</Typography>
                   <Chip label={`${dayRules.length} rule${dayRules.length > 1 ? 's' : ''}`} size="small" sx={{ backgroundColor: 'rgba(255,255,255,0.6)', color: dc.color, fontSize: '0.625rem', height: 18 }} />
                 </Box>
                 <Box sx={{ px: 3, py: 2, display: 'flex', flexDirection: 'column', gap: 1.5 }}>

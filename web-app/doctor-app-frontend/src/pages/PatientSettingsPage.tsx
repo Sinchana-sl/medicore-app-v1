@@ -65,12 +65,12 @@ const LANGUAGES = [
 function SettingsCard({ title, subtitle, children }: { title: string; subtitle?: string; children: React.ReactNode }) {
   return (
     <Box sx={{
-      width: '100%', backgroundColor: '#fff', borderRadius: 3,
-      border: '1px solid #eaecf0', boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
+      width: '100%', backgroundColor: '#fff', borderRadius: '8px',
+      border: '1px solid #E9E9E7', boxShadow: 'none',
       overflow: 'hidden',
     }}>
-      <Box sx={{ px: 3, py: 2.25, borderBottom: '1px solid #f1f5f9' }}>
-        <Typography sx={{ fontWeight: 700, fontSize: '0.9375rem', color: '#0f172a', fontFamily: 'Manrope, sans-serif' }}>
+      <Box sx={{ px: 3, py: 2.25, borderBottom: '1px solid #E9E9E7' }}>
+        <Typography sx={{ fontWeight: 700, fontSize: '0.9375rem', color: '#37352F', fontFamily: 'inherit' }}>
           {title}
         </Typography>
         {subtitle && (
@@ -87,7 +87,7 @@ function SettingsRow({ label, description, control }: { label: string; descripti
     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, py: 1.5,
       '&:not(:last-child)': { borderBottom: '1px solid #f8fafc' } }}>
       <Box>
-        <Typography sx={{ fontSize: '0.875rem', fontWeight: 600, color: '#0f172a' }}>{label}</Typography>
+        <Typography sx={{ fontSize: '0.875rem', fontWeight: 600, color: '#37352F' }}>{label}</Typography>
         {description && <Typography sx={{ fontSize: '0.75rem', color: '#94a3b8', mt: 0.25 }}>{description}</Typography>}
       </Box>
       <Box sx={{ flexShrink: 0 }}>{control}</Box>
@@ -274,9 +274,9 @@ export default function PatientSettingsPage() {
 
   function renderProfile() {
     const infoRows = [
-      { label: 'First Name',    value: profile?.firstName || '—', icon: <PersonIcon sx={{ fontSize: 20, color: '#0061a5' }} />, bg: '#eff6ff' },
+      { label: 'First Name',    value: profile?.firstName || '—', icon: <PersonIcon sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#eff6ff' },
       { label: 'Last Name',     value: profile?.lastName  || '—', icon: <PersonIcon sx={{ fontSize: 20, color: '#7c3aed' }} />, bg: '#faf5ff' },
-      { label: 'Email',         value: profile?.email     || '—', icon: <EmailIcon  sx={{ fontSize: 20, color: '#0891b2' }} />, bg: '#ecfeff', badge: 'Verified' },
+      { label: 'Email',         value: profile?.email     || '—', icon: <EmailIcon  sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#ecfeff', badge: 'Verified' },
       { label: 'Phone',         value: profile?.phone     || '—', icon: <PhoneAndroidIcon sx={{ fontSize: 20, color: '#16a34a' }} />, bg: '#f0fdf4' },
       { label: 'Date of Birth', value: fmtDob(profile?.dateOfBirth ?? null), icon: <CakeIcon sx={{ fontSize: 20, color: '#f59e0b' }} />, bg: '#fffbeb' },
       { label: 'Gender',        value: profile?.gender    || '—', icon: <WcIcon sx={{ fontSize: 20, color: '#ec4899' }} />, bg: '#fdf2f8' },
@@ -287,20 +287,20 @@ export default function PatientSettingsPage() {
 
         {/* ── Hero card ── */}
         <Box sx={{
-          borderRadius: 3, overflow: 'hidden',
-          background: 'linear-gradient(135deg, #0061a5 0%, #0891b2 100%)',
-          boxShadow: '0 8px 32px rgba(0,97,165,0.2)',
+          borderRadius: '8px', overflow: 'hidden',
+          background: 'linear-gradient(135deg, #0D9488 0%, #0D9488 100%)',
+          boxShadow: 'none',
         }}>
           <Box sx={{ p: 3, display: 'flex', alignItems: 'center', gap: 3 }}>
             <Avatar sx={{
               width: 80, height: 80, backgroundColor: 'rgba(255,255,255,0.2)',
-              fontSize: '1.75rem', fontWeight: 800, fontFamily: 'Manrope, sans-serif',
+              fontSize: '1.75rem', fontWeight: 800, fontFamily: 'inherit',
               border: '3px solid rgba(255,255,255,0.4)', flexShrink: 0,
             }}>
               {loading ? '?' : getInitials(displayName)}
             </Avatar>
             <Box sx={{ flex: 1, minWidth: 0 }}>
-              <Typography sx={{ fontWeight: 800, fontSize: '1.375rem', color: '#fff', fontFamily: 'Manrope, sans-serif', lineHeight: 1.2 }}>
+              <Typography sx={{ fontWeight: 800, fontSize: '1.375rem', color: '#fff', fontFamily: 'inherit', lineHeight: 1.2 }}>
                 {loading ? '…' : displayName}
               </Typography>
               <Typography sx={{ fontSize: '0.8125rem', color: 'rgba(200,230,255,0.9)', mt: 0.375 }}>
@@ -408,11 +408,11 @@ export default function PatientSettingsPage() {
               </TextField>
 
               <Box sx={{ display: 'flex', gap: 1.5, pt: 0.5 }}>
-                <Button onClick={cancelEditProfile} sx={{ color: '#64748b', fontWeight: 600 }}>Cancel</Button>
+                <Button onClick={cancelEditProfile} sx={{ color: '#73726E', fontWeight: 600 }}>Cancel</Button>
                 <Button onClick={handleSaveProfile} disabled={savingProfile} variant="contained"
                   startIcon={savingProfile ? <CircularProgress size={16} color="inherit" /> : <SaveIcon />}
-                  sx={{ backgroundColor: '#0061a5', borderRadius: 2, fontWeight: 700, boxShadow: 'none',
-                    px: 3, '&:hover': { backgroundColor: '#004f8a' } }}>
+                  sx={{ backgroundColor: '#0D9488', borderRadius: '6px', fontWeight: 700, boxShadow: 'none',
+                    px: 3, '&:hover': { backgroundColor: '#0F766E' } }}>
                   {savingProfile ? 'Saving…' : 'Save Changes'}
                 </Button>
               </Box>
@@ -426,10 +426,10 @@ export default function PatientSettingsPage() {
             {infoRows.map(f => (
               <Box key={f.label} sx={{
                 display: 'flex', alignItems: 'center', gap: 2, p: 2,
-                borderRadius: 2.5, border: '1px solid #e8eef8',
+                borderRadius: '8px', border: '1px solid #E9E9E7',
                 background: `linear-gradient(135deg, ${f.bg}80, #fff)`,
               }}>
-                <Box sx={{ width: 40, height: 40, borderRadius: 2, backgroundColor: f.bg, flexShrink: 0,
+                <Box sx={{ width: 40, height: 40, borderRadius: '6px', backgroundColor: f.bg, flexShrink: 0,
                   display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   {f.icon}
                 </Box>
@@ -438,7 +438,7 @@ export default function PatientSettingsPage() {
                     textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                     {f.label}
                   </Typography>
-                  <Typography sx={{ fontSize: '0.9rem', fontWeight: 700, color: f.value === '—' ? '#cbd5e1' : '#0f172a', mt: 0.2, fontStyle: f.value === '—' ? 'italic' : 'normal' }}>
+                  <Typography sx={{ fontSize: '0.9rem', fontWeight: 700, color: f.value === '—' ? '#cbd5e1' : '#37352F', mt: 0.2, fontStyle: f.value === '—' ? 'italic' : 'normal' }}>
                     {f.value}
                   </Typography>
                 </Box>
@@ -460,7 +460,7 @@ export default function PatientSettingsPage() {
                 label: 'Blood Type',
                 value: profile?.bloodType || 'Not set',
                 icon: <BloodtypeIcon sx={{ fontSize: 24, color: profile?.bloodType ? '#dc2626' : '#94a3b8' }} />,
-                bg: profile?.bloodType ? '#fef2f2' : '#f8fafc',
+                bg: profile?.bloodType ? '#fef2f2' : '#F7F7F5',
                 border: profile?.bloodType ? '#fecaca' : '#e2e8f0',
                 color: profile?.bloodType ? '#dc2626' : '#94a3b8',
               },
@@ -468,7 +468,7 @@ export default function PatientSettingsPage() {
                 label: 'Date of Birth',
                 value: fmtDob(profile?.dateOfBirth ?? null),
                 icon: <CalendarMonthIcon sx={{ fontSize: 24, color: profile?.dateOfBirth ? '#f59e0b' : '#94a3b8' }} />,
-                bg: profile?.dateOfBirth ? '#fffbeb' : '#f8fafc',
+                bg: profile?.dateOfBirth ? '#fffbeb' : '#F7F7F5',
                 border: profile?.dateOfBirth ? '#fde68a' : '#e2e8f0',
                 color: profile?.dateOfBirth ? '#b45309' : '#94a3b8',
               },
@@ -476,13 +476,13 @@ export default function PatientSettingsPage() {
                 label: 'Gender',
                 value: profile?.gender || 'Not set',
                 icon: <WcIcon sx={{ fontSize: 24, color: profile?.gender ? '#ec4899' : '#94a3b8' }} />,
-                bg: profile?.gender ? '#fdf2f8' : '#f8fafc',
+                bg: profile?.gender ? '#fdf2f8' : '#F7F7F5',
                 border: profile?.gender ? '#fbcfe8' : '#e2e8f0',
                 color: profile?.gender ? '#be185d' : '#94a3b8',
               },
             ].map(card => (
               <Box key={card.label} sx={{
-                flex: '1 1 160px', p: 2.5, borderRadius: 3,
+                flex: '1 1 160px', p: 2.5, borderRadius: '8px',
                 border: `2px solid ${card.border}`,
                 backgroundColor: card.bg,
                 textAlign: 'center',
@@ -491,20 +491,20 @@ export default function PatientSettingsPage() {
                 <Typography sx={{ fontSize: '0.65rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em', mb: 0.5 }}>
                   {card.label}
                 </Typography>
-                <Typography sx={{ fontSize: '1rem', fontWeight: 800, color: card.color, fontFamily: 'Manrope, sans-serif' }}>
+                <Typography sx={{ fontSize: '1rem', fontWeight: 800, color: card.color, fontFamily: 'inherit' }}>
                   {card.value}
                 </Typography>
               </Box>
             ))}
           </Box>
           {(!profile?.bloodType || !profile?.dateOfBirth || !profile?.gender) && (
-            <Box sx={{ mt: 2, p: 1.5, borderRadius: 2, backgroundColor: '#fffbeb', border: '1px solid #fde68a', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2 }}>
+            <Box sx={{ mt: 2, p: 1.5, borderRadius: '6px', backgroundColor: '#fffbeb', border: '1px solid #fde68a', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2 }}>
               <Typography sx={{ fontSize: '0.78rem', color: '#92400e' }}>
                 Complete your health info to help doctors prepare better
               </Typography>
               <Button size="small" onClick={() => setEditingProfile(true)}
                 startIcon={<EditIcon sx={{ fontSize: 14 }} />}
-                sx={{ flexShrink: 0, color: '#b45309', fontWeight: 700, fontSize: '0.75rem', borderRadius: 2,
+                sx={{ flexShrink: 0, color: '#b45309', fontWeight: 700, fontSize: '0.75rem', borderRadius: '6px',
                   backgroundColor: '#fef3c7', '&:hover': { backgroundColor: '#fde68a' } }}>
                 Fill now
               </Button>
@@ -516,16 +516,16 @@ export default function PatientSettingsPage() {
         <SettingsCard title="Account Details" subtitle="Read-only information about your account">
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.25 }}>
             {[
-              { label: 'User ID',      value: profile?.id ? profile.id.slice(0, 8) + '…' : '—', icon: <ShieldIcon sx={{ fontSize: 20, color: '#64748b' }} />, bg: '#f8fafc' },
-              { label: 'Account Type', value: 'Patient',    icon: <PersonIcon sx={{ fontSize: 20, color: '#0061a5' }} />, bg: '#eff6ff', badge: 'Active' },
+              { label: 'User ID',      value: profile?.id ? profile.id.slice(0, 8) + '…' : '—', icon: <ShieldIcon sx={{ fontSize: 20, color: '#73726E' }} />, bg: '#F7F7F5' },
+              { label: 'Account Type', value: 'Patient',    icon: <PersonIcon sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#eff6ff', badge: 'Active' },
               { label: 'Member Since', value: profile?.memberSince || '—', icon: <CalendarMonthIcon sx={{ fontSize: 20, color: '#7c3aed' }} />, bg: '#faf5ff' },
             ].map(row => (
               <Box key={row.label} sx={{
                 display: 'flex', alignItems: 'center', gap: 2, p: 2,
-                borderRadius: 2.5, border: '1px solid #e8eef8',
+                borderRadius: '8px', border: '1px solid #E9E9E7',
                 background: `linear-gradient(135deg, ${row.bg}80, #fff)`,
               }}>
-                <Box sx={{ width: 40, height: 40, borderRadius: 2, backgroundColor: row.bg, flexShrink: 0,
+                <Box sx={{ width: 40, height: 40, borderRadius: '6px', backgroundColor: row.bg, flexShrink: 0,
                   display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   {row.icon}
                 </Box>
@@ -533,7 +533,7 @@ export default function PatientSettingsPage() {
                   <Typography sx={{ fontSize: '0.65rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                     {row.label}
                   </Typography>
-                  <Typography sx={{ fontSize: '0.9rem', fontWeight: 700, color: '#0f172a', mt: 0.2 }}>
+                  <Typography sx={{ fontSize: '0.9rem', fontWeight: 700, color: '#37352F', mt: 0.2 }}>
                     {row.value}
                   </Typography>
                 </Box>
@@ -552,7 +552,7 @@ export default function PatientSettingsPage() {
   function renderSecurity() {
     const pwOptions = [
       {
-        icon: <EmailIcon sx={{ fontSize: 20, color: '#0061a5' }} />,
+        icon: <EmailIcon sx={{ fontSize: 20, color: '#0D9488' }} />,
         bg: '#eff6ff',
         title: 'Email OTP Verification',
         desc: `One-time code sent to ${profile?.email ?? 'your email'}`,
@@ -576,29 +576,29 @@ export default function PatientSettingsPage() {
                 {pwOptions.map((opt, i) => (
                   <Box key={i} sx={{
                     display: 'flex', alignItems: 'center', gap: 2, p: 2.5,
-                    borderRadius: 3, border: '2px solid #e2e8f0',
+                    borderRadius: '8px', border: '1px solid #E9E9E7',
                     background: `linear-gradient(135deg, ${opt.bg}, #fff)`,
                   }}>
-                    <Box sx={{ width: 48, height: 48, borderRadius: 2, backgroundColor: opt.bg, flexShrink: 0,
+                    <Box sx={{ width: 48, height: 48, borderRadius: '6px', backgroundColor: opt.bg, flexShrink: 0,
                       display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       {opt.icon}
                     </Box>
                     <Box sx={{ flex: 1 }}>
-                      <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#0f172a', lineHeight: 1.3 }}>
+                      <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#37352F', lineHeight: 1.3 }}>
                         {opt.title}
                       </Typography>
-                      <Typography sx={{ fontSize: '0.78rem', color: '#64748b', mt: 0.25 }}>
+                      <Typography sx={{ fontSize: '0.78rem', color: '#73726E', mt: 0.25 }}>
                         {opt.desc}
                       </Typography>
                     </Box>
                     <Chip label={`Step ${i + 1}`} size="small"
-                      sx={{ flexShrink: 0, height: 22, fontSize: '0.65rem', fontWeight: 700, backgroundColor: '#f1f5f9', color: '#64748b' }} />
+                      sx={{ flexShrink: 0, height: 22, fontSize: '0.65rem', fontWeight: 700, backgroundColor: '#F1F0EF', color: '#73726E' }} />
                   </Box>
                 ))}
               </Box>
               <Button onClick={handleSendOtp} disabled={pwLoading || !profile} variant="contained"
-                sx={{ backgroundColor: '#0061a5', borderRadius: 2, fontWeight: 700, boxShadow: 'none',
-                  alignSelf: 'flex-start', px: 3, '&:hover': { backgroundColor: '#004f8a' } }}>
+                sx={{ backgroundColor: '#0D9488', borderRadius: '6px', fontWeight: 700, boxShadow: 'none',
+                  alignSelf: 'flex-start', px: 3, '&:hover': { backgroundColor: '#0F766E' } }}>
                 {pwLoading ? <CircularProgress size={18} color="inherit" /> : 'Send OTP to Email'}
               </Button>
             </Box>
@@ -609,10 +609,10 @@ export default function PatientSettingsPage() {
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                 <Box sx={{
                   display: 'flex', alignItems: 'center', gap: 2, p: 2.5,
-                  borderRadius: 3, border: '2px solid #bbf7d0',
+                  borderRadius: '8px', border: '2px solid #bbf7d0',
                   background: 'linear-gradient(135deg, #f0fdf4, #fff)',
                 }}>
-                  <Box sx={{ width: 48, height: 48, borderRadius: 2, backgroundColor: '#dcfce7', flexShrink: 0,
+                  <Box sx={{ width: 48, height: 48, borderRadius: '6px', backgroundColor: '#dcfce7', flexShrink: 0,
                     display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <CheckCircleIcon sx={{ fontSize: 24, color: '#16a34a' }} />
                   </Box>
@@ -620,7 +620,7 @@ export default function PatientSettingsPage() {
                     <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#15803d', lineHeight: 1.3 }}>
                       OTP Sent!
                     </Typography>
-                    <Typography sx={{ fontSize: '0.78rem', color: '#64748b', mt: 0.25 }}>
+                    <Typography sx={{ fontSize: '0.78rem', color: '#73726E', mt: 0.25 }}>
                       Check your email inbox and enter the code below
                     </Typography>
                   </Box>
@@ -629,26 +629,26 @@ export default function PatientSettingsPage() {
                 </Box>
                 <Box sx={{
                   display: 'flex', alignItems: 'center', gap: 2, p: 2.5,
-                  borderRadius: 3, border: '2px solid #bfdbfe',
+                  borderRadius: '8px', border: '2px solid #bfdbfe',
                   background: 'linear-gradient(135deg, #eff6ff, #fff)',
                 }}>
-                  <Box sx={{ width: 48, height: 48, borderRadius: 2, backgroundColor: '#eff6ff', flexShrink: 0,
+                  <Box sx={{ width: 48, height: 48, borderRadius: '6px', backgroundColor: '#eff6ff', flexShrink: 0,
                     display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <VpnKeyIcon sx={{ fontSize: 24, color: '#0061a5' }} />
+                    <VpnKeyIcon sx={{ fontSize: 24, color: '#0D9488' }} />
                   </Box>
                   <Box sx={{ flex: 1 }}>
-                    <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#0f172a', lineHeight: 1.3 }}>
+                    <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#37352F', lineHeight: 1.3 }}>
                       Enter OTP & New Password
                     </Typography>
-                    <Typography sx={{ fontSize: '0.78rem', color: '#64748b', mt: 0.25 }}>
+                    <Typography sx={{ fontSize: '0.78rem', color: '#73726E', mt: 0.25 }}>
                       Fill in the form below
                     </Typography>
                   </Box>
                   <Chip label="Step 2 — now" size="small"
-                    sx={{ flexShrink: 0, height: 22, fontSize: '0.65rem', fontWeight: 700, backgroundColor: '#eff6ff', color: '#0061a5' }} />
+                    sx={{ flexShrink: 0, height: 22, fontSize: '0.65rem', fontWeight: 700, backgroundColor: '#eff6ff', color: '#0D9488' }} />
                 </Box>
               </Box>
-              <Box sx={{ p: 3, borderRadius: 3, border: '2px solid #e2e8f0',
+              <Box sx={{ p: 3, borderRadius: '8px', border: '1px solid #E9E9E7',
                 background: 'linear-gradient(135deg, #f8fafc, #fff)',
                 display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <TextField size="small" label="Enter OTP" value={otp} onChange={e => setOtp(e.target.value)}
@@ -678,7 +678,7 @@ export default function PatientSettingsPage() {
                       <Chip key={r.label} label={r.label} size="small"
                         icon={r.ok ? <CheckCircleIcon sx={{ fontSize: '12px !important' }} /> : undefined}
                         sx={{ fontSize: '0.65rem', fontWeight: 700, height: 22,
-                          backgroundColor: r.ok ? '#f0fdf4' : '#f1f5f9',
+                          backgroundColor: r.ok ? '#f0fdf4' : '#F1F0EF',
                           color: r.ok ? '#16a34a' : '#94a3b8' }} />
                     ))}
                   </Box>
@@ -686,10 +686,10 @@ export default function PatientSettingsPage() {
               </Box>
               <Box sx={{ display: 'flex', gap: 1.5 }}>
                 <Button onClick={() => { setPwStep('idle'); setPwError(''); setOtp(''); setNewPw(''); setConfirmPw(''); }}
-                  sx={{ color: '#64748b', fontWeight: 600 }}>Cancel</Button>
+                  sx={{ color: '#73726E', fontWeight: 600 }}>Cancel</Button>
                 <Button onClick={handleResetPassword} disabled={pwLoading} variant="contained"
-                  sx={{ backgroundColor: '#0061a5', borderRadius: 2, fontWeight: 700, boxShadow: 'none',
-                    '&:hover': { backgroundColor: '#004f8a' } }}>
+                  sx={{ backgroundColor: '#0D9488', borderRadius: '6px', fontWeight: 700, boxShadow: 'none',
+                    '&:hover': { backgroundColor: '#0F766E' } }}>
                   {pwLoading ? <CircularProgress size={18} color="inherit" /> : 'Change Password'}
                 </Button>
               </Box>
@@ -701,18 +701,18 @@ export default function PatientSettingsPage() {
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
             <Box sx={{
               display: 'flex', alignItems: 'center', gap: 2, p: 2.5,
-              borderRadius: 3, border: '2px solid #bbf7d0',
+              borderRadius: '8px', border: '2px solid #bbf7d0',
               background: 'linear-gradient(135deg, #f0fdf4, #fff)',
             }}>
-              <Box sx={{ width: 48, height: 48, borderRadius: 2, backgroundColor: '#dcfce7', flexShrink: 0,
+              <Box sx={{ width: 48, height: 48, borderRadius: '6px', backgroundColor: '#dcfce7', flexShrink: 0,
                 display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <DevicesIcon sx={{ color: '#16a34a', fontSize: 24 }} />
               </Box>
               <Box sx={{ flex: 1 }}>
-                <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#0f172a', lineHeight: 1.3 }}>
+                <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#37352F', lineHeight: 1.3 }}>
                   Current Browser Session
                 </Typography>
-                <Typography sx={{ fontSize: '0.78rem', color: '#64748b', mt: 0.25 }}>
+                <Typography sx={{ fontSize: '0.78rem', color: '#73726E', mt: 0.25 }}>
                   Logged in now · This device
                 </Typography>
               </Box>
@@ -722,12 +722,12 @@ export default function PatientSettingsPage() {
 
             <Box onClick={logout} sx={{
               display: 'flex', alignItems: 'center', gap: 2, p: 2.5,
-              borderRadius: 3, border: '2px solid #fecaca', cursor: 'pointer',
+              borderRadius: '8px', border: '2px solid #fecaca', cursor: 'pointer',
               background: 'linear-gradient(135deg, #fef2f2, #fff)',
               transition: 'all 0.15s',
               '&:hover': { borderColor: '#dc2626', background: 'linear-gradient(135deg, #fee2e2, #fff)' },
             }}>
-              <Box sx={{ width: 48, height: 48, borderRadius: 2, backgroundColor: '#fee2e2', flexShrink: 0,
+              <Box sx={{ width: 48, height: 48, borderRadius: '6px', backgroundColor: '#fee2e2', flexShrink: 0,
                 display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <LogoutIcon sx={{ color: '#dc2626', fontSize: 24 }} />
               </Box>
@@ -735,7 +735,7 @@ export default function PatientSettingsPage() {
                 <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#dc2626', lineHeight: 1.3 }}>
                   Sign Out All Sessions
                 </Typography>
-                <Typography sx={{ fontSize: '0.78rem', color: '#64748b', mt: 0.25 }}>
+                <Typography sx={{ fontSize: '0.78rem', color: '#73726E', mt: 0.25 }}>
                   Revokes all active tokens and logs you out
                 </Typography>
               </Box>
@@ -754,9 +754,9 @@ export default function PatientSettingsPage() {
         title: 'Appointment Reminders',
         subtitle: 'Get notified about upcoming appointments',
         rows: [
-          { key: 'email_reminders',    label: 'Email reminders',    desc: '24 hours before your appointment', icon: <EmailIcon sx={{ fontSize: 20, color: '#0061a5' }} />, bg: '#eff6ff' },
+          { key: 'email_reminders',    label: 'Email reminders',    desc: '24 hours before your appointment', icon: <EmailIcon sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#eff6ff' },
           { key: 'whatsapp_reminders', label: 'WhatsApp reminders', desc: 'Quick message before your visit',  icon: <SmartphoneIcon sx={{ fontSize: 20, color: '#16a34a' }} />, bg: '#f0fdf4' },
-          { key: 'sms_reminders',      label: 'SMS reminders',      desc: 'Text reminder 2 hours before',    icon: <SmsIcon sx={{ fontSize: 20, color: '#0891b2' }} />, bg: '#ecfeff' },
+          { key: 'sms_reminders',      label: 'SMS reminders',      desc: 'Text reminder 2 hours before',    icon: <SmsIcon sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#ecfeff' },
         ],
       },
       {
@@ -766,7 +766,7 @@ export default function PatientSettingsPage() {
           { key: 'booking_confirm',  label: 'Booking confirmations', desc: 'When an appointment is confirmed',  icon: <DoneAllIcon sx={{ fontSize: 20, color: '#16a34a' }} />, bg: '#f0fdf4' },
           { key: 'cancellation',     label: 'Cancellation alerts',   desc: 'If your appointment is cancelled', icon: <NotificationImportantIcon sx={{ fontSize: 20, color: '#f59e0b' }} />, bg: '#fffbeb' },
           { key: 'payment_receipts', label: 'Payment receipts',      desc: 'Email receipt after payment',      icon: <ReceiptLongIcon sx={{ fontSize: 20, color: '#7c3aed' }} />, bg: '#faf5ff' },
-          { key: 'report_ready',     label: 'Report available',      desc: 'When a new report is shared',      icon: <DescriptionIcon sx={{ fontSize: 20, color: '#0891b2' }} />, bg: '#ecfeff' },
+          { key: 'report_ready',     label: 'Report available',      desc: 'When a new report is shared',      icon: <DescriptionIcon sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#ecfeff' },
         ],
       },
       {
@@ -790,20 +790,20 @@ export default function PatientSettingsPage() {
                 return (
                   <Box key={row.key} onClick={() => saveNotif(row.key, !on)} sx={{
                     flex: '1 1 120px',
-                    p: 2, borderRadius: 3, cursor: 'pointer', textAlign: 'center',
-                    border: `2px solid ${on ? '#0061a5' : '#e2e8f0'}`,
+                    p: 2, borderRadius: '8px', cursor: 'pointer', textAlign: 'center',
+                    border: `2px solid ${on ? '#0D9488' : '#e2e8f0'}`,
                     background: on ? `linear-gradient(135deg, ${row.bg}, #fff)` : 'linear-gradient(135deg, #f8fafc, #fff)',
                     transition: 'all 0.15s',
                     display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1,
-                    '&:hover': { borderColor: '#0061a5' },
+                    '&:hover': { borderColor: '#0D9488' },
                   }}>
-                    <Box sx={{ width: 44, height: 44, borderRadius: 2,
-                      backgroundColor: on ? row.bg : '#f1f5f9',
+                    <Box sx={{ width: 44, height: 44, borderRadius: '6px',
+                      backgroundColor: on ? row.bg : '#F1F0EF',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       transition: 'background 0.15s' }}>
                       {row.icon}
                     </Box>
-                    <Typography sx={{ fontSize: '0.82rem', fontWeight: 700, color: on ? '#0f172a' : '#94a3b8', lineHeight: 1.3 }}>
+                    <Typography sx={{ fontSize: '0.82rem', fontWeight: 700, color: on ? '#37352F' : '#94a3b8', lineHeight: 1.3 }}>
                       {row.label}
                     </Typography>
                     <Typography sx={{ fontSize: '0.68rem', color: '#94a3b8', lineHeight: 1.4 }}>
@@ -815,8 +815,8 @@ export default function PatientSettingsPage() {
                       onClick={e => e.stopPropagation()}
                       size="small"
                       sx={{
-                        '& .MuiSwitch-switchBase.Mui-checked': { color: '#0061a5' },
-                        '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { backgroundColor: '#0061a5' },
+                        '& .MuiSwitch-switchBase.Mui-checked': { color: '#0D9488' },
+                        '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { backgroundColor: '#0D9488' },
                       }}
                     />
                   </Box>
@@ -837,20 +837,20 @@ export default function PatientSettingsPage() {
             {[
               { value: 'light', label: 'Light',  icon: <LightModeIcon sx={{ fontSize: 28, color: '#f59e0b' }} />, bg: '#fff', border: '#e2e8f0', preview: 'linear-gradient(135deg,#f8fafc,#fff)' },
               { value: 'dark',  label: 'Dark',   icon: <DarkModeIcon  sx={{ fontSize: 28, color: '#818cf8' }} />, bg: '#1e293b', border: '#334155', preview: 'linear-gradient(135deg,#1e293b,#0f172a)' },
-              { value: 'system', label: 'System', icon: <PaletteIcon  sx={{ fontSize: 28, color: '#0891b2' }} />, bg: '#f0f9ff', border: '#bae6fd', preview: 'linear-gradient(135deg,#f0f9ff,#e0f2fe)' },
+              { value: 'system', label: 'System', icon: <PaletteIcon  sx={{ fontSize: 28, color: '#0D9488' }} />, bg: '#f0f9ff', border: '#bae6fd', preview: 'linear-gradient(135deg,#f0f9ff,#e0f2fe)' },
             ].map(opt => {
               const active = themeMode === opt.value;
               return (
                 <Box key={opt.value} onClick={() => saveTheme(opt.value)} sx={{
-                  flex: 1, p: 2, borderRadius: 3, cursor: 'pointer', textAlign: 'center',
-                  border: `2px solid ${active ? '#0061a5' : opt.border}`,
+                  flex: 1, p: 2, borderRadius: '8px', cursor: 'pointer', textAlign: 'center',
+                  border: `2px solid ${active ? '#0D9488' : opt.border}`,
                   background: opt.preview,
                   transition: 'all 0.15s',
-                  '&:hover': { borderColor: '#0061a5' },
+                  '&:hover': { borderColor: '#0D9488' },
                 }}>
                   {opt.icon}
-                  <Typography sx={{ fontSize: '0.82rem', fontWeight: 700, color: active ? '#0061a5' : '#475569', mt: 1 }}>{opt.label}</Typography>
-                  {active && <Chip label="Active" size="small" sx={{ mt: 0.75, height: 20, fontSize: '0.6rem', fontWeight: 700, backgroundColor: '#eff6ff', color: '#0061a5' }} />}
+                  <Typography sx={{ fontSize: '0.82rem', fontWeight: 700, color: active ? '#0D9488' : '#475569', mt: 1 }}>{opt.label}</Typography>
+                  {active && <Chip label="Active" size="small" sx={{ mt: 0.75, height: 20, fontSize: '0.6rem', fontWeight: 700, backgroundColor: '#eff6ff', color: '#0D9488' }} />}
                 </Box>
               );
             })}
@@ -866,13 +866,13 @@ export default function PatientSettingsPage() {
               const active = language === l;
               return (
                 <Chip key={l} label={l} clickable onClick={() => saveLanguage(l)}
-                  icon={active ? <CheckCircleIcon sx={{ fontSize: '14px !important', color: '#0061a5 !important' }} /> : undefined}
+                  icon={active ? <CheckCircleIcon sx={{ fontSize: '14px !important', color: '#0D9488 !important' }} /> : undefined}
                   sx={{
                     fontWeight: 700, fontSize: '0.78rem',
-                    backgroundColor: active ? '#eff6ff' : '#f8fafc',
-                    color: active ? '#0061a5' : '#475569',
+                    backgroundColor: active ? '#eff6ff' : '#F7F7F5',
+                    color: active ? '#0D9488' : '#475569',
                     border: `1px solid ${active ? '#bfdbfe' : '#e2e8f0'}`,
-                    '&:hover': { backgroundColor: active ? '#dbeafe' : '#f1f5f9' },
+                    '&:hover': { backgroundColor: active ? '#dbeafe' : '#F1F0EF' },
                   }} />
               );
             })}
@@ -884,10 +884,10 @@ export default function PatientSettingsPage() {
 
         <SettingsCard title="Accessibility" subtitle="Adjust display preferences">
           <SettingsRow label="Compact mode" description="Reduce spacing for more content on screen"
-            control={<Switch size="small" sx={{ '& .MuiSwitch-switchBase.Mui-checked': { color: '#0061a5' }, '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { backgroundColor: '#0061a5' } }} />}
+            control={<Switch size="small" sx={{ '& .MuiSwitch-switchBase.Mui-checked': { color: '#0D9488' }, '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { backgroundColor: '#0D9488' } }} />}
           />
           <SettingsRow label="Larger text" description="Increase font size across the app"
-            control={<Switch size="small" sx={{ '& .MuiSwitch-switchBase.Mui-checked': { color: '#0061a5' }, '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { backgroundColor: '#0061a5' } }} />}
+            control={<Switch size="small" sx={{ '& .MuiSwitch-switchBase.Mui-checked': { color: '#0D9488' }, '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { backgroundColor: '#0D9488' } }} />}
           />
         </SettingsCard>
       </Box>
@@ -905,8 +905,8 @@ export default function PatientSettingsPage() {
               </Typography>
             </Box>
             <Button onClick={logout} variant="outlined" startIcon={<LogoutIcon />}
-              sx={{ flexShrink: 0, borderColor: '#0061a5', color: '#0061a5', borderRadius: 2, fontWeight: 700,
-                '&:hover': { backgroundColor: '#eff6ff', borderColor: '#004f8a' } }}>
+              sx={{ flexShrink: 0, borderColor: '#0D9488', color: '#0D9488', borderRadius: '6px', fontWeight: 700,
+                '&:hover': { backgroundColor: '#eff6ff', borderColor: '#0F766E' } }}>
               Sign Out
             </Button>
           </Box>
@@ -914,29 +914,29 @@ export default function PatientSettingsPage() {
 
         <SettingsCard title="Data & Privacy" subtitle="Manage your personal data">
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Box sx={{ p: 2, borderRadius: 2, backgroundColor: '#f8fafc', border: '1px solid #e2e8f0' }}>
-              <Typography sx={{ fontSize: '0.82rem', fontWeight: 700, color: '#0f172a', mb: 0.5 }}>What we store</Typography>
-              <Typography sx={{ fontSize: '0.78rem', color: '#64748b', lineHeight: 1.65 }}>
+            <Box sx={{ p: 2, borderRadius: '6px', backgroundColor: '#F7F7F5', border: '1px solid #E9E9E7' }}>
+              <Typography sx={{ fontSize: '0.82rem', fontWeight: 700, color: '#37352F', mb: 0.5 }}>What we store</Typography>
+              <Typography sx={{ fontSize: '0.78rem', color: '#73726E', lineHeight: 1.65 }}>
                 Your name, email, appointment history, and medical records you upload are stored securely. We do not share your data with third parties without consent.
               </Typography>
             </Box>
             <Button variant="outlined" size="small"
-              sx={{ alignSelf: 'flex-start', borderColor: '#e2e8f0', color: '#64748b', borderRadius: 2, fontWeight: 600,
-                '&:hover': { borderColor: '#0061a5', color: '#0061a5', backgroundColor: '#f0f7ff' } }}>
+              sx={{ alignSelf: 'flex-start', borderColor: '#E9E9E7', color: '#73726E', borderRadius: '6px', fontWeight: 600,
+                '&:hover': { borderColor: '#0D9488', color: '#0D9488', backgroundColor: '#f0f7ff' } }}>
               Request My Data Export
             </Button>
           </Box>
         </SettingsCard>
 
         <SettingsCard title="Delete Account" subtitle="Permanently remove your account and all associated data">
-          <Box sx={{ p: 2, borderRadius: 2, backgroundColor: '#fef2f2', border: '1px solid #fecaca', mb: 2 }}>
+          <Box sx={{ p: 2, borderRadius: '6px', backgroundColor: '#fef2f2', border: '1px solid #fecaca', mb: 2 }}>
             <Typography sx={{ fontSize: '0.82rem', color: '#b91c1c', fontWeight: 600, mb: 0.5 }}>⚠️ This action is irreversible</Typography>
             <Typography sx={{ fontSize: '0.78rem', color: '#ef4444', lineHeight: 1.65 }}>
               Deleting your account will permanently remove all your appointments, medical records, and personal information. This cannot be undone.
             </Typography>
           </Box>
           <Button onClick={() => setDeleteOpen(true)} variant="contained" startIcon={<DeleteForeverIcon />}
-            sx={{ backgroundColor: '#dc2626', borderRadius: 2, fontWeight: 700, boxShadow: 'none',
+            sx={{ backgroundColor: '#dc2626', borderRadius: '6px', fontWeight: 700, boxShadow: 'none',
               '&:hover': { backgroundColor: '#b91c1c', boxShadow: '0 4px 12px rgba(220,38,38,0.3)' } }}>
             Delete My Account
           </Button>
@@ -948,7 +948,7 @@ export default function PatientSettingsPage() {
   // ─── Render ─────────────────────────────────────────────────────────────────
 
   return (
-    <Box sx={{ backgroundColor: '#f4f6fb', minHeight: '100vh' }}>
+    <Box sx={{ backgroundColor: '#FFFFFF', minHeight: '100vh' }}>
       <TopNavBar
         displayName={displayName}
         email={profile?.email}
@@ -956,15 +956,15 @@ export default function PatientSettingsPage() {
       />
       <Box sx={{ display: 'flex' }}>
         <SideNavBar />
-        <Box component="main" sx={{ ml: '240px', flex: 1, p: { xs: 3, md: 4 }, backgroundColor: '#f4f6fb' }}>
+        <Box component="main" sx={{ ml: '240px', flex: 1, mt: '52px', p: { xs: 3, md: 4 }, backgroundColor: '#FFFFFF' }}>
           <Box sx={{ maxWidth: 1100, mx: 'auto' }}>
 
             {/* Page header */}
             <Box sx={{ mb: 4 }}>
-              <Typography sx={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', fontFamily: 'Manrope, sans-serif', lineHeight: 1.2 }}>
+              <Typography sx={{ fontSize: '1.5rem', fontWeight: 800, color: '#37352F', fontFamily: 'inherit', lineHeight: 1.2 }}>
                 Settings
               </Typography>
-              <Typography sx={{ fontSize: '0.875rem', color: '#64748b', mt: 0.5 }}>
+              <Typography sx={{ fontSize: '0.875rem', color: '#73726E', mt: 0.5 }}>
                 Manage your account, security, and preferences
               </Typography>
             </Box>
@@ -972,26 +972,26 @@ export default function PatientSettingsPage() {
             {/* Horizontal pill nav */}
             <Box sx={{
               display: 'flex', gap: 1, flexWrap: 'wrap', mb: 3,
-              p: 1, borderRadius: 3,
+              p: 1, borderRadius: '8px',
               backgroundColor: '#fff',
-              border: '1px solid #eaecf0',
-              boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
+              border: '1px solid #E9E9E7',
+              boxShadow: 'none',
             }}>
               {SECTIONS.map(s => {
                 const active = activeSection === s.id;
                 return (
                   <Box key={s.id} onClick={() => setActiveSection(s.id)} sx={{
                     display: 'flex', alignItems: 'center', gap: 1,
-                    px: 2, py: 1, borderRadius: 2, cursor: 'pointer',
-                    backgroundColor: active ? '#0061a5' : 'transparent',
+                    px: 2, py: 1, borderRadius: '6px', cursor: 'pointer',
+                    backgroundColor: active ? '#0D9488' : 'transparent',
                     transition: 'all 0.15s',
-                    '&:hover': { backgroundColor: active ? '#004f8a' : '#f1f5f9' },
+                    '&:hover': { backgroundColor: active ? '#0F766E' : '#F1F0EF' },
                   }}>
                     <Box sx={{ display: 'flex', color: active ? '#fff' : '#94a3b8', '& svg': { fontSize: 18 } }}>
                       {s.icon}
                     </Box>
                     <Typography sx={{
-                      fontSize: '0.8125rem', fontWeight: 700, fontFamily: 'Manrope, sans-serif',
+                      fontSize: '0.8125rem', fontWeight: 700, fontFamily: 'inherit',
                       color: active ? '#fff' : '#475569',
                       whiteSpace: 'nowrap',
                     }}>
@@ -1006,7 +1006,7 @@ export default function PatientSettingsPage() {
             <Box sx={{ width: '100%' }}>
               {loading ? (
                 <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
-                  <CircularProgress sx={{ color: '#0061a5' }} />
+                  <CircularProgress sx={{ color: '#0D9488' }} />
                 </Box>
               ) : activeSection === 'profile'       ? renderProfile()
                 : activeSection === 'security'      ? renderSecurity()
@@ -1022,7 +1022,7 @@ export default function PatientSettingsPage() {
       {/* Delete account confirmation dialog */}
       <Dialog open={deleteOpen} onClose={() => { setDeleteOpen(false); setDeleteConfirm(''); }} maxWidth="xs" fullWidth
         PaperProps={{ sx: { borderRadius: 3 } }}>
-        <DialogTitle sx={{ fontWeight: 800, fontFamily: 'Manrope, sans-serif', color: '#dc2626' }}>
+        <DialogTitle sx={{ fontWeight: 800, fontFamily: 'inherit', color: '#dc2626' }}>
           Delete Account
         </DialogTitle>
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: '12px !important' }}>
@@ -1037,11 +1037,11 @@ export default function PatientSettingsPage() {
             sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }} />
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 3, gap: 1 }}>
-          <Button onClick={() => { setDeleteOpen(false); setDeleteConfirm(''); }} sx={{ color: '#64748b', fontWeight: 600 }}>
+          <Button onClick={() => { setDeleteOpen(false); setDeleteConfirm(''); }} sx={{ color: '#73726E', fontWeight: 600 }}>
             Cancel
           </Button>
           <Button onClick={handleDeleteAccount} disabled={deleteConfirm !== 'DELETE'} variant="contained"
-            sx={{ backgroundColor: '#dc2626', borderRadius: 2, fontWeight: 700, boxShadow: 'none',
+            sx={{ backgroundColor: '#dc2626', borderRadius: '6px', fontWeight: 700, boxShadow: 'none',
               '&:hover': { backgroundColor: '#b91c1c' }, '&.Mui-disabled': { backgroundColor: '#fca5a5', color: '#fff' } }}>
             Delete My Account
           </Button>
