@@ -1,0 +1,18 @@
+# --- Frontend ---
+web-app/doctor-app-frontend/node_modules/
+web-app/doctor-app-frontend/dist/
+web-app/doctor-app-frontend/.env
+web-app/doctor-app-frontend/.env.local
+
+# --- Backend ---
+MediCore/target/
+MediCore/.mvn/wrapper/maven-wrapper.jar
+*.class
+*.jar
+*.war
+
+# --- IDE / OS ---
+.DS_Store
+.idea/
+*.iml
+.vscode/
