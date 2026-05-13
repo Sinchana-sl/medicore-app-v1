@@ -5,6 +5,7 @@ import BrandingPanel from '../components/BrandingPanel';
 import BrandLogo from '../components/BrandLogo';
 import { sendPasswordResetOtp, resetPassword } from '../services/authService';
 import { useToast } from '../contexts/ToastContext';
+import { C } from '../styles/theme';
 
 type Step = 'email' | 'otp' | 'reset' | 'done';
 
@@ -82,14 +83,14 @@ export default function ForgotPasswordPage() {
       >
         <Box sx={{ maxWidth: 448, mx: 'auto', width: '100%' }}>
           <Box sx={{ display: { xs: 'flex', md: 'none' }, mb: 4 }}>
-            <BrandLogo color="#1a365d" />
+            <BrandLogo />
           </Box>
 
           {/* Step: Email */}
           {step === 'email' && (
             <>
               <Box mb={4}>
-                <Typography variant="h2" sx={{ fontSize: '2rem', color: '#002045', mb: 1 }}>
+                <Typography variant="h2" sx={{ fontSize: '2rem', color: C.ink, mb: 1 }}>
                   Forgot password?
                 </Typography>
                 <Typography color="text.secondary">
@@ -105,7 +106,7 @@ export default function ForgotPasswordPage() {
                 />
                 <Button
                   type="submit" fullWidth variant="contained" disabled={loading}
-                  sx={{ height: 52, backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#002045' } }}
+                  sx={{ height: 52, backgroundColor: C.blue, borderRadius: '10px', fontWeight: 700, boxShadow: 'none', '&:hover': { backgroundColor: C.blueDark } }}
                 >
                   {loading ? 'Sending…' : 'Send Verification Code'}
                 </Button>
@@ -117,7 +118,7 @@ export default function ForgotPasswordPage() {
           {step === 'otp' && (
             <>
               <Box mb={4}>
-                <Typography variant="h2" sx={{ fontSize: '2rem', color: '#002045', mb: 1 }}>
+                <Typography variant="h2" sx={{ fontSize: '2rem', color: C.ink, mb: 1 }}>
                   Enter verification code
                 </Typography>
                 <Typography color="text.secondary">
@@ -134,7 +135,7 @@ export default function ForgotPasswordPage() {
                 />
                 <Button
                   type="submit" fullWidth variant="contained" disabled={loading}
-                  sx={{ height: 52, backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#002045' } }}
+                  sx={{ height: 52, backgroundColor: C.blue, borderRadius: '10px', fontWeight: 700, boxShadow: 'none', '&:hover': { backgroundColor: C.blueDark } }}
                 >
                   {loading ? 'Verifying…' : 'Verify Code'}
                 </Button>
@@ -156,7 +157,7 @@ export default function ForgotPasswordPage() {
           {step === 'reset' && (
             <>
               <Box mb={4}>
-                <Typography variant="h2" sx={{ fontSize: '2rem', color: '#002045', mb: 1 }}>
+                <Typography variant="h2" sx={{ fontSize: '2rem', color: C.ink, mb: 1 }}>
                   Set new password
                 </Typography>
                 <Typography color="text.secondary">
@@ -177,7 +178,7 @@ export default function ForgotPasswordPage() {
                 />
                 <Button
                   type="submit" fullWidth variant="contained" disabled={loading}
-                  sx={{ height: 52, backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#002045' } }}
+                  sx={{ height: 52, backgroundColor: C.blue, borderRadius: '10px', fontWeight: 700, boxShadow: 'none', '&:hover': { backgroundColor: C.blueDark } }}
                 >
                   {loading ? 'Updating…' : 'Reset Password'}
                 </Button>
@@ -188,7 +189,7 @@ export default function ForgotPasswordPage() {
           {/* Step: Done */}
           {step === 'done' && (
             <Box textAlign="center">
-              <Typography variant="h2" sx={{ fontSize: '2rem', color: '#002045', mb: 2 }}>
+              <Typography variant="h2" sx={{ fontSize: '2rem', color: C.ink, mb: 2 }}>
                 Password reset!
               </Typography>
               <Typography color="text.secondary" mb={4}>
@@ -197,7 +198,7 @@ export default function ForgotPasswordPage() {
               <Button
                 fullWidth variant="contained"
                 onClick={() => navigate('/login')}
-                sx={{ height: 52, backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#002045' } }}
+                sx={{ height: 52, backgroundColor: C.blue, borderRadius: '10px', fontWeight: 700, boxShadow: 'none', '&:hover': { backgroundColor: C.blueDark } }}
               >
                 Back to Sign In
               </Button>

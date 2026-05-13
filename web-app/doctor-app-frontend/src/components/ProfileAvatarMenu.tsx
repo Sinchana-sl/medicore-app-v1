@@ -33,7 +33,7 @@ export default function ProfileAvatarMenu({ displayName = '', email = '', onProf
         sx={{
           display: 'flex', alignItems: 'center', gap: 1,
           border: 'none', background: 'none', cursor: 'pointer',
-          borderRadius: 7, px: 0.75, py: 0.5,
+          borderRadius: 8, px: 0.75, py: 0.5,
           '&:hover': { backgroundColor: C.borderSub },
           transition: 'background 0.1s',
         }}
@@ -42,12 +42,12 @@ export default function ProfileAvatarMenu({ displayName = '', email = '', onProf
           sx={{
             width: 26, height: 26,
             backgroundColor: C.blue,
-            fontSize: '0.6875rem', fontWeight: 700,
+            fontSize: '0.625rem', fontWeight: 600, borderRadius: '6px',
           }}
         >
           {displayName ? initials(displayName) : <PersonIcon sx={{ fontSize: 14 }} />}
         </Avatar>
-        <Typography sx={{ fontSize: '0.8125rem', fontWeight: 500, color: C.inkMid, display: { xs: 'none', sm: 'block' } }}>
+        <Typography sx={{ fontSize: '0.8125rem', fontWeight: 500, color: C.ink, display: { xs: 'none', sm: 'block' } }}>
           {displayName || 'Account'}
         </Typography>
       </Box>
@@ -56,10 +56,10 @@ export default function ProfileAvatarMenu({ displayName = '', email = '', onProf
         anchorEl={anchor} open={Boolean(anchor)} onClose={close}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        slotProps={{ paper: { sx: { mt: 0.75, minWidth: 200 } } }}
+        slotProps={{ paper: { sx: { mt: 0.75, minWidth: 210 } } }}
       >
         <Box sx={{ px: 1.5, py: 1.25 }}>
-          <Typography sx={{ fontSize: '0.8125rem', fontWeight: 600, color: C.ink }}>{displayName || 'User'}</Typography>
+          <Typography sx={{ fontSize: '0.8125rem', fontWeight: 700, color: C.ink }}>{displayName || 'User'}</Typography>
           {email && <Typography sx={{ fontSize: '0.75rem', color: C.muted, mt: 0.125 }} noWrap>{email}</Typography>}
         </Box>
 

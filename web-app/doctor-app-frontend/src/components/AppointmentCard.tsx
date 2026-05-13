@@ -8,6 +8,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlined';
 import EventBusyIcon from '@mui/icons-material/EventBusy';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { C } from '../styles/theme';
 
 interface AppointmentCardProps {
   doctorName: string;
@@ -26,15 +27,15 @@ interface AppointmentCardProps {
 }
 
 const TYPE_META: Record<string, { label: string; icon: React.ReactNode; bg: string; color: string }> = {
-  VIDEO:     { label: 'Video',      icon: <VideocamOutlinedIcon sx={{ fontSize: 11 }} />,  bg: '#fdf4ff', color: '#7e22ce' },
-  AUDIO:     { label: 'Audio',      icon: <HeadsetMicOutlinedIcon sx={{ fontSize: 11 }} />, bg: '#f0fdf4', color: '#15803d' },
-  IN_PERSON: { label: 'In-Person',  icon: <PersonOutlinedIcon sx={{ fontSize: 11 }} />,    bg: '#eff6ff', color: '#1d4ed8' },
+  VIDEO:     { label: 'Video',     icon: <VideocamOutlinedIcon sx={{ fontSize: 11 }} />,   bg: C.purpleBg, color: C.purple },
+  AUDIO:     { label: 'Audio',     icon: <HeadsetMicOutlinedIcon sx={{ fontSize: 11 }} />, bg: C.greenBg,  color: C.green },
+  IN_PERSON: { label: 'In-Person', icon: <PersonOutlinedIcon sx={{ fontSize: 11 }} />,     bg: C.blueLight, color: C.blue },
 };
 
-const STATUS_META: Record<string, { label: string; bg: string; color: string; dot: string; icon: React.ReactNode }> = {
-  CONFIRMED:       { label: 'Confirmed',       bg: '#f0fdf4', color: '#15803d', dot: '#16a34a', icon: <CheckCircleOutlineIcon sx={{ fontSize: 13 }} /> },
-  PAYMENT_PENDING: { label: 'Awaiting Payment', bg: '#fffbeb', color: '#b45309', dot: '#d97706', icon: <WarningAmberIcon sx={{ fontSize: 13 }} /> },
-  CANCELLED:       { label: 'Cancelled',        bg: '#fef2f2', color: '#b91c1c', dot: '#dc2626', icon: <EventBusyIcon sx={{ fontSize: 13 }} /> },
+const STATUS_META: Record<string, { label: string; bg: string; color: string; icon: React.ReactNode }> = {
+  CONFIRMED:       { label: 'Confirmed',        bg: C.greenBg,  color: C.green,  icon: <CheckCircleOutlineIcon sx={{ fontSize: 12 }} /> },
+  PAYMENT_PENDING: { label: 'Awaiting Payment', bg: C.amberBg,  color: C.amber,  icon: <WarningAmberIcon sx={{ fontSize: 12 }} /> },
+  CANCELLED:       { label: 'Cancelled',        bg: C.redBg,    color: C.red,    icon: <EventBusyIcon sx={{ fontSize: 12 }} /> },
 };
 
 function getInitials(name: string) {
@@ -42,52 +43,48 @@ function getInitials(name: string) {
   return (parts[0]?.[0] ?? '') + (parts[1]?.[0] ?? '');
 }
 
+const AVATAR_COLORS = [C.blue, C.purple, '#E11D48', C.amber, '#0891B2', '#16A34A'];
 function getAvatarColor(name: string) {
-  const colors = ['#0061a5', '#0891b2', '#7c3aed', '#0d9488', '#e11d48', '#b45309', '#1d4ed8'];
   let h = 0;
   for (const c of name) h = (h * 31 + c.charCodeAt(0)) & 0xffff;
-  return colors[h % colors.length];
+  return AVATAR_COLORS[h % AVATAR_COLORS.length];
 }
 
 export default function AppointmentCard({
   doctorName, specialty, clinic, date, time, imageUrl, canJoin, status,
-  consultationType = 'IN_PERSON', paymentStatus, amountPaise, onPayNow, onCancel,
+  consultationType = 'IN_PERSON', amountPaise, onPayNow, onCancel,
 }: AppointmentCardProps) {
   const isPendingPayment = status === 'PAYMENT_PENDING' && amountPaise && amountPaise > 0;
   const isCancelled = status === 'CANCELLED';
   const typeMeta = TYPE_META[consultationType] ?? TYPE_META.IN_PERSON;
-  const statusMeta = STATUS_META[status] ?? { label: status, bg: '#f1f5f9', color: '#475569', dot: '#94a3b8', icon: null };
-  const avatarBg = getAvatarColor(doctorName);
+  const statusMeta = STATUS_META[status] ?? { label: status, bg: C.borderSub, color: C.slate, icon: null };
 
   return (
     <Box
       sx={{
-        backgroundColor: '#fff',
-        borderRadius: 3,
-        border: `1px solid ${isCancelled ? '#fee2e2' : '#e8eef8'}`,
-        boxShadow: '0 2px 10px rgba(0,0,0,0.04)',
+        backgroundColor: C.paper,
+        borderRadius: '8px',
+        border: `1px solid ${isCancelled ? '#FECACA' : C.border}`,
+        boxShadow: 'none',
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
-        opacity: isCancelled ? 0.75 : 1,
-        transition: 'box-shadow 0.15s, border-color 0.15s',
-        '&:hover': !isCancelled ? { borderColor: '#93c5fd', boxShadow: '0 6px 20px rgba(0,97,165,0.1)' } : {},
+        opacity: isCancelled ? 0.65 : 1,
+        transition: 'background-color 0.1s ease, border-color 0.1s ease',
+        '&:hover': !isCancelled ? { backgroundColor: C.surface, borderColor: C.subtle } : {},
       }}
     >
-      {/* Accent bar */}
-      <Box sx={{ height: 3, background: isCancelled ? '#fca5a5' : 'linear-gradient(90deg, #0061a5, #0891b2)' }} />
-
-      {/* Status + consultation type row */}
-      <Box sx={{ px: 2.5, pt: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1 }}>
+      {/* Status + type badges */}
+      <Box sx={{ px: 2, pt: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1 }}>
         <Chip
           icon={statusMeta.icon as React.ReactElement}
           label={statusMeta.label}
           size="small"
           sx={{
-            height: 22, fontSize: '0.65rem', fontWeight: 700,
+            height: 20, fontSize: '0.5875rem', fontWeight: 600,
             backgroundColor: statusMeta.bg, color: statusMeta.color,
-            border: `1px solid ${statusMeta.color}33`,
-            '& .MuiChip-icon': { color: 'inherit', fontSize: 13, ml: 0.5 },
+            border: `1px solid ${statusMeta.color}28`,
+            '& .MuiChip-icon': { color: 'inherit', fontSize: 12, ml: 0.5 },
           }}
         />
         <Chip
@@ -95,7 +92,7 @@ export default function AppointmentCard({
           label={typeMeta.label}
           size="small"
           sx={{
-            height: 20, fontSize: '0.6rem', fontWeight: 700,
+            height: 20, fontSize: '0.5875rem', fontWeight: 600,
             backgroundColor: typeMeta.bg, color: typeMeta.color,
             '& .MuiChip-icon': { color: 'inherit' },
           }}
@@ -103,28 +100,29 @@ export default function AppointmentCard({
       </Box>
 
       {/* Doctor info */}
-      <Box sx={{ px: 2.5, pt: 1.75, display: 'flex', gap: 1.5, alignItems: 'flex-start' }}>
+      <Box sx={{ px: 2, pt: 1.5, display: 'flex', gap: 1.25, alignItems: 'flex-start' }}>
         <Avatar
           src={imageUrl}
           alt={doctorName}
           sx={{
-            width: 46, height: 46, borderRadius: 2, flexShrink: 0,
-            backgroundColor: avatarBg, fontSize: '0.875rem', fontWeight: 700,
+            width: 38, height: 38, borderRadius: '6px', flexShrink: 0,
+            backgroundColor: getAvatarColor(doctorName),
+            fontSize: '0.8125rem', fontWeight: 600,
           }}
         >
           {getInitials(doctorName)}
         </Avatar>
         <Box sx={{ flex: 1, minWidth: 0 }}>
-          <Typography sx={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a', fontFamily: 'Manrope, sans-serif', lineHeight: 1.3 }}>
+          <Typography sx={{ fontWeight: 600, fontSize: '0.875rem', color: C.ink, lineHeight: 1.3 }}>
             {doctorName}
           </Typography>
-          <Typography sx={{ fontSize: '0.78rem', color: '#0061a5', fontWeight: 600, mt: 0.25 }}>
+          <Typography sx={{ fontSize: '0.75rem', color: C.blue, fontWeight: 500, mt: 0.25 }}>
             {specialty}
           </Typography>
           {clinic && (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.4, mt: 0.375 }}>
-              <LocationOnIcon sx={{ fontSize: 11, color: '#94a3b8', flexShrink: 0 }} />
-              <Typography sx={{ fontSize: '0.72rem', color: '#94a3b8', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.4, mt: 0.25 }}>
+              <LocationOnIcon sx={{ fontSize: 10, color: C.muted, flexShrink: 0 }} />
+              <Typography sx={{ fontSize: '0.6875rem', color: C.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                 {clinic}
               </Typography>
             </Box>
@@ -133,91 +131,52 @@ export default function AppointmentCard({
       </Box>
 
       {/* Divider */}
-      <Box sx={{ mx: 2.5, my: 1.75, height: '1px', backgroundColor: '#f1f5f9' }} />
+      <Box sx={{ mx: 2, my: 1.5, height: '1px', backgroundColor: C.border }} />
 
-      {/* Date & Time */}
-      <Box sx={{ px: 2.5, display: 'flex', gap: 2 }}>
+      {/* Date & time */}
+      <Box sx={{ px: 2, display: 'flex', gap: 2 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
-          <Box sx={{ width: 30, height: 30, borderRadius: 1.5, backgroundColor: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <CalendarMonthIcon sx={{ fontSize: 15, color: '#0061a5' }} />
-          </Box>
-          <Box>
-            <Typography sx={{ fontSize: '0.58rem', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Date</Typography>
-            <Typography sx={{ fontSize: '0.78rem', fontWeight: 700, color: '#0f172a', lineHeight: 1.2 }}>{date}</Typography>
-          </Box>
+          <CalendarMonthIcon sx={{ fontSize: 13, color: C.muted }} />
+          <Typography sx={{ fontSize: '0.75rem', fontWeight: 500, color: C.ink }}>{date}</Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
-          <Box sx={{ width: 30, height: 30, borderRadius: 1.5, backgroundColor: '#ecfeff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <ScheduleIcon sx={{ fontSize: 15, color: '#0891b2' }} />
-          </Box>
-          <Box>
-            <Typography sx={{ fontSize: '0.58rem', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Time</Typography>
-            <Typography sx={{ fontSize: '0.78rem', fontWeight: 700, color: '#0f172a', lineHeight: 1.2 }}>{time}</Typography>
-          </Box>
+          <ScheduleIcon sx={{ fontSize: 13, color: C.muted }} />
+          <Typography sx={{ fontSize: '0.75rem', fontWeight: 500, color: C.ink }}>{time}</Typography>
         </Box>
       </Box>
 
-      {/* Payment pending banner */}
+      {/* Payment banner */}
       {isPendingPayment && (
-        <Box sx={{ mx: 2.5, mt: 1.5, px: 1.5, py: 1, borderRadius: 2, backgroundColor: '#fffbeb', border: '1px dashed #fbbf24', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Box sx={{ mx: 2, mt: 1.5, px: 1.25, py: 0.875, borderRadius: '6px', backgroundColor: C.amberBg, border: `1px solid ${C.amber}30`, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Box>
-            <Typography sx={{ fontSize: '0.7rem', color: '#92400e', fontWeight: 700 }}>Payment required</Typography>
-            <Typography sx={{ fontSize: '0.65rem', color: '#b45309' }}>Appointment reserved for 30 min</Typography>
+            <Typography sx={{ fontSize: '0.6875rem', color: '#92400E', fontWeight: 600 }}>Payment required</Typography>
+            <Typography sx={{ fontSize: '0.625rem', color: C.amber }}>Reserved for 30 min</Typography>
           </Box>
-          <Typography sx={{ fontSize: '0.875rem', fontWeight: 800, color: '#d97706', fontFamily: 'Manrope, sans-serif' }}>
+          <Typography sx={{ fontSize: '0.8125rem', fontWeight: 700, color: C.amber }}>
             ₹{(amountPaise / 100).toLocaleString('en-IN')}
           </Typography>
         </Box>
       )}
 
       {/* Actions */}
-      <Box sx={{ px: 2.5, pt: 1.75, pb: 2.5, mt: 'auto', display: 'flex', flexDirection: 'column', gap: 1 }}>
+      <Box sx={{ px: 2, pt: 1.5, pb: 2, mt: 'auto', display: 'flex', flexDirection: 'column', gap: 0.75 }}>
         {isPendingPayment && (
-          <Button
-            variant="contained"
-            onClick={onPayNow}
-            size="small"
-            fullWidth
-            sx={{
-              background: 'linear-gradient(90deg, #f59e0b, #f97316)',
-              borderRadius: 2, fontWeight: 700, fontSize: '0.78rem', py: 0.875,
-              boxShadow: 'none', color: '#fff',
-              '&:hover': { background: 'linear-gradient(90deg, #d97706, #ea580c)', boxShadow: '0 3px 8px rgba(245,158,11,0.35)' },
-            }}
-          >
+          <Button variant="contained" onClick={onPayNow} size="small" fullWidth
+            sx={{ backgroundColor: C.amber, borderRadius: '6px', fontWeight: 600, fontSize: '0.75rem', boxShadow: 'none', color: '#fff', '&:hover': { backgroundColor: '#B45309', boxShadow: 'none' } }}>
             Pay ₹{(amountPaise! / 100).toLocaleString('en-IN')} to Confirm
           </Button>
         )}
-
         {status === 'CONFIRMED' && (
-          <Button
-            variant="contained"
-            disabled={!canJoin}
-            size="small"
-            fullWidth
-            sx={{
-              backgroundColor: '#0061a5', borderRadius: 2, fontWeight: 700,
-              fontSize: '0.78rem', py: 0.875, boxShadow: 'none',
-              '&:hover': { backgroundColor: '#004f8a', boxShadow: '0 3px 8px rgba(0,97,165,0.3)' },
-              '&.Mui-disabled': { backgroundColor: '#e2e8f0', color: '#94a3b8' },
-            }}
-          >
+          <Button variant="contained" disabled={!canJoin} size="small" fullWidth
+            sx={{ backgroundColor: canJoin ? C.blue : undefined, borderRadius: '6px', fontWeight: 600, fontSize: '0.75rem', boxShadow: 'none', '&.Mui-disabled': { backgroundColor: C.borderSub, color: C.muted } }}>
             {canJoin ? 'Join Call' : 'Upcoming'}
           </Button>
         )}
-
         {!isCancelled && (
-          <Button
-            size="small"
-            onClick={onCancel}
-            fullWidth
-            sx={{
-              color: '#94a3b8', borderRadius: 2, border: '1px solid #e2e8f0',
-              fontSize: '0.72rem', fontWeight: 600, py: 0.75,
-              '&:hover': { backgroundColor: '#fef2f2', color: '#dc2626', borderColor: '#fecaca' },
-            }}
-          >
-            Cancel Appointment
+          <Button size="small" onClick={onCancel} fullWidth
+            sx={{ color: C.muted, borderRadius: '6px', border: `1px solid ${C.border}`, fontSize: '0.6875rem', fontWeight: 500,
+              '&:hover': { backgroundColor: C.redBg, color: C.red, borderColor: '#FECACA' } }}>
+            Cancel
           </Button>
         )}
       </Box>

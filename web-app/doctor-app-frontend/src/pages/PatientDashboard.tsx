@@ -37,6 +37,7 @@ import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import { C } from '../styles/theme';
 import TopNavBar from '../components/TopNavBar';
 import ChatBot from '../components/ChatBot';
 import PaymentModal from '../components/PaymentModal';
@@ -80,21 +81,21 @@ function StatCard({ icon, label, value, sub, accent, accentBg, loading }: StatCa
   return (
     <Box
       sx={{
-        backgroundColor: '#fff',
-        borderRadius: 3,
-        border: '1px solid #e8eef8',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.04)',
-        p: 2.75,
+        backgroundColor: C.paper,
+        borderRadius: '8px',
+        border: `1px solid ${C.border}`,
+        boxShadow: 'none',
+        p: 2.5,
         display: 'flex',
         alignItems: 'center',
         gap: 2,
-        transition: 'box-shadow 0.15s',
-        '&:hover': { boxShadow: '0 6px 20px rgba(0,0,0,0.07)' },
+        transition: 'background-color 0.1s ease',
+        '&:hover': { backgroundColor: C.surface },
       }}
     >
       <Box
         sx={{
-          width: 50, height: 50, borderRadius: 2.5, flexShrink: 0,
+          width: 40, height: 40, borderRadius: '8px', flexShrink: 0,
           backgroundColor: accentBg, color: accent,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}
@@ -108,7 +109,7 @@ function StatCard({ icon, label, value, sub, accent, accentBg, loading }: StatCa
         {loading ? (
           <Skeleton width={60} height={28} />
         ) : (
-          <Typography sx={{ fontSize: '1.5rem', fontWeight: 800, fontFamily: 'Manrope, sans-serif', color: '#0f172a', lineHeight: 1.2, mt: 0.25 }}>
+          <Typography sx={{ fontSize: '1.5rem', fontWeight: 800, fontFamily: 'inherit', color: '#0f172a', lineHeight: 1.2, mt: 0.25 }}>
             {value}
           </Typography>
         )}
@@ -159,7 +160,7 @@ function VitalRow({ icon, label, value, unit, status, accentBg, accentColor }: V
         {status === 'empty' ? (
           <Typography sx={{ fontSize: '0.875rem', color: '#cbd5e1', fontWeight: 600 }}>—</Typography>
         ) : (
-          <Typography sx={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a', fontFamily: 'Manrope, sans-serif', lineHeight: 1 }}>
+          <Typography sx={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a', fontFamily: 'inherit', lineHeight: 1 }}>
             {value} <Box component="span" sx={{ fontSize: '0.6875rem', color: '#94a3b8', fontWeight: 500 }}>{unit}</Box>
           </Typography>
         )}
@@ -203,7 +204,7 @@ function LogVitalsDialog({ open, onClose, initial, onSave }: VitalsDialogProps) 
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
-      <DialogTitle sx={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, color: '#002045' }}>
+      <DialogTitle sx={{ fontWeight: 700, color: C.ink }}>
         Log My Vitals
       </DialogTitle>
       <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: '16px !important' }}>
@@ -217,7 +218,7 @@ function LogVitalsDialog({ open, onClose, initial, onSave }: VitalsDialogProps) 
         <Button
           onClick={handleSave}
           variant="contained"
-          sx={{ backgroundColor: '#0061a5', borderRadius: 2, fontWeight: 600, '&:hover': { backgroundColor: '#004f8a' } }}
+          sx={{ backgroundColor: C.blue, borderRadius: '8px', fontWeight: 700, boxShadow: 'none', '&:hover': { backgroundColor: C.blueDark } }}
         >
           Save
         </Button>
@@ -327,7 +328,7 @@ export default function PatientDashboard() {
     const w = parseFloat(bmiWeight);
     if (!h || !w || h <= 0) return null;
     const val = w / (h * h);
-    const cat = val < 18.5 ? { label: 'Underweight', color: '#0891b2' }
+    const cat = val < 18.5 ? { label: 'Underweight', color: C.blue }
               : val < 25   ? { label: 'Normal',      color: '#16a34a' }
               : val < 30   ? { label: 'Overweight',  color: '#d97706' }
               :               { label: 'Obese',       color: '#dc2626' };
@@ -441,16 +442,16 @@ export default function PatientDashboard() {
 
   // Shared card style
   const card = {
-    backgroundColor: '#fff',
-    borderRadius: 3,
-    border: '1px solid #eaecf0',
-    boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+    backgroundColor: C.paper,
+    borderRadius: '8px',
+    border: `1px solid ${C.border}`,
+    boxShadow: 'none',
   };
 
   function SectionHeader({ title, action }: { title: string; action?: React.ReactNode }) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 3, py: 2, borderBottom: '1px solid #f1f5f9' }}>
-        <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#0f172a', fontFamily: 'Manrope, sans-serif', letterSpacing: '-0.01em' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 3, py: 2, borderBottom: `1px solid ${C.border}` }}>
+        <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#0f172a', fontFamily: 'inherit', letterSpacing: '-0.01em' }}>
           {title}
         </Typography>
         {action}
@@ -459,15 +460,15 @@ export default function PatientDashboard() {
   }
 
   return (
-    <Box sx={{ backgroundColor: '#f4f6fb', minHeight: '100vh' }}>
+    <Box sx={{ backgroundColor: C.paper, minHeight: '100vh' }}>
       <TopNavBar
         displayName={displayName}
         email={profile?.email}
         onProfileClick={() => navigate('/settings')}
       />
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', pt: '52px' }}>
         <SideNavBar onChatClick={() => setChatOpen(o => !o)} chatActive={chatOpen} />
-        <Box component="main" sx={{ ml: '220px', flex: 1, display: 'flex', flexDirection: 'column', backgroundColor: '#f4f6fb' }}>
+        <Box component="main" sx={{ ml: '240px', flex: 1, display: 'flex', flexDirection: 'column', backgroundColor: C.paper }}>
           {/* Full chat view */}
           {chatOpen ? (
             <Box sx={{ flex: 1, height: 'calc(100vh - 52px)', display: 'flex', flexDirection: 'column', backgroundColor: '#f8fafc' }}>
@@ -493,19 +494,19 @@ export default function PatientDashboard() {
             {/* Welcome banner */}
             <Box
               sx={{
-                background: 'linear-gradient(135deg, #0061a5 0%, #0891b2 100%)',
-                borderRadius: 3,
+                background: `linear-gradient(135deg, ${C.blue} 0%, ${C.blueBright} 100%)`,
+                borderRadius: '14px',
                 p: { xs: 2.5, md: 3 },
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 gap: 2,
-                boxShadow: '0 4px 20px rgba(0,97,165,0.2)',
+                boxShadow: '0 4px 20px rgba(13,148,136,0.25)',
               }}
             >
               <Box>
                 {loading ? <Skeleton width={280} height={40} sx={{ bgcolor: 'rgba(255,255,255,0.15)' }} /> : (
-                  <Typography sx={{ fontSize: { xs: '1.375rem', md: '1.75rem' }, fontWeight: 800, color: '#fff', fontFamily: 'Manrope, sans-serif', lineHeight: 1.2 }}>
+                  <Typography sx={{ fontSize: { xs: '1.375rem', md: '1.75rem' }, fontWeight: 800, color: '#fff', fontFamily: 'inherit', lineHeight: 1.2 }}>
                     {getGreeting()}, {displayName} 👋
                   </Typography>
                 )}
@@ -523,17 +524,17 @@ export default function PatientDashboard() {
             {/* Health Tip of the Day — top strip */}
             <Box sx={{
               display: 'flex', alignItems: 'center', gap: 2,
-              backgroundColor: '#fff', borderRadius: 3,
-              border: '1px solid #bae6fd',
+              borderRadius: '14px',
+              border: `1px solid ${C.blueMid}`,
               px: 3, py: 1.75,
-              background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
+              background: `linear-gradient(135deg, ${C.blueLight} 0%, ${C.blueMid} 100%)`,
               boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
             }}>
               <Box sx={{ fontSize: '1.75rem', lineHeight: 1, flexShrink: 0 }}>{todayTip.emoji}</Box>
               <Box sx={{ flex: 1, minWidth: 0 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.25 }}>
-                  <TipsAndUpdatesIcon sx={{ fontSize: 14, color: '#0284c7' }} />
-                  <Typography sx={{ fontSize: '0.65rem', fontWeight: 700, color: '#0284c7', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                  <TipsAndUpdatesIcon sx={{ fontSize: 14, color: C.blue }} />
+                  <Typography sx={{ fontSize: '0.65rem', fontWeight: 700, color: C.blue, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                     Health Tip of the Day
                   </Typography>
                 </Box>
@@ -549,9 +550,9 @@ export default function PatientDashboard() {
             {/* Stats Row */}
             <Grid container spacing={2.5}>
               {[
-                { icon: <CalendarTodayIcon sx={{ fontSize: 20 }} />, label: 'Upcoming', value: loading ? '—' : activeAppointments.length, sub: 'appointments', accent: '#0061a5', accentBg: '#eff6ff' },
-                { icon: <FolderOpenIcon sx={{ fontSize: 20 }} />, label: 'Medical Records', value: loading ? '—' : records.length, sub: 'on file', accent: '#7c3aed', accentBg: '#f5f3ff' },
-                { icon: <AccessTimeIcon sx={{ fontSize: 20 }} />, label: 'Next Appointment', value: loading ? '—' : nextAppointment ? nextAppointment.appointmentDate : 'None', sub: nextAppointment ? nextAppointment.startTime : 'Book one now', accent: '#0891b2', accentBg: '#ecfeff' },
+                { icon: <CalendarTodayIcon sx={{ fontSize: 20 }} />, label: 'Upcoming', value: loading ? '—' : activeAppointments.length, sub: 'appointments', accent: C.blue, accentBg: C.blueLight },
+                { icon: <FolderOpenIcon sx={{ fontSize: 20 }} />, label: 'Medical Records', value: loading ? '—' : records.length, sub: 'on file', accent: C.purple, accentBg: C.purpleBg },
+                { icon: <AccessTimeIcon sx={{ fontSize: 20 }} />, label: 'Next Appointment', value: loading ? '—' : nextAppointment ? nextAppointment.appointmentDate : 'None', sub: nextAppointment ? nextAppointment.startTime : 'Book one now', accent: C.blue, accentBg: C.blueMid },
                 { icon: <MonitorHeartIcon sx={{ fontSize: 20 }} />, label: 'Vitals Logged', value: loading ? '—' : `${Object.values(vitals).filter(Boolean).length}/4`, sub: 'metrics tracked', accent: '#e11d48', accentBg: '#fff1f2' },
               ].map((s) => (
                 <Grid item xs={12} sm={6} lg={3} key={s.label}>
@@ -567,9 +568,9 @@ export default function PatientDashboard() {
               <Grid item xs={12} lg={3}>
                 <Box
                   sx={{
-                    background: 'linear-gradient(150deg, #0d2444 0%, #1a365d 60%, #1e4080 100%)',
-                    color: '#fff', borderRadius: 3, overflow: 'hidden',
-                    boxShadow: '0 8px 24px -4px rgba(13,36,68,0.4)',
+                    background: 'linear-gradient(150deg, #021F1C 0%, #032B27 50%, #054F49 100%)',
+                    color: '#fff', borderRadius: '14px', overflow: 'hidden',
+                    boxShadow: '0 8px 24px -4px rgba(2,31,28,0.45)',
                     position: 'relative', height: '100%', display: 'flex', flexDirection: 'column',
                   }}
                 >
@@ -603,11 +604,11 @@ export default function PatientDashboard() {
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
                           <Box>
                             <Typography sx={{ fontSize: '0.5625rem', color: '#86a0cd', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Position</Typography>
-                            <Typography sx={{ fontSize: '2.25rem', fontWeight: 800, fontFamily: 'Manrope, sans-serif', lineHeight: 1.1, color: '#fff' }}>#1</Typography>
+                            <Typography sx={{ fontSize: '2.25rem', fontWeight: 800, fontFamily: 'inherit', lineHeight: 1.1, color: '#fff' }}>#1</Typography>
                           </Box>
                           <Box sx={{ pl: 2, borderLeft: '1px solid rgba(255,255,255,0.1)' }}>
                             <Typography sx={{ fontSize: '0.5625rem', color: '#86a0cd', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Est. Wait</Typography>
-                            <Typography sx={{ fontSize: '1.125rem', fontWeight: 700, fontFamily: 'Manrope, sans-serif', color: '#66affe' }}>~15 min</Typography>
+                            <Typography sx={{ fontSize: '1.125rem', fontWeight: 700, fontFamily: 'inherit', color: '#66affe' }}>~15 min</Typography>
                           </Box>
                         </Box>
 
@@ -626,12 +627,12 @@ export default function PatientDashboard() {
                           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Box>
                               <Typography sx={{ fontSize: '0.5625rem', color: '#5a7899', textTransform: 'uppercase', letterSpacing: '0.07em', fontWeight: 600, mb: 0.25 }}>Doctor</Typography>
-                              <Typography sx={{ fontWeight: 700, fontSize: '0.875rem', fontFamily: 'Manrope, sans-serif' }}>{nextAppointment.doctorName}</Typography>
+                              <Typography sx={{ fontWeight: 700, fontSize: '0.875rem', fontFamily: 'inherit' }}>{nextAppointment.doctorName}</Typography>
                               <Typography sx={{ fontSize: '0.75rem', color: '#86a0cd' }}>{nextAppointment.doctorSpecialty ?? 'Consultation'}</Typography>
                             </Box>
                             <Box sx={{ textAlign: 'right' }}>
                               <Typography sx={{ fontSize: '0.5625rem', color: '#5a7899', textTransform: 'uppercase', letterSpacing: '0.07em', fontWeight: 600, mb: 0.25 }}>Time</Typography>
-                              <Typography sx={{ fontWeight: 700, fontSize: '0.875rem', fontFamily: 'Manrope, sans-serif' }}>{nextAppointment.startTime}</Typography>
+                              <Typography sx={{ fontWeight: 700, fontSize: '0.875rem', fontFamily: 'inherit' }}>{nextAppointment.startTime}</Typography>
                               <Typography sx={{ fontSize: '0.75rem', color: '#86a0cd' }}>{nextAppointment.appointmentDate}</Typography>
                             </Box>
                           </Box>
@@ -653,7 +654,7 @@ export default function PatientDashboard() {
                     ) : (
                       <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', py: 1 }}>
                         <Typography sx={{ fontSize: '2rem', mb: 1 }}>🗓</Typography>
-                        <Typography sx={{ fontWeight: 700, fontSize: '0.875rem', fontFamily: 'Manrope, sans-serif', mb: 0.5 }}>No active queue</Typography>
+                        <Typography sx={{ fontWeight: 700, fontSize: '0.875rem', fontFamily: 'inherit', mb: 0.5 }}>No active queue</Typography>
                         <Typography fontSize="0.75rem" sx={{ color: '#5a7899', lineHeight: 1.5 }}>Book an appointment to join the live queue.</Typography>
                       </Box>
                     )}
@@ -668,7 +669,7 @@ export default function PatientDashboard() {
                     title="Upcoming Appointments"
                     action={
                       <Button onClick={() => setBookOpen(true)} size="small"
-                        sx={{ color: '#0061a5', fontWeight: 600, fontSize: '0.8125rem', backgroundColor: '#eff6ff', borderRadius: 2, px: 1.5, '&:hover': { backgroundColor: '#dbeafe' } }}
+                        sx={{ color: C.blue, fontWeight: 600, fontSize: '0.8125rem', backgroundColor: C.blueLight, borderRadius: '8px', px: 1.5, '&:hover': { backgroundColor: C.blueMid } }}
                       >
                         + Book New
                       </Button>
@@ -718,7 +719,7 @@ export default function PatientDashboard() {
                     title="My Vitals"
                     action={
                       <Button onClick={() => setVitalsOpen(true)} size="small" startIcon={<EditIcon sx={{ fontSize: 14 }} />}
-                        sx={{ color: '#0061a5', fontWeight: 600, fontSize: '0.8125rem', backgroundColor: '#eff6ff', borderRadius: 2, px: 1.5, '&:hover': { backgroundColor: '#dbeafe' } }}
+                        sx={{ color: C.blue, fontWeight: 600, fontSize: '0.8125rem', backgroundColor: C.blueLight, borderRadius: '8px', px: 1.5, '&:hover': { backgroundColor: C.blueMid } }}
                       >
                         Log
                       </Button>
@@ -754,8 +755,8 @@ export default function PatientDashboard() {
               <Grid item xs={12} md={6}>
                 <Box sx={{ ...card, height: '100%' }}>
                   <Box sx={{ px: 3, py: 2, borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <CalculateIcon sx={{ fontSize: 18, color: '#0061a5' }} />
-                    <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#0f172a', fontFamily: 'Manrope, sans-serif' }}>BMI Calculator</Typography>
+                    <CalculateIcon sx={{ fontSize: 18, color: C.blue }} />
+                    <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#0f172a', fontFamily: 'inherit' }}>BMI Calculator</Typography>
                   </Box>
                   <Box sx={{ p: 2.5, display: 'flex', flexDirection: 'column', gap: 2 }}>
                     <Box sx={{ display: 'flex', gap: 1.5 }}>
@@ -773,10 +774,10 @@ export default function PatientDashboard() {
                           <Chip label={bmi.label} size="small"
                             sx={{ backgroundColor: bmi.color + '18', color: bmi.color, fontWeight: 700, fontSize: '0.7rem' }} />
                         </Box>
-                        <Typography sx={{ fontSize: '2.5rem', fontWeight: 900, color: bmi.color, fontFamily: 'Manrope, sans-serif', lineHeight: 1 }}>
+                        <Typography sx={{ fontSize: '2.5rem', fontWeight: 900, color: bmi.color, fontFamily: 'inherit', lineHeight: 1 }}>
                           {bmi.val}
                         </Typography>
-                        <Box sx={{ mt: 1.5, position: 'relative', height: 8, borderRadius: 99, overflow: 'hidden', background: 'linear-gradient(90deg,#0891b2 0%,#16a34a 30%,#d97706 65%,#dc2626 100%)' }}>
+                        <Box sx={{ mt: 1.5, position: 'relative', height: 8, borderRadius: 99, overflow: 'hidden', background: `linear-gradient(90deg, ${C.blue} 0%, #16a34a 30%, #d97706 65%, #dc2626 100%)` }}>
                           <Box sx={{ position: 'absolute', top: -2, left: `${Math.min(Math.max(((parseFloat(bmi.val) - 10) / 30) * 100, 0), 96)}%`, width: 12, height: 12, borderRadius: '50%', backgroundColor: '#0f172a', border: '2px solid #fff', boxShadow: '0 0 0 2px #0f172a' }} />
                         </Box>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 0.5 }}>
@@ -799,8 +800,8 @@ export default function PatientDashboard() {
                 <Box sx={{ ...card, height: '100%' }}>
                   <Box sx={{ px: 3, py: 2, borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <WaterDropIcon sx={{ fontSize: 18, color: '#0891b2' }} />
-                      <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#0f172a', fontFamily: 'Manrope, sans-serif' }}>Water Intake</Typography>
+                      <WaterDropIcon sx={{ fontSize: 18, color: C.blue }} />
+                      <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#0f172a', fontFamily: 'inherit' }}>Water Intake</Typography>
                     </Box>
                     <Typography sx={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>
                       {waterGlasses.filter(Boolean).length} / 8 glasses
@@ -810,19 +811,19 @@ export default function PatientDashboard() {
                     <LinearProgress
                       variant="determinate"
                       value={(waterGlasses.filter(Boolean).length / 8) * 100}
-                      sx={{ height: 6, borderRadius: 99, mb: 2, backgroundColor: '#e0f2fe', '& .MuiLinearProgress-bar': { backgroundColor: '#0891b2', borderRadius: 99 } }}
+                      sx={{ height: 6, borderRadius: 99, mb: 2, backgroundColor: C.blueMid, '& .MuiLinearProgress-bar': { backgroundColor: C.blue, borderRadius: 99 } }}
                     />
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center' }}>
                       {waterGlasses.map((filled, i) => (
                         <Tooltip key={i} title={`Glass ${i + 1}`}>
                           <Box onClick={() => toggleGlass(i)} sx={{
                             width: 40, height: 48, cursor: 'pointer', borderRadius: 2,
-                            border: `2px solid ${filled ? '#0891b2' : '#e2e8f0'}`,
-                            backgroundColor: filled ? '#e0f2fe' : '#f8fafc',
+                            border: `2px solid ${filled ? C.blue : '#e2e8f0'}`,
+                            backgroundColor: filled ? C.blueMid : '#f8fafc',
                             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', pb: 0.5,
-                            transition: 'all 0.15s', '&:hover': { borderColor: '#0891b2' },
+                            transition: 'all 0.15s', '&:hover': { borderColor: C.blue },
                           }}>
-                            <WaterDropIcon sx={{ fontSize: 18, color: filled ? '#0891b2' : '#cbd5e1' }} />
+                            <WaterDropIcon sx={{ fontSize: 18, color: filled ? C.blue : '#cbd5e1' }} />
                           </Box>
                         </Tooltip>
                       ))}
@@ -845,8 +846,8 @@ export default function PatientDashboard() {
               <Grid item xs={12}>
                 <Box sx={{ ...card, height: '100%' }}>
                   <Box sx={{ px: 3, py: 2, borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <ManageSearchIcon sx={{ fontSize: 18, color: '#0891b2' }} />
-                    <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#0f172a', fontFamily: 'Manrope, sans-serif' }}>Symptom Checker</Typography>
+                    <ManageSearchIcon sx={{ fontSize: 18, color: C.blue }} />
+                    <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#0f172a', fontFamily: 'inherit' }}>Symptom Checker</Typography>
                   </Box>
                   <Box sx={{ p: 2.5, display: 'flex', flexDirection: 'column', gap: 2, height: 'calc(100% - 56px)' }}>
                     <Typography sx={{ fontSize: '0.78rem', color: '#64748b' }}>
@@ -862,9 +863,9 @@ export default function PatientDashboard() {
                           }}
                           sx={{
                             fontSize: '0.68rem', fontWeight: 600,
-                            backgroundColor: active ? '#0061a5' : '#f1f5f9',
-                            color: active ? '#fff' : '#475569',
-                            '&:hover': { backgroundColor: active ? '#004f8a' : '#e2e8f0' },
+                            backgroundColor: active ? C.blue : C.borderSub,
+                            color: active ? '#fff' : C.slate,
+                            '&:hover': { backgroundColor: active ? C.blueDark : C.border },
                           }} />
                         );
                       })}
@@ -877,7 +878,7 @@ export default function PatientDashboard() {
                         </Box>
                         <Typography sx={{ fontSize: '0.75rem', color: '#475569', lineHeight: 1.6 }}>{symptomResult.advice}</Typography>
                         <Button size="small" onClick={() => { setBookOpen(true); setSymptomResult(null); }}
-                          sx={{ mt: 1.5, backgroundColor: '#0061a5', color: '#fff', borderRadius: 2, fontWeight: 700, fontSize: '0.72rem', boxShadow: 'none', '&:hover': { backgroundColor: '#004f8a' } }}>
+                          sx={{ mt: 1.5, backgroundColor: C.blue, color: '#fff', borderRadius: '8px', fontWeight: 700, fontSize: '0.72rem', boxShadow: 'none', '&:hover': { backgroundColor: C.blueDark } }}>
                           Book with {symptomResult.specialist}
                         </Button>
                       </Box>
@@ -886,7 +887,7 @@ export default function PatientDashboard() {
                       variant="contained"
                       disabled={selectedSymptoms.length === 0}
                       onClick={() => setSymptomResult(recommendSpecialist(selectedSymptoms))}
-                      sx={{ background: 'linear-gradient(90deg,#0061a5,#0891b2)', borderRadius: 2.5, fontWeight: 700, boxShadow: 'none', '&.Mui-disabled': { backgroundColor: '#e2e8f0', color: '#94a3b8' } }}
+                      sx={{ background: `linear-gradient(90deg, ${C.blue}, ${C.blueBright})`, borderRadius: '10px', fontWeight: 700, boxShadow: 'none', '&.Mui-disabled': { backgroundColor: C.border, color: C.muted } }}
                     >
                       Check Symptoms ({selectedSymptoms.length})
                     </Button>
@@ -1017,21 +1018,21 @@ function ProfileDialog({ open, onClose, profile, onSaved }: ProfileDialogProps) 
       TransitionProps={{ onEnter: handleOpen }}
       PaperProps={{ sx: { borderRadius: 3 } }}
     >
-      <DialogTitle sx={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, color: '#0f172a', fontSize: '1.125rem', px: 3, pt: 3.5, pb: 1 }}>
+      <DialogTitle sx={{ fontFamily: 'inherit', fontWeight: 700, color: '#0f172a', fontSize: '1.125rem', px: 3, pt: 3.5, pb: 1 }}>
         My Profile
       </DialogTitle>
 
       <DialogContent sx={{ px: 3, pt: '16px !important', pb: 2 }}>
         {/* Avatar + name header */}
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.5, mb: 3 }}>
-          <Avatar sx={{ width: 72, height: 72, backgroundColor: '#0061a5', fontSize: '1.5rem', fontWeight: 700, fontFamily: 'Manrope, sans-serif' }}>
+          <Avatar sx={{ width: 72, height: 72, background: `linear-gradient(135deg, ${C.blue}, ${C.blueDark})`, fontSize: '1.5rem', fontWeight: 700 }}>
             {displayName ? getInitials(displayName) : '?'}
           </Avatar>
           <Box sx={{ textAlign: 'center' }}>
-            <Typography sx={{ fontWeight: 700, fontSize: '1rem', color: '#0f172a', fontFamily: 'Manrope, sans-serif' }}>
+            <Typography sx={{ fontWeight: 700, fontSize: '1rem', color: '#0f172a', fontFamily: 'inherit' }}>
               {displayName || '—'}
             </Typography>
-            <Chip label={roleLabel} size="small" sx={{ mt: 0.5, backgroundColor: '#eff6ff', color: '#1d4ed8', fontWeight: 600, fontSize: '0.7rem' }} />
+            <Chip label={roleLabel} size="small" sx={{ mt: 0.5, backgroundColor: C.blueLight, color: C.blue, fontWeight: 600, fontSize: '0.7rem' }} />
           </Box>
         </Box>
 
@@ -1081,7 +1082,7 @@ function ProfileDialog({ open, onClose, profile, onSaved }: ProfileDialogProps) 
               onClick={handleSave}
               disabled={saving}
               variant="contained"
-              sx={{ backgroundColor: '#0061a5', borderRadius: 2, fontWeight: 600, px: 3, '&:hover': { backgroundColor: '#004f8a' } }}
+              sx={{ backgroundColor: C.blue, borderRadius: '8px', fontWeight: 700, px: 3, boxShadow: 'none', '&:hover': { backgroundColor: C.blueDark } }}
             >
               {saving ? <CircularProgress size={20} color="inherit" /> : 'Save Changes'}
             </Button>
@@ -1093,7 +1094,7 @@ function ProfileDialog({ open, onClose, profile, onSaved }: ProfileDialogProps) 
               onClick={() => setEditing(true)}
               variant="contained"
               startIcon={<EditIcon sx={{ fontSize: 16 }} />}
-              sx={{ backgroundColor: '#0061a5', borderRadius: 2, fontWeight: 600, px: 3, '&:hover': { backgroundColor: '#004f8a' } }}
+              sx={{ backgroundColor: C.blue, borderRadius: '8px', fontWeight: 700, px: 3, boxShadow: 'none', '&:hover': { backgroundColor: C.blueDark } }}
             >
               Edit Profile
             </Button>

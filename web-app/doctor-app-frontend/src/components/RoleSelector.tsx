@@ -29,7 +29,7 @@ export default function RoleSelector({ selected, onChange }: RoleSelectorProps) 
               display: 'flex', flexDirection: 'column', alignItems: 'flex-start',
               gap: 0.5, p: 1.25,
               border: `1.5px solid ${active ? C.blue : C.border}`,
-              borderRadius: 2,
+              borderRadius: '10px',
               backgroundColor: active ? C.blueLight : C.paper,
               cursor: 'pointer', textAlign: 'left', width: '100%',
               transition: 'all 0.15s',
@@ -37,10 +37,10 @@ export default function RoleSelector({ selected, onChange }: RoleSelectorProps) 
             }}
           >
             <Box sx={{ color: active ? C.blue : C.slate }}>{icon}</Box>
-            <Typography sx={{ fontSize: '0.8125rem', fontWeight: 600, color: active ? C.blue : C.ink, fontFamily: 'Inter, sans-serif' }}>
+            <Typography sx={{ fontSize: '0.8125rem', fontWeight: 700, color: active ? C.blue : C.ink, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               {label}
             </Typography>
-            <Typography sx={{ fontSize: '0.6875rem', color: active ? C.blue : C.muted, fontFamily: 'Inter, sans-serif', lineHeight: 1.3 }}>
+            <Typography sx={{ fontSize: '0.6875rem', color: active ? C.blue : C.muted, fontFamily: "'Plus Jakarta Sans', sans-serif", lineHeight: 1.3 }}>
               {desc}
             </Typography>
           </Box>

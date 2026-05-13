@@ -7,7 +7,6 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useNavigate } from 'react-router-dom';
 import BrandingPanel from '../components/BrandingPanel';
-import BrandLogo from '../components/BrandLogo';
 import RoleSelector from '../components/RoleSelector';
 import { useAuth } from '../hooks/useAuth';
 import { useToast } from '../contexts/ToastContext';
@@ -62,10 +61,8 @@ export default function RegisterPage() {
     }
   };
 
-  const field = { mb: 1.5 } as const;
-
   return (
-    <Box component="main" sx={{ minHeight: '100vh', display: 'flex', flexDirection: { xs: 'column', md: 'row' }, backgroundColor: C.surface }}>
+    <Box component="main" sx={{ minHeight: '100vh', display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
       <BrandingPanel />
 
       <Box
@@ -73,43 +70,40 @@ export default function RegisterPage() {
         sx={{
           flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center',
           backgroundColor: C.paper,
-          px: { xs: 3, sm: 5, md: 5, lg: 10 },
+          px: { xs: 3, sm: 5, md: 5, lg: 8 },
           py: { xs: 5, md: 6 },
           overflowY: 'auto',
         }}
       >
-        <Box sx={{ maxWidth: 400, mx: 'auto', width: '100%' }}>
+        <Box sx={{ maxWidth: 420, mx: 'auto', width: '100%' }}>
 
-          <Box sx={{ display: { xs: 'flex', md: 'none' }, mb: 4 }}>
-            <BrandLogo iconSize="medium" />
-          </Box>
-
-          <Box mb={2.5}>
-            <Typography sx={{ fontSize: '1.375rem', fontWeight: 700, color: C.ink, letterSpacing: '-0.02em', lineHeight: 1.3, mb: 0.5 }}>
-              Create an account
+          {/* Header */}
+          <Box sx={{ mb: 3 }}>
+            <Typography sx={{ fontSize: '1.375rem', fontWeight: 800, color: C.ink, letterSpacing: '-0.02em', lineHeight: 1.3, mb: 0.5 }}>
+              Create your account
             </Typography>
             <Typography sx={{ fontSize: '0.8125rem', color: C.slate }}>
-              Fill in your details to get started.
+              Join MediCore — free to get started.
             </Typography>
           </Box>
 
           <RoleSelector selected={role} onChange={(r) => { setRole(r); setError(null); }} />
 
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-            {error && <Alert severity="error" sx={{ mb: 1.5 }}>{error}</Alert>}
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+            {error && <Alert severity="error" sx={{ py: 0.5 }}>{error}</Alert>}
 
-            <Box sx={field}>
-              <Typography sx={{ fontSize: '0.75rem', fontWeight: 500, color: C.slate, mb: 0.5 }}>Full Name</Typography>
+            <Box>
+              <Typography sx={{ fontSize: '0.75rem', fontWeight: 600, color: C.slate, mb: 0.5 }}>Full Name</Typography>
               <TextField fullWidth placeholder="John Doe" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
             </Box>
 
-            <Box sx={field}>
-              <Typography sx={{ fontSize: '0.75rem', fontWeight: 500, color: C.slate, mb: 0.5 }}>Email</Typography>
+            <Box>
+              <Typography sx={{ fontSize: '0.75rem', fontWeight: 600, color: C.slate, mb: 0.5 }}>Email</Typography>
               <TextField fullWidth type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </Box>
 
-            <Box sx={field}>
-              <Typography sx={{ fontSize: '0.75rem', fontWeight: 500, color: C.slate, mb: 0.5 }}>Password</Typography>
+            <Box>
+              <Typography sx={{ fontSize: '0.75rem', fontWeight: 600, color: C.slate, mb: 0.5 }}>Password</Typography>
               <TextField
                 fullWidth type={showPassword ? 'text' : 'password'} placeholder="Min. 8 characters"
                 value={password} onChange={(e) => setPassword(e.target.value)} required
@@ -127,12 +121,12 @@ export default function RegisterPage() {
 
             {role === 'patient' && (
               <>
-                <Box sx={field}>
-                  <Typography sx={{ fontSize: '0.75rem', fontWeight: 500, color: C.slate, mb: 0.5 }}>Date of Birth</Typography>
+                <Box>
+                  <Typography sx={{ fontSize: '0.75rem', fontWeight: 600, color: C.slate, mb: 0.5 }}>Date of Birth</Typography>
                   <TextField fullWidth placeholder="DD/MM/YYYY" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} required />
                 </Box>
-                <Box sx={field}>
-                  <Typography sx={{ fontSize: '0.75rem', fontWeight: 500, color: C.slate, mb: 0.5 }}>Phone Number</Typography>
+                <Box>
+                  <Typography sx={{ fontSize: '0.75rem', fontWeight: 600, color: C.slate, mb: 0.5 }}>Phone Number</Typography>
                   <TextField fullWidth type="tel" placeholder="+91 98765 43210" value={phone} onChange={(e) => setPhone(e.target.value)} required />
                 </Box>
               </>
@@ -140,39 +134,38 @@ export default function RegisterPage() {
 
             {role === 'doctor' && (
               <>
-                <Box sx={field}>
-                  <Typography sx={{ fontSize: '0.75rem', fontWeight: 500, color: C.slate, mb: 0.5 }}>License Number</Typography>
+                <Box>
+                  <Typography sx={{ fontSize: '0.75rem', fontWeight: 600, color: C.slate, mb: 0.5 }}>License Number</Typography>
                   <TextField fullWidth placeholder="ML-123456" value={licenseNumber} onChange={(e) => setLicenseNumber(e.target.value)} required />
                 </Box>
-                <Box sx={field}>
-                  <Typography sx={{ fontSize: '0.75rem', fontWeight: 500, color: C.slate, mb: 0.5 }}>Specialization</Typography>
+                <Box>
+                  <Typography sx={{ fontSize: '0.75rem', fontWeight: 600, color: C.slate, mb: 0.5 }}>Specialization</Typography>
                   <TextField fullWidth select value={specialization} onChange={(e) => setSpecialization(e.target.value)} required>
                     {specializations.map((s) => <MenuItem key={s} value={s}>{s}</MenuItem>)}
                   </TextField>
                 </Box>
-                <Box sx={field}>
-                  <Typography sx={{ fontSize: '0.75rem', fontWeight: 500, color: C.slate, mb: 0.5 }}>Hospital / Clinic</Typography>
+                <Box>
+                  <Typography sx={{ fontSize: '0.75rem', fontWeight: 600, color: C.slate, mb: 0.5 }}>Hospital / Clinic</Typography>
                   <TextField fullWidth placeholder="City General Hospital" value={hospital} onChange={(e) => setHospital(e.target.value)} required />
                 </Box>
               </>
             )}
 
-            <Button type="submit" fullWidth variant="contained" size="medium" disabled={loading}
-              sx={{ mt: 0.5, height: 38, fontSize: '0.8125rem' }}>
+            <Button type="submit" fullWidth variant="contained" size="medium" disabled={loading} sx={{ mt: 0.5 }}>
               {loading ? <CircularProgress size={15} color="inherit" /> : 'Create Account'}
             </Button>
           </Box>
 
-          <Typography sx={{ fontSize: '0.75rem', color: C.slate, textAlign: 'center', mt: 2 }}>
+          <Typography sx={{ fontSize: '0.75rem', color: C.muted, textAlign: 'center', mt: 2 }}>
             Already have an account?{' '}
             <Link component="button" type="button" onClick={() => navigate('/login')}
-              sx={{ fontSize: '0.75rem', fontWeight: 600, color: C.blue, background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
+              sx={{ fontSize: '0.75rem', fontWeight: 700, color: C.blue, background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
               Sign in
             </Link>
           </Typography>
 
-          <Box sx={{ mt: 5, pt: 2.5, borderTop: `1px solid ${C.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Box sx={{ display: 'flex', gap: 2.5 }}>
+          <Box sx={{ mt: 5, pt: 2.5, borderTop: `1px solid ${C.border}`, display: 'flex', justifyContent: 'space-between' }}>
+            <Box sx={{ display: 'flex', gap: 2 }}>
               {['Privacy', 'Terms'].map((label) => (
                 <Link key={label} href="#" sx={{ fontSize: '0.6875rem', color: C.muted, textDecoration: 'none', '&:hover': { color: C.slate } }}>
                   {label}
