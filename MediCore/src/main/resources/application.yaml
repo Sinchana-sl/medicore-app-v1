@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/medicore}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:}
 
   jpa:
     hibernate:
@@ -26,8 +26,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${MAIL_USERNAME}
-    password: ${MAIL_PASSWORD}
+    username: ${MAIL_USERNAME:dev@example.com}
+    password: ${MAIL_PASSWORD:}
     properties:
       mail:
         smtp:
@@ -38,7 +38,7 @@ mail:
   from: medicore.team@gmail.com
 
 jwt:
-  secret: ${JWT_SECRET}
+  secret: ${JWT_SECRET:local-dev-secret-key-must-be-at-least-256-bits-long-abcdefghij}
   expiration-ms: 900000
   refresh-expiration-ms: 604800000
 
@@ -49,11 +49,11 @@ app:
   frontend-url: ${FRONTEND_URL:http://localhost:5173}
 
 razorpay:
-  key-id: ${RAZORPAY_KEY_ID}
-  key-secret: ${RAZORPAY_KEY_SECRET}
+  key-id: ${RAZORPAY_KEY_ID:rzp_test_placeholder}
+  key-secret: ${RAZORPAY_KEY_SECRET:placeholder}
 
 groq:
-  api-key: ${GROQ_API_KEY}
+  api-key: ${GROQ_API_KEY:}
 
 logging:
   level:
