@@ -116,7 +116,7 @@ export default function PaymentModal({
           email: order.patientEmail,
           contact: isTestKey ? '+919999999999' : (patientPhone ?? ''),
         },
-        theme: { color: '#0061a5' },
+        theme: { color: '#0D9488' },
         modal: {
           ondismiss: () => {
             if (stage !== 'success' && stage !== 'expired') setStage('idle');
@@ -180,12 +180,12 @@ export default function PaymentModal({
       PaperProps={{ sx: { borderRadius: 3, overflow: 'hidden' } }}
     >
       {/* Header */}
-      <Box sx={{ background: 'linear-gradient(135deg, #0061a5, #0891b2)', p: 2.5, color: '#fff' }}>
+      <Box sx={{ backgroundColor: '#0D9488', p: 2.5, color: '#fff' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
             <PaymentIcon sx={{ fontSize: 28 }} />
             <Box>
-              <Typography sx={{ fontWeight: 800, fontSize: '1.1rem', fontFamily: 'Manrope, sans-serif' }}>
+              <Typography sx={{ fontWeight: 800, fontSize: '1.1rem', fontFamily: 'inherit' }}>
                 Complete Payment
               </Typography>
               <Typography sx={{ fontSize: '0.78rem', opacity: 0.85 }}>Secure payment via Razorpay</Typography>
@@ -198,7 +198,7 @@ export default function PaymentModal({
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, justifyContent: 'flex-end', mb: 0.5 }}>
                 <AccessTimeIcon sx={{ fontSize: 14, color: secondsLeft <= 60 ? '#fca5a5' : 'rgba(255,255,255,0.7)' }} />
                 <Typography sx={{
-                  fontSize: '1rem', fontWeight: 800, fontFamily: 'Manrope, sans-serif',
+                  fontSize: '1rem', fontWeight: 800, fontFamily: 'inherit',
                   color: secondsLeft <= 60 ? '#fca5a5' : '#fff',
                   letterSpacing: '0.05em',
                 }}>
@@ -227,12 +227,12 @@ export default function PaymentModal({
 
       <DialogContent sx={{ p: 3 }}>
         {/* Appointment summary */}
-        <Box sx={{ backgroundColor: '#f8fafc', borderRadius: 2, p: 2, mb: 2, border: '1px solid #e8eef8' }}>
+        <Box sx={{ backgroundColor: '#F7F7F5', borderRadius: 2, p: 2, mb: 2, border: '1px solid #E9E9E7' }}>
           <Typography sx={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a' }}>{doctorName}</Typography>
-          <Typography sx={{ fontSize: '0.78rem', color: '#0061a5', fontWeight: 600, mt: 0.25 }}>{specialty}</Typography>
+          <Typography sx={{ fontSize: '0.78rem', color: '#0D9488', fontWeight: 600, mt: 0.25 }}>{specialty}</Typography>
           <Divider sx={{ my: 1.25 }} />
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography sx={{ fontSize: '0.78rem', color: '#64748b' }}>{date} · {time}</Typography>
+            <Typography sx={{ fontSize: '0.78rem', color: '#73726E' }}>{date} · {time}</Typography>
             <Chip
               label={stage === 'success' ? 'Confirmed' : 'Awaiting Payment'}
               size="small"
@@ -262,17 +262,17 @@ export default function PaymentModal({
 
         {/* Amount */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-          <Typography sx={{ fontSize: '0.85rem', color: '#475569', fontWeight: 600 }}>Consultation Fee</Typography>
-          <Typography sx={{ fontSize: '1.35rem', fontWeight: 800, color: '#0061a5', fontFamily: 'Manrope, sans-serif' }}>
+          <Typography sx={{ fontSize: '0.85rem', color: '#73726E', fontWeight: 600 }}>Consultation Fee</Typography>
+          <Typography sx={{ fontSize: '1.35rem', fontWeight: 800, color: '#0D9488', fontFamily: 'inherit' }}>
             {amount}
           </Typography>
         </Box>
 
         {/* Stage feedback */}
         {stage === 'verifying' && (
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 2, backgroundColor: '#eff6ff', borderRadius: 2 }}>
-            <CircularProgress size={18} sx={{ color: '#0061a5' }} />
-            <Typography sx={{ fontSize: '0.82rem', color: '#0061a5', fontWeight: 600 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 2, backgroundColor: '#F0FDFA', borderRadius: 2 }}>
+            <CircularProgress size={18} sx={{ color: '#0D9488' }} />
+            <Typography sx={{ fontSize: '0.82rem', color: '#0D9488', fontWeight: 600 }}>
               Verifying your payment…
             </Typography>
           </Box>
@@ -308,7 +308,7 @@ export default function PaymentModal({
           </Box>
         )}
 
-        <Typography sx={{ fontSize: '0.68rem', color: '#94a3b8', mt: 2, textAlign: 'center' }}>
+        <Typography sx={{ fontSize: '0.68rem', color: '#9B9A97', mt: 2, textAlign: 'center' }}>
           256-bit encrypted • PCI-DSS compliant • Supports UPI, cards, net banking & wallets
         </Typography>
       </DialogContent>
@@ -343,7 +343,7 @@ export default function PaymentModal({
               background: 'linear-gradient(90deg, #7c3aed, #6d28d9)',
               borderRadius: 2, fontWeight: 700, boxShadow: 'none', py: 1,
               '&:hover': { background: 'linear-gradient(90deg, #6d28d9, #5b21b6)', boxShadow: '0 3px 8px rgba(109,40,217,0.35)' },
-              '&.Mui-disabled': { backgroundColor: '#e2e8f0', color: '#94a3b8' },
+              '&.Mui-disabled': { backgroundColor: '#E9E9E7', color: '#9B9A97' },
             }}
           >
             Simulate Payment (Test Mode)
@@ -356,7 +356,7 @@ export default function PaymentModal({
             disabled={isBlocked}
             variant="outlined"
             size="small"
-            sx={{ borderColor: '#e2e8f0', color: '#475569', borderRadius: 2, fontWeight: 600, flex: 1 }}
+            sx={{ borderColor: '#E9E9E7', color: '#73726E', borderRadius: 2, fontWeight: 600, flex: 1 }}
           >
             {stage === 'expired' ? 'Close' : 'Cancel'}
           </Button>
@@ -368,9 +368,9 @@ export default function PaymentModal({
               size="small"
               startIcon={stage === 'loading' ? <CircularProgress size={14} color="inherit" /> : <PaymentIcon />}
               sx={{
-                backgroundColor: '#0061a5', borderRadius: 2, fontWeight: 700, flex: 2, boxShadow: 'none',
-                '&:hover': { backgroundColor: '#004f8a' },
-                '&.Mui-disabled': { backgroundColor: '#e2e8f0', color: '#94a3b8' },
+                backgroundColor: '#0D9488', borderRadius: 2, fontWeight: 700, flex: 2, boxShadow: 'none',
+                '&:hover': { backgroundColor: '#0F766E' },
+                '&.Mui-disabled': { backgroundColor: '#E9E9E7', color: '#9B9A97' },
               }}
             >
               {stage === 'loading' ? 'Preparing…' : `Pay via Razorpay`}

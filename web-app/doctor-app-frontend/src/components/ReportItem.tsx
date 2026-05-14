@@ -15,7 +15,7 @@ interface ReportItemProps {
 
 const iconMap = {
   pdf:          { icon: <PictureAsPdfIcon sx={{ fontSize: 18 }} />, bg: '#fef2f2', color: '#dc2626' },
-  doc:          { icon: <DescriptionIcon sx={{ fontSize: 18 }} />,  bg: '#eff6ff', color: '#2563eb' },
+  doc:          { icon: <DescriptionIcon sx={{ fontSize: 18 }} />,  bg: '#F0FDFA', color: '#2563eb' },
   prescription: { icon: <MedicationIcon sx={{ fontSize: 18 }} />,  bg: '#faf5ff', color: '#9333ea' },
 };
 
@@ -33,7 +33,7 @@ export default function ReportItem({ title, subtitle, type, status }: ReportItem
       sx={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         p: 1.75, borderRadius: 2.5,
-        border: '1px solid #f1f5f9',
+        border: '1px solid #F1F0EF',
         backgroundColor: '#fafbfd',
         gap: 1.5,
         transition: 'background 0.15s, border-color 0.15s',
@@ -56,7 +56,7 @@ export default function ReportItem({ title, subtitle, type, status }: ReportItem
           <Typography sx={{ fontWeight: 700, fontSize: '0.8125rem', color: '#0f172a', lineHeight: 1.3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {title}
           </Typography>
-          <Typography sx={{ fontSize: '0.72rem', color: '#94a3b8', mt: 0.25, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <Typography sx={{ fontSize: '0.72rem', color: '#9B9A97', mt: 0.25, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {subtitle}
           </Typography>
         </Box>
@@ -72,7 +72,7 @@ export default function ReportItem({ title, subtitle, type, status }: ReportItem
         <IconButton
           size="small"
           disabled={status === 'Pending'}
-          sx={{ color: status === 'Pending' ? '#cbd5e1' : '#94a3b8', '&:hover': { color: '#0061a5', backgroundColor: '#eff6ff' } }}
+          sx={{ color: status === 'Pending' ? '#C8C8C5' : '#9B9A97', '&:hover': { color: '#0D9488', backgroundColor: '#F0FDFA' } }}
         >
           <DownloadIcon sx={{ fontSize: 16 }} />
         </IconButton>

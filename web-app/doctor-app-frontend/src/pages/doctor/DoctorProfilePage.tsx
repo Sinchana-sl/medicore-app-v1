@@ -18,7 +18,7 @@ function getInitials(name: string) {
 
 function SectionLabel({ children }: { children: string }) {
   return (
-    <Typography sx={{ fontSize: '0.6875rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', mb: 2, mt: 0.5 }}>
+    <Typography sx={{ fontSize: '0.6875rem', fontWeight: 700, color: '#9B9A97', textTransform: 'uppercase', letterSpacing: '0.08em', mb: 2, mt: 0.5 }}>
       {children}
     </Typography>
   );
@@ -98,14 +98,14 @@ export default function DoctorProfilePage() {
                   {displayName ? getInitials(displayName) : <PersonIcon sx={{ fontSize: 48 }} />}
                 </Avatar>
                 <Typography sx={{ fontWeight: 700, fontSize: '1.125rem', color: '#37352F', fontFamily: 'inherit' }}>{displayName || '—'}</Typography>
-                <Typography sx={{ fontSize: '0.8125rem', color: '#64748b', mb: 2 }}>{profile?.email}</Typography>
+                <Typography sx={{ fontSize: '0.8125rem', color: '#73726E', mb: 2 }}>{profile?.email}</Typography>
                 <Divider sx={{ mb: 2 }} />
                 <FormControlLabel
                   control={
                     <Switch checked={isAvailable} onChange={(e) => setIsAvailable(e.target.checked)} color="success" />
                   }
                   label={
-                    <Typography sx={{ fontSize: '0.875rem', fontWeight: 600, color: isAvailable ? '#16a34a' : '#94a3b8' }}>
+                    <Typography sx={{ fontSize: '0.875rem', fontWeight: 600, color: isAvailable ? '#16a34a' : '#9B9A97' }}>
                       {isAvailable ? 'Accepting patients' : 'Not available'}
                     </Typography>
                   }

@@ -184,7 +184,7 @@ export default function PatientAppointmentsPage() {
             {!loading && (
               <Grid container spacing={2} sx={{ mb: 3 }}>
                 {[
-                  { icon: <CalendarTodayIcon />,        label: 'Total',           value: counts.all,       bg: '#eff6ff', color: '#0D9488' },
+                  { icon: <CalendarTodayIcon />,        label: 'Total',           value: counts.all,       bg: '#F0FDFA', color: '#0D9488' },
                   { icon: <EventAvailableIcon />,       label: 'Confirmed',       value: counts.confirmed,  bg: '#f0fdf4', color: '#16a34a' },
                   { icon: <PendingActionsIcon />,       label: 'Pending Payment', value: counts.pending,    bg: '#fffbeb', color: '#d97706' },
                   { icon: <EventBusyIcon />,            label: 'Cancelled',       value: counts.cancelled,  bg: '#fef2f2', color: '#dc2626' },
@@ -223,8 +223,8 @@ export default function PatientAppointmentsPage() {
                             size="small"
                             sx={{
                               height: 18, fontSize: '0.65rem', fontWeight: 700,
-                              backgroundColor: tab === i ? '#eff6ff' : '#F1F0EF',
-                              color: tab === i ? '#0D9488' : '#64748b',
+                              backgroundColor: tab === i ? '#F0FDFA' : '#F1F0EF',
+                              color: tab === i ? '#0D9488' : '#73726E',
                               '& .MuiChip-label': { px: 0.75 },
                             }}
                           />
@@ -242,14 +242,14 @@ export default function PatientAppointmentsPage() {
                   placeholder="Search by doctor, specialty, clinic…"
                   value={search}
                   onChange={e => setSearch(e.target.value)}
-                  InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon sx={{ fontSize: 18, color: '#94a3b8' }} /></InputAdornment> }}
+                  InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon sx={{ fontSize: 18, color: '#9B9A97' }} /></InputAdornment> }}
                   sx={{ flex: 1, '& .MuiOutlinedInput-root': { borderRadius: 2.5 } }}
                 />
                 <Button
                   size="small"
                   startIcon={<FilterListIcon />}
                   onClick={e => setSortAnchor(e.currentTarget)}
-                  sx={{ borderRadius: '6px', border: '1px solid #E9E9E7', color: '#475569', fontWeight: 600, fontSize: '0.78rem', whiteSpace: 'nowrap', px: 1.5 }}
+                  sx={{ borderRadius: '6px', border: '1px solid #E9E9E7', color: '#73726E', fontWeight: 600, fontSize: '0.78rem', whiteSpace: 'nowrap', px: 1.5 }}
                 >
                   {sortOrder === 'desc' ? 'Newest First' : 'Oldest First'}
                 </Button>
@@ -323,7 +323,7 @@ export default function PatientAppointmentsPage() {
         <DialogContent>
           {cancelTarget && (
             <Box>
-              <Typography sx={{ fontSize: '0.875rem', color: '#475569', mb: 2 }}>
+              <Typography sx={{ fontSize: '0.875rem', color: '#73726E', mb: 2 }}>
                 Are you sure you want to cancel your appointment with
               </Typography>
               <Box sx={{ backgroundColor: '#F7F7F5', borderRadius: '6px', p: 2, border: '1px solid #E9E9E7' }}>
@@ -341,7 +341,7 @@ export default function PatientAppointmentsPage() {
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2.5, gap: 1 }}>
           <Button onClick={() => setCancelTarget(null)} variant="outlined"
-            sx={{ borderRadius: '6px', fontWeight: 600, borderColor: '#E9E9E7', color: '#475569' }}>
+            sx={{ borderRadius: '6px', fontWeight: 600, borderColor: '#E9E9E7', color: '#73726E' }}>
             Keep Appointment
           </Button>
           <Button onClick={handleCancel} variant="contained" disabled={cancelling}

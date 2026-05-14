@@ -74,7 +74,7 @@ function SettingsCard({ title, subtitle, children }: { title: string; subtitle?:
           {title}
         </Typography>
         {subtitle && (
-          <Typography sx={{ fontSize: '0.78rem', color: '#94a3b8', mt: 0.25 }}>{subtitle}</Typography>
+          <Typography sx={{ fontSize: '0.78rem', color: '#9B9A97', mt: 0.25 }}>{subtitle}</Typography>
         )}
       </Box>
       <Box sx={{ p: 3 }}>{children}</Box>
@@ -88,7 +88,7 @@ function SettingsRow({ label, description, control }: { label: string; descripti
       '&:not(:last-child)': { borderBottom: '1px solid #f8fafc' } }}>
       <Box>
         <Typography sx={{ fontSize: '0.875rem', fontWeight: 600, color: '#37352F' }}>{label}</Typography>
-        {description && <Typography sx={{ fontSize: '0.75rem', color: '#94a3b8', mt: 0.25 }}>{description}</Typography>}
+        {description && <Typography sx={{ fontSize: '0.75rem', color: '#9B9A97', mt: 0.25 }}>{description}</Typography>}
       </Box>
       <Box sx={{ flexShrink: 0 }}>{control}</Box>
     </Box>
@@ -274,7 +274,7 @@ export default function PatientSettingsPage() {
 
   function renderProfile() {
     const infoRows = [
-      { label: 'First Name',    value: profile?.firstName || '—', icon: <PersonIcon sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#eff6ff' },
+      { label: 'First Name',    value: profile?.firstName || '—', icon: <PersonIcon sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#F0FDFA' },
       { label: 'Last Name',     value: profile?.lastName  || '—', icon: <PersonIcon sx={{ fontSize: 20, color: '#7c3aed' }} />, bg: '#faf5ff' },
       { label: 'Email',         value: profile?.email     || '—', icon: <EmailIcon  sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#ecfeff', badge: 'Verified' },
       { label: 'Phone',         value: profile?.phone     || '—', icon: <PhoneAndroidIcon sx={{ fontSize: 20, color: '#16a34a' }} />, bg: '#f0fdf4' },
@@ -372,7 +372,7 @@ export default function PatientSettingsPage() {
                 onChange={e => setPhone(e.target.value)}
                 fullWidth size="small"
                 placeholder="+91 XXXXX XXXXX"
-                slotProps={{ input: { startAdornment: <InputAdornment position="start"><PhoneAndroidIcon sx={{ fontSize: 18, color: '#94a3b8' }} /></InputAdornment> } }}
+                slotProps={{ input: { startAdornment: <InputAdornment position="start"><PhoneAndroidIcon sx={{ fontSize: 18, color: '#9B9A97' }} /></InputAdornment> } }}
                 sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
               />
               <Box sx={{ display: 'flex', gap: 2 }}>
@@ -434,7 +434,7 @@ export default function PatientSettingsPage() {
                   {f.icon}
                 </Box>
                 <Box sx={{ flex: 1, minWidth: 0 }}>
-                  <Typography sx={{ fontSize: '0.65rem', fontWeight: 700, color: '#94a3b8',
+                  <Typography sx={{ fontSize: '0.65rem', fontWeight: 700, color: '#9B9A97',
                     textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                     {f.label}
                   </Typography>
@@ -459,26 +459,26 @@ export default function PatientSettingsPage() {
               {
                 label: 'Blood Type',
                 value: profile?.bloodType || 'Not set',
-                icon: <BloodtypeIcon sx={{ fontSize: 24, color: profile?.bloodType ? '#dc2626' : '#94a3b8' }} />,
+                icon: <BloodtypeIcon sx={{ fontSize: 24, color: profile?.bloodType ? '#dc2626' : '#9B9A97' }} />,
                 bg: profile?.bloodType ? '#fef2f2' : '#F7F7F5',
                 border: profile?.bloodType ? '#fecaca' : '#e2e8f0',
-                color: profile?.bloodType ? '#dc2626' : '#94a3b8',
+                color: profile?.bloodType ? '#dc2626' : '#9B9A97',
               },
               {
                 label: 'Date of Birth',
                 value: fmtDob(profile?.dateOfBirth ?? null),
-                icon: <CalendarMonthIcon sx={{ fontSize: 24, color: profile?.dateOfBirth ? '#f59e0b' : '#94a3b8' }} />,
+                icon: <CalendarMonthIcon sx={{ fontSize: 24, color: profile?.dateOfBirth ? '#f59e0b' : '#9B9A97' }} />,
                 bg: profile?.dateOfBirth ? '#fffbeb' : '#F7F7F5',
                 border: profile?.dateOfBirth ? '#fde68a' : '#e2e8f0',
-                color: profile?.dateOfBirth ? '#b45309' : '#94a3b8',
+                color: profile?.dateOfBirth ? '#b45309' : '#9B9A97',
               },
               {
                 label: 'Gender',
                 value: profile?.gender || 'Not set',
-                icon: <WcIcon sx={{ fontSize: 24, color: profile?.gender ? '#ec4899' : '#94a3b8' }} />,
+                icon: <WcIcon sx={{ fontSize: 24, color: profile?.gender ? '#ec4899' : '#9B9A97' }} />,
                 bg: profile?.gender ? '#fdf2f8' : '#F7F7F5',
                 border: profile?.gender ? '#fbcfe8' : '#e2e8f0',
-                color: profile?.gender ? '#be185d' : '#94a3b8',
+                color: profile?.gender ? '#be185d' : '#9B9A97',
               },
             ].map(card => (
               <Box key={card.label} sx={{
@@ -488,7 +488,7 @@ export default function PatientSettingsPage() {
                 textAlign: 'center',
               }}>
                 <Box sx={{ mb: 1 }}>{card.icon}</Box>
-                <Typography sx={{ fontSize: '0.65rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em', mb: 0.5 }}>
+                <Typography sx={{ fontSize: '0.65rem', fontWeight: 700, color: '#9B9A97', textTransform: 'uppercase', letterSpacing: '0.06em', mb: 0.5 }}>
                   {card.label}
                 </Typography>
                 <Typography sx={{ fontSize: '1rem', fontWeight: 800, color: card.color, fontFamily: 'inherit' }}>
@@ -517,7 +517,7 @@ export default function PatientSettingsPage() {
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.25 }}>
             {[
               { label: 'User ID',      value: profile?.id ? profile.id.slice(0, 8) + '…' : '—', icon: <ShieldIcon sx={{ fontSize: 20, color: '#73726E' }} />, bg: '#F7F7F5' },
-              { label: 'Account Type', value: 'Patient',    icon: <PersonIcon sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#eff6ff', badge: 'Active' },
+              { label: 'Account Type', value: 'Patient',    icon: <PersonIcon sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#F0FDFA', badge: 'Active' },
               { label: 'Member Since', value: profile?.memberSince || '—', icon: <CalendarMonthIcon sx={{ fontSize: 20, color: '#7c3aed' }} />, bg: '#faf5ff' },
             ].map(row => (
               <Box key={row.label} sx={{
@@ -530,7 +530,7 @@ export default function PatientSettingsPage() {
                   {row.icon}
                 </Box>
                 <Box sx={{ flex: 1 }}>
-                  <Typography sx={{ fontSize: '0.65rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                  <Typography sx={{ fontSize: '0.65rem', fontWeight: 700, color: '#9B9A97', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                     {row.label}
                   </Typography>
                   <Typography sx={{ fontSize: '0.9rem', fontWeight: 700, color: '#37352F', mt: 0.2 }}>
@@ -553,7 +553,7 @@ export default function PatientSettingsPage() {
     const pwOptions = [
       {
         icon: <EmailIcon sx={{ fontSize: 20, color: '#0D9488' }} />,
-        bg: '#eff6ff',
+        bg: '#F0FDFA',
         title: 'Email OTP Verification',
         desc: `One-time code sent to ${profile?.email ?? 'your email'}`,
       },
@@ -629,10 +629,10 @@ export default function PatientSettingsPage() {
                 </Box>
                 <Box sx={{
                   display: 'flex', alignItems: 'center', gap: 2, p: 2.5,
-                  borderRadius: '8px', border: '2px solid #bfdbfe',
-                  background: 'linear-gradient(135deg, #eff6ff, #fff)',
+                  borderRadius: '8px', border: '2px solid #CCFBF1',
+                  background: 'linear-gradient(135deg, #F0FDFA, #fff)',
                 }}>
-                  <Box sx={{ width: 48, height: 48, borderRadius: '6px', backgroundColor: '#eff6ff', flexShrink: 0,
+                  <Box sx={{ width: 48, height: 48, borderRadius: '6px', backgroundColor: '#F0FDFA', flexShrink: 0,
                     display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <VpnKeyIcon sx={{ fontSize: 24, color: '#0D9488' }} />
                   </Box>
@@ -645,7 +645,7 @@ export default function PatientSettingsPage() {
                     </Typography>
                   </Box>
                   <Chip label="Step 2 — now" size="small"
-                    sx={{ flexShrink: 0, height: 22, fontSize: '0.65rem', fontWeight: 700, backgroundColor: '#eff6ff', color: '#0D9488' }} />
+                    sx={{ flexShrink: 0, height: 22, fontSize: '0.65rem', fontWeight: 700, backgroundColor: '#F0FDFA', color: '#0D9488' }} />
                 </Box>
               </Box>
               <Box sx={{ p: 3, borderRadius: '8px', border: '1px solid #E9E9E7',
@@ -679,7 +679,7 @@ export default function PatientSettingsPage() {
                         icon={r.ok ? <CheckCircleIcon sx={{ fontSize: '12px !important' }} /> : undefined}
                         sx={{ fontSize: '0.65rem', fontWeight: 700, height: 22,
                           backgroundColor: r.ok ? '#f0fdf4' : '#F1F0EF',
-                          color: r.ok ? '#16a34a' : '#94a3b8' }} />
+                          color: r.ok ? '#16a34a' : '#9B9A97' }} />
                     ))}
                   </Box>
                 )}
@@ -754,7 +754,7 @@ export default function PatientSettingsPage() {
         title: 'Appointment Reminders',
         subtitle: 'Get notified about upcoming appointments',
         rows: [
-          { key: 'email_reminders',    label: 'Email reminders',    desc: '24 hours before your appointment', icon: <EmailIcon sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#eff6ff' },
+          { key: 'email_reminders',    label: 'Email reminders',    desc: '24 hours before your appointment', icon: <EmailIcon sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#F0FDFA' },
           { key: 'whatsapp_reminders', label: 'WhatsApp reminders', desc: 'Quick message before your visit',  icon: <SmartphoneIcon sx={{ fontSize: 20, color: '#16a34a' }} />, bg: '#f0fdf4' },
           { key: 'sms_reminders',      label: 'SMS reminders',      desc: 'Text reminder 2 hours before',    icon: <SmsIcon sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#ecfeff' },
         ],
@@ -803,10 +803,10 @@ export default function PatientSettingsPage() {
                       transition: 'background 0.15s' }}>
                       {row.icon}
                     </Box>
-                    <Typography sx={{ fontSize: '0.82rem', fontWeight: 700, color: on ? '#37352F' : '#94a3b8', lineHeight: 1.3 }}>
+                    <Typography sx={{ fontSize: '0.82rem', fontWeight: 700, color: on ? '#37352F' : '#9B9A97', lineHeight: 1.3 }}>
                       {row.label}
                     </Typography>
-                    <Typography sx={{ fontSize: '0.68rem', color: '#94a3b8', lineHeight: 1.4 }}>
+                    <Typography sx={{ fontSize: '0.68rem', color: '#9B9A97', lineHeight: 1.4 }}>
                       {row.desc}
                     </Typography>
                     <Switch
@@ -849,13 +849,13 @@ export default function PatientSettingsPage() {
                   '&:hover': { borderColor: '#0D9488' },
                 }}>
                   {opt.icon}
-                  <Typography sx={{ fontSize: '0.82rem', fontWeight: 700, color: active ? '#0D9488' : '#475569', mt: 1 }}>{opt.label}</Typography>
-                  {active && <Chip label="Active" size="small" sx={{ mt: 0.75, height: 20, fontSize: '0.6rem', fontWeight: 700, backgroundColor: '#eff6ff', color: '#0D9488' }} />}
+                  <Typography sx={{ fontSize: '0.82rem', fontWeight: 700, color: active ? '#0D9488' : '#73726E', mt: 1 }}>{opt.label}</Typography>
+                  {active && <Chip label="Active" size="small" sx={{ mt: 0.75, height: 20, fontSize: '0.6rem', fontWeight: 700, backgroundColor: '#F0FDFA', color: '#0D9488' }} />}
                 </Box>
               );
             })}
           </Box>
-          <Typography sx={{ fontSize: '0.72rem', color: '#94a3b8', mt: 2 }}>
+          <Typography sx={{ fontSize: '0.72rem', color: '#9B9A97', mt: 2 }}>
             Note: Theme switching is saved as a preference. Full dark mode will be applied in the next update.
           </Typography>
         </SettingsCard>
@@ -869,15 +869,15 @@ export default function PatientSettingsPage() {
                   icon={active ? <CheckCircleIcon sx={{ fontSize: '14px !important', color: '#0D9488 !important' }} /> : undefined}
                   sx={{
                     fontWeight: 700, fontSize: '0.78rem',
-                    backgroundColor: active ? '#eff6ff' : '#F7F7F5',
-                    color: active ? '#0D9488' : '#475569',
-                    border: `1px solid ${active ? '#bfdbfe' : '#e2e8f0'}`,
-                    '&:hover': { backgroundColor: active ? '#dbeafe' : '#F1F0EF' },
+                    backgroundColor: active ? '#F0FDFA' : '#F7F7F5',
+                    color: active ? '#0D9488' : '#73726E',
+                    border: `1px solid ${active ? '#CCFBF1' : '#e2e8f0'}`,
+                    '&:hover': { backgroundColor: active ? '#CCFBF1' : '#F1F0EF' },
                   }} />
               );
             })}
           </Box>
-          <Typography sx={{ fontSize: '0.72rem', color: '#94a3b8', mt: 2 }}>
+          <Typography sx={{ fontSize: '0.72rem', color: '#9B9A97', mt: 2 }}>
             This language is used for AI document explanations in the Chat section.
           </Typography>
         </SettingsCard>
@@ -900,13 +900,13 @@ export default function PatientSettingsPage() {
         <SettingsCard title="Sign Out" subtitle="End your current session">
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Box sx={{ flex: 1 }}>
-              <Typography sx={{ fontSize: '0.875rem', color: '#475569' }}>
+              <Typography sx={{ fontSize: '0.875rem', color: '#73726E' }}>
                 You will be redirected to the login page. Your data is safely stored and you can log back in at any time.
               </Typography>
             </Box>
             <Button onClick={logout} variant="outlined" startIcon={<LogoutIcon />}
               sx={{ flexShrink: 0, borderColor: '#0D9488', color: '#0D9488', borderRadius: '6px', fontWeight: 700,
-                '&:hover': { backgroundColor: '#eff6ff', borderColor: '#0F766E' } }}>
+                '&:hover': { backgroundColor: '#F0FDFA', borderColor: '#0F766E' } }}>
               Sign Out
             </Button>
           </Box>
@@ -987,12 +987,12 @@ export default function PatientSettingsPage() {
                     transition: 'all 0.15s',
                     '&:hover': { backgroundColor: active ? '#0F766E' : '#F1F0EF' },
                   }}>
-                    <Box sx={{ display: 'flex', color: active ? '#fff' : '#94a3b8', '& svg': { fontSize: 18 } }}>
+                    <Box sx={{ display: 'flex', color: active ? '#fff' : '#9B9A97', '& svg': { fontSize: 18 } }}>
                       {s.icon}
                     </Box>
                     <Typography sx={{
                       fontSize: '0.8125rem', fontWeight: 700, fontFamily: 'inherit',
-                      color: active ? '#fff' : '#475569',
+                      color: active ? '#fff' : '#73726E',
                       whiteSpace: 'nowrap',
                     }}>
                       {s.label}
@@ -1029,7 +1029,7 @@ export default function PatientSettingsPage() {
           <Alert severity="error" sx={{ borderRadius: 2 }}>
             This action <strong>cannot be undone</strong>. All your data will be permanently deleted.
           </Alert>
-          <Typography sx={{ fontSize: '0.875rem', color: '#475569' }}>
+          <Typography sx={{ fontSize: '0.875rem', color: '#73726E' }}>
             Type <strong>DELETE</strong> below to confirm you want to permanently delete your account.
           </Typography>
           <TextField size="small" placeholder="Type DELETE to confirm" value={deleteConfirm}

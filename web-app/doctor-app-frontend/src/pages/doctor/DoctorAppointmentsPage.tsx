@@ -30,8 +30,8 @@ const STATUS_TABS: { value: StatusFilter; label: string }[] = [
 ];
 
 const STATUS_STYLE: Record<string, { label: string; bg: string; color: string }> = {
-  PENDING:   { label: 'Pending',   bg: '#eff6ff', color: '#0D9488' },
-  CONFIRMED: { label: 'Confirmed', bg: '#F1F0EF', color: '#475569' },
+  PENDING:   { label: 'Pending',   bg: '#F0FDFA', color: '#0D9488' },
+  CONFIRMED: { label: 'Confirmed', bg: '#F1F0EF', color: '#73726E' },
   COMPLETED: { label: 'Completed', bg: '#f0fdf4', color: '#16a34a' },
   CANCELLED: { label: 'Cancelled', bg: '#fef2f2', color: '#dc2626' },
 };
@@ -39,7 +39,7 @@ const STATUS_STYLE: Record<string, { label: string; bg: string; color: string }>
 function AppointmentRow({ appt, onCompleted }: { appt: DoctorAppointment; onCompleted: (updated: DoctorAppointment) => void }) {
   const toast = useToast();
   const [completing, setCompleting] = useState(false);
-  const s = STATUS_STYLE[appt.status.toUpperCase()] ?? { label: appt.status, bg: '#F1F0EF', color: '#475569' };
+  const s = STATUS_STYLE[appt.status.toUpperCase()] ?? { label: appt.status, bg: '#F1F0EF', color: '#73726E' };
   const isActive = !['COMPLETED', 'CANCELLED'].includes(appt.status.toUpperCase());
 
   const handleComplete = async () => {
@@ -76,11 +76,11 @@ function AppointmentRow({ appt, onCompleted }: { appt: DoctorAppointment; onComp
           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
           backgroundColor: '#F7F7F5', borderRadius: '6px', p: 2, minWidth: 100, flexShrink: 0,
         }}>
-          <CalendarTodayIcon sx={{ fontSize: '1rem', color: '#94a3b8', mb: 0.5 }} />
+          <CalendarTodayIcon sx={{ fontSize: '1rem', color: '#9B9A97', mb: 0.5 }} />
           <Typography sx={{ fontSize: '0.75rem', fontWeight: 600, color: '#37352F', fontFamily: 'inherit' }}>
             {fmtDate(appt.appointmentDate)}
           </Typography>
-          <Typography sx={{ fontSize: '0.8125rem', color: '#64748b', mt: 0.25 }}>
+          <Typography sx={{ fontSize: '0.8125rem', color: '#73726E', mt: 0.25 }}>
             {appt.startTime}
           </Typography>
         </Box>
@@ -92,7 +92,7 @@ function AppointmentRow({ appt, onCompleted }: { appt: DoctorAppointment; onComp
               <Typography sx={{ fontSize: '1.0625rem', fontWeight: 700, color: '#37352F', fontFamily: 'inherit' }}>
                 {appt.patientName || appt.patientEmail}
               </Typography>
-              <Typography sx={{ fontSize: '0.8125rem', color: '#64748b', mt: 0.25 }}>
+              <Typography sx={{ fontSize: '0.8125rem', color: '#73726E', mt: 0.25 }}>
                 {appt.reason || '—'}
               </Typography>
             </Box>
@@ -100,7 +100,7 @@ function AppointmentRow({ appt, onCompleted }: { appt: DoctorAppointment; onComp
               <Chip
                 label={appt.consultationType.replace('_', ' ')}
                 size="small"
-                sx={{ backgroundColor: '#F1F0EF', color: '#475569', fontWeight: 600, fontSize: '0.6875rem', borderRadius: 6, height: 24 }}
+                sx={{ backgroundColor: '#F1F0EF', color: '#73726E', fontWeight: 600, fontSize: '0.6875rem', borderRadius: 6, height: 24 }}
               />
               <Chip
                 label={s.label}
@@ -184,7 +184,7 @@ export default function DoctorAppointmentsPage() {
       {/* Summary cards */}
       <Grid container spacing={2} sx={{ mb: 4 }}>
         {[
-          { label: 'Pending',   value: counts.PENDING,   bg: '#eff6ff', color: '#0D9488', icon: <PendingActionsIcon sx={{ fontSize: '1.25rem' }} /> },
+          { label: 'Pending',   value: counts.PENDING,   bg: '#F0FDFA', color: '#0D9488', icon: <PendingActionsIcon sx={{ fontSize: '1.25rem' }} /> },
           { label: 'Confirmed', value: counts.CONFIRMED, bg: '#f0fdf4', color: '#15803d', icon: <CalendarTodayIcon   sx={{ fontSize: '1.25rem' }} /> },
           { label: 'Completed', value: counts.COMPLETED, bg: '#f0fdf4', color: '#16a34a', icon: <CheckCircleIcon     sx={{ fontSize: '1.25rem' }} /> },
           { label: 'Cancelled', value: counts.CANCELLED, bg: '#fef2f2', color: '#dc2626', icon: <CalendarTodayIcon   sx={{ fontSize: '1.25rem' }} /> },
@@ -196,7 +196,7 @@ export default function DoctorAppointmentsPage() {
               </Box>
               <Box>
                 <Typography sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#37352F', fontFamily: 'inherit', lineHeight: 1.1 }}>{value}</Typography>
-                <Typography sx={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 500 }}>{label}</Typography>
+                <Typography sx={{ fontSize: '0.75rem', color: '#9B9A97', fontWeight: 500 }}>{label}</Typography>
               </Box>
             </Box>
           </Grid>
@@ -213,7 +213,7 @@ export default function DoctorAppointmentsPage() {
               placeholder="Search patient name, email or reason…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon sx={{ color: '#94a3b8', fontSize: '1.1rem' }} /></InputAdornment> }}
+              InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon sx={{ color: '#9B9A97', fontSize: '1.1rem' }} /></InputAdornment> }}
               sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
             />
           </Grid>
@@ -277,8 +277,8 @@ export default function DoctorAppointmentsPage() {
       ) : filtered.length === 0 ? (
         <Box sx={{ backgroundColor: '#fff', p: 6, borderRadius: '8px', border: '1px solid #E9E9E7', textAlign: 'center', boxShadow: 'none' }}>
           <CalendarTodayIcon sx={{ fontSize: 48, color: '#cbd5e1', mb: 2 }} />
-          <Typography sx={{ color: '#64748b', fontWeight: 600, mb: 0.5 }}>No appointments found</Typography>
-          <Typography sx={{ fontSize: '0.875rem', color: '#94a3b8' }}>
+          <Typography sx={{ color: '#73726E', fontWeight: 600, mb: 0.5 }}>No appointments found</Typography>
+          <Typography sx={{ fontSize: '0.875rem', color: '#9B9A97' }}>
             {search || fromDate || toDate || statusFilter !== 'ALL' ? 'Try adjusting your filters.' : 'No appointments have been booked yet.'}
           </Typography>
         </Box>
@@ -291,7 +291,7 @@ export default function DoctorAppointmentsPage() {
               onCompleted={(updated) => setAppointments(prev => prev.map(x => x.id === updated.id ? updated : x))}
             />
           ))}
-          <Typography sx={{ fontSize: '0.8125rem', color: '#94a3b8', textAlign: 'center', py: 1 }}>
+          <Typography sx={{ fontSize: '0.8125rem', color: '#9B9A97', textAlign: 'center', py: 1 }}>
             Showing {filtered.length} of {appointments.length} appointment{appointments.length !== 1 ? 's' : ''}
           </Typography>
         </Box>

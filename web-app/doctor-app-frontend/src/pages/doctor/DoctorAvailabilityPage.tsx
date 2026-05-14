@@ -44,16 +44,16 @@ function RuleCard({ rule, onEdit, onDelete }: { rule: Availability; onEdit: () =
       <Typography sx={{ fontSize: '0.9375rem', fontWeight: 600, color: '#37352F', fontFamily: 'inherit' }}>
         {rule.startTime.slice(0, 5)} – {rule.endTime.slice(0, 5)}
       </Typography>
-      <Typography sx={{ fontSize: '0.8125rem', color: '#64748b' }}>
+      <Typography sx={{ fontSize: '0.8125rem', color: '#73726E' }}>
         {rule.slotDurationMinutes} min slots
       </Typography>
       {rule.clinicName && (
-        <Typography sx={{ fontSize: '0.8125rem', color: '#94a3b8' }}>@ {rule.clinicName}</Typography>
+        <Typography sx={{ fontSize: '0.8125rem', color: '#9B9A97' }}>@ {rule.clinicName}</Typography>
       )}
       {!rule.isActive && <Chip label="Inactive" size="small" sx={{ backgroundColor: '#fef2f2', color: '#dc2626', fontSize: '0.625rem' }} />}
       <Box sx={{ ml: 'auto', display: 'flex', gap: 0.5 }}>
-        <IconButton size="small" onClick={onEdit} sx={{ color: '#64748b', '&:hover': { color: '#37352F', backgroundColor: '#eff6ff' } }}><EditIcon fontSize="small" /></IconButton>
-        <IconButton size="small" onClick={onDelete} sx={{ color: '#64748b', '&:hover': { color: '#dc2626', backgroundColor: '#fef2f2' } }}><DeleteIcon fontSize="small" /></IconButton>
+        <IconButton size="small" onClick={onEdit} sx={{ color: '#73726E', '&:hover': { color: '#37352F', backgroundColor: '#eff6ff' } }}><EditIcon fontSize="small" /></IconButton>
+        <IconButton size="small" onClick={onDelete} sx={{ color: '#73726E', '&:hover': { color: '#dc2626', backgroundColor: '#fef2f2' } }}><DeleteIcon fontSize="small" /></IconButton>
       </Box>
     </Box>
   );
@@ -128,7 +128,7 @@ function AvailDialog({ open, onClose, onSaved, clinics, initial, ruleId }: {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ px: 3, pb: 3 }}>
-        <Button onClick={onClose} sx={{ color: '#64748b' }}>Cancel</Button>
+        <Button onClick={onClose} sx={{ color: '#73726E' }}>Cancel</Button>
         <Button variant="contained" onClick={handleSave} disabled={saving}
           sx={{ backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#37352F' }, borderRadius: '6px', px: 3 }}>
           {saving ? 'Saving…' : ruleId ? 'Save Changes' : 'Add Schedule'}
@@ -189,7 +189,7 @@ export default function DoctorAvailabilityPage() {
       ) : rules.length === 0 ? (
         <Box sx={{ backgroundColor: '#fff', p: 6, borderRadius: '8px', border: '1px solid #E9E9E7', textAlign: 'center' }}>
           <EventAvailableIcon sx={{ fontSize: 48, color: '#cbd5e1', mb: 2 }} />
-          <Typography sx={{ color: '#64748b', mb: 2 }}>No availability schedule set up yet.</Typography>
+          <Typography sx={{ color: '#73726E', mb: 2 }}>No availability schedule set up yet.</Typography>
           <Button variant="outlined" onClick={openAdd} sx={{ borderColor: '#37352F', color: '#37352F', borderRadius: 2 }}>Add your first schedule</Button>
         </Box>
       ) : (

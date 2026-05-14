@@ -50,7 +50,7 @@ const emptyForm = (): ClinicForm => ({
 
 const TYPE_META: Record<ConsultationType, { label: string; icon: React.ReactNode; color: string; bg: string }> = {
   IN_PERSON: { label: 'In-Person',   icon: <PersonPinCircleIcon sx={{ fontSize: 16 }} />, color: '#15803d', bg: '#f0fdf4' },
-  AUDIO:     { label: 'Audio Call',  icon: <PhoneInTalkIcon     sx={{ fontSize: 16 }} />, color: '#0D9488', bg: '#eff6ff' },
+  AUDIO:     { label: 'Audio Call',  icon: <PhoneInTalkIcon     sx={{ fontSize: 16 }} />, color: '#0D9488', bg: '#F0FDFA' },
   VIDEO:     { label: 'Video Call',  icon: <VideocamIcon        sx={{ fontSize: 16 }} />, color: '#7c3aed', bg: '#f5f3ff' },
 };
 
@@ -66,7 +66,7 @@ function ClinicCard({ clinic, onEdit, onDelete }: { clinic: Clinic; onEdit: () =
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5, flex: 1, minWidth: 0 }}>
           <Box sx={{
-            width: 42, height: 42, borderRadius: '50%', backgroundColor: '#eff6ff',
+            width: 42, height: 42, borderRadius: '50%', backgroundColor: '#F0FDFA',
             display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0F766E', flexShrink: 0,
           }}>
             <LocalHospitalIcon fontSize="small" />
@@ -83,14 +83,14 @@ function ClinicCard({ clinic, onEdit, onDelete }: { clinic: Clinic; onEdit: () =
 
             {fullAddress && (
               <Box display="flex" alignItems="flex-start" gap={0.75} mb={0.5}>
-                <LocationOnIcon sx={{ fontSize: 14, color: '#94a3b8', mt: 0.2, flexShrink: 0 }} />
-                <Typography sx={{ fontSize: '0.8125rem', color: '#64748b' }}>{fullAddress}</Typography>
+                <LocationOnIcon sx={{ fontSize: 14, color: '#9B9A97', mt: 0.2, flexShrink: 0 }} />
+                <Typography sx={{ fontSize: '0.8125rem', color: '#73726E' }}>{fullAddress}</Typography>
               </Box>
             )}
             {clinic.phone && (
               <Box display="flex" alignItems="center" gap={0.75} mb={1}>
-                <PhoneIcon sx={{ fontSize: 13, color: '#94a3b8', flexShrink: 0 }} />
-                <Typography sx={{ fontSize: '0.75rem', color: '#94a3b8' }}>{clinic.phone}</Typography>
+                <PhoneIcon sx={{ fontSize: 13, color: '#9B9A97', flexShrink: 0 }} />
+                <Typography sx={{ fontSize: '0.75rem', color: '#9B9A97' }}>{clinic.phone}</Typography>
               </Box>
             )}
 
@@ -122,11 +122,11 @@ function ClinicCard({ clinic, onEdit, onDelete }: { clinic: Clinic; onEdit: () =
 
         <Box sx={{ display: 'flex', gap: 0.5, flexShrink: 0 }}>
           <IconButton size="small" onClick={onEdit}
-            sx={{ color: '#64748b', '&:hover': { color: '#37352F', backgroundColor: '#eff6ff' } }}>
+            sx={{ color: '#73726E', '&:hover': { color: '#37352F', backgroundColor: '#F0FDFA' } }}>
             <EditIcon fontSize="small" />
           </IconButton>
           <IconButton size="small" onClick={onDelete}
-            sx={{ color: '#64748b', '&:hover': { color: '#dc2626', backgroundColor: '#fef2f2' } }}>
+            sx={{ color: '#73726E', '&:hover': { color: '#dc2626', backgroundColor: '#fef2f2' } }}>
             <DeleteIcon fontSize="small" />
           </IconButton>
         </Box>
@@ -203,7 +203,7 @@ function ClinicDialog({ open, onClose, onSaved, initial, clinicId }: {
     } finally { setSaving(false); }
   };
 
-  const labelSx = { fontSize: '0.8125rem', fontWeight: 600, color: '#475569', mb: 1, display: 'block' };
+  const labelSx = { fontSize: '0.8125rem', fontWeight: 600, color: '#73726E', mb: 1, display: 'block' };
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm" PaperProps={{ sx: { borderRadius: 3 } }}>
@@ -222,7 +222,7 @@ function ClinicDialog({ open, onClose, onSaved, initial, clinicId }: {
           {/* Address section */}
           <Grid item xs={12}>
             <Divider sx={{ mt: 0.5, mb: 1 }}>
-              <Typography sx={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <Typography sx={{ fontSize: '0.75rem', color: '#9B9A97', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 Address
               </Typography>
             </Divider>
@@ -248,11 +248,11 @@ function ClinicDialog({ open, onClose, onSaved, initial, clinicId }: {
           {/* Consultation types + fees */}
           <Grid item xs={12}>
             <Divider sx={{ mt: 0.5, mb: 1 }}>
-              <Typography sx={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <Typography sx={{ fontSize: '0.75rem', color: '#9B9A97', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 Consultation Types &amp; Fees *
               </Typography>
             </Divider>
-            <Typography sx={{ fontSize: '0.8125rem', color: '#64748b', mb: 2 }}>
+            <Typography sx={{ fontSize: '0.8125rem', color: '#73726E', mb: 2 }}>
               Select all types you offer and set a consultation fee for each.
             </Typography>
 
@@ -280,7 +280,7 @@ function ClinicDialog({ open, onClose, onSaved, initial, clinicId }: {
                         width: 36, height: 36, borderRadius: 1.5, display: 'flex',
                         alignItems: 'center', justifyContent: 'center',
                         backgroundColor: selected ? meta.color : '#e2e8f0',
-                        color: selected ? '#fff' : '#64748b', flexShrink: 0,
+                        color: selected ? '#fff' : '#73726E', flexShrink: 0,
                         transition: 'all 0.15s',
                       }}>
                         {meta.icon}
@@ -289,7 +289,7 @@ function ClinicDialog({ open, onClose, onSaved, initial, clinicId }: {
                         <Typography sx={{ fontWeight: 600, fontSize: '0.9rem', color: selected ? meta.color : '#334155' }}>
                           {meta.label}
                         </Typography>
-                        <Typography sx={{ fontSize: '0.75rem', color: '#94a3b8' }}>
+                        <Typography sx={{ fontSize: '0.75rem', color: '#9B9A97' }}>
                           {type === 'IN_PERSON' && 'Patient visits your clinic in person'}
                           {type === 'AUDIO'     && 'Consultation over a phone/audio call'}
                           {type === 'VIDEO'     && 'Consultation via video conference'}
@@ -336,7 +336,7 @@ function ClinicDialog({ open, onClose, onSaved, initial, clinicId }: {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ px: 3, pb: 3 }}>
-        <Button onClick={onClose} sx={{ color: '#64748b' }}>Cancel</Button>
+        <Button onClick={onClose} sx={{ color: '#73726E' }}>Cancel</Button>
         <Button variant="contained" onClick={handleSave} disabled={saving}
           sx={{ backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#37352F' }, borderRadius: '6px', px: 3 }}>
           {saving ? 'Saving…' : clinicId ? 'Save Changes' : 'Add Clinic'}
@@ -410,7 +410,7 @@ export default function DoctorClinicsPage() {
       ) : clinics.length === 0 ? (
         <Box sx={{ backgroundColor: '#fff', p: 6, borderRadius: '8px', border: '1px solid #E9E9E7', textAlign: 'center' }}>
           <LocalHospitalIcon sx={{ fontSize: 48, color: '#cbd5e1', mb: 2 }} />
-          <Typography sx={{ color: '#64748b', mb: 2 }}>No clinics added yet.</Typography>
+          <Typography sx={{ color: '#73726E', mb: 2 }}>No clinics added yet.</Typography>
           <Button variant="outlined" onClick={openAdd} sx={{ borderColor: '#37352F', color: '#37352F', borderRadius: 2 }}>
             Add your first clinic
           </Button>
@@ -440,7 +440,7 @@ export default function DoctorClinicsPage() {
           </Typography>
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 3 }}>
-          <Button onClick={() => setDeleteTarget(null)} sx={{ color: '#64748b' }}>Cancel</Button>
+          <Button onClick={() => setDeleteTarget(null)} sx={{ color: '#73726E' }}>Cancel</Button>
           <Button variant="contained" onClick={handleDelete}
             sx={{ backgroundColor: '#dc2626', '&:hover': { backgroundColor: '#b91c1c' }, borderRadius: 2 }}>
             Remove
