@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useMemo, useEffect, type ReactNode } from 'react';
-import { ThemeProvider, CssBaseline } from '@mui/material';
-import { createAppTheme } from '../styles/theme';
+import { ThemeProvider, CssBaseline, GlobalStyles } from '@mui/material';
+import { createAppTheme, CSS_VARS } from '../styles/theme';
 
 export type ThemeMode = 'light' | 'dark' | 'system';
 
@@ -46,9 +46,15 @@ export function AppThemeProvider({ children }: { children: ReactNode }) {
   const resolvedMode = themeMode === 'system' ? getSystemMode() : themeMode;
   const theme = useMemo(() => createAppTheme(resolvedMode), [resolvedMode]);
 
+  // Set data-theme attribute so CSS variables (var(--c-*)) switch correctly
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', resolvedMode);
+  }, [resolvedMode]);
+
   return (
     <AppThemeContext.Provider value={{ themeMode, setThemeMode }}>
       <ThemeProvider theme={theme}>
+        <GlobalStyles styles={CSS_VARS.light + CSS_VARS.dark} />
         <CssBaseline />
         {children}
       </ThemeProvider>

@@ -2,32 +2,34 @@ import { createTheme, type Theme, alpha } from '@mui/material/styles';
 
 const SANS = "'Plus Jakarta Sans', system-ui, -apple-system, sans-serif";
 
+// CSS custom-property tokens — values switch automatically via [data-theme] attribute.
+// All sx props referencing C.* pick up dark/light changes with zero component changes.
 export const C = {
-  // Primary accent — teal (used sparingly, Notion-style)
+  // Brand — fixed across both modes
   blue:       '#0D9488',
   blueDark:   '#0F766E',
-  blueLight:  '#F0FDFA',
-  blueMid:    '#CCFBF1',
+  blueLight:  'var(--c-blue-light)',
+  blueMid:    'var(--c-blue-mid)',
   blueBright: '#2DD4BF',
 
-  // Sidebar — Notion-style LIGHT sidebar
-  sidebarBg:         '#FAFAF9',
-  sidebarBorder:     '#E3E2E0',
-  sidebarText:       '#73726E',
-  sidebarHover:      '#EBEBEA',
-  sidebarActive:     '#E3E2E0',
-  sidebarActiveText: '#37352F',
+  // Sidebar
+  sidebarBg:         'var(--c-sidebar-bg)',
+  sidebarBorder:     'var(--c-sidebar-border)',
+  sidebarText:       'var(--c-sidebar-text)',
+  sidebarHover:      'var(--c-sidebar-hover)',
+  sidebarActive:     'var(--c-sidebar-active)',
+  sidebarActiveText: 'var(--c-sidebar-active-text)',
 
-  // Neutrals — Notion palette
-  ink:       '#37352F',
-  inkMid:    '#4A4744',
-  slate:     '#73726E',
-  muted:     '#9B9A97',
-  subtle:    '#C8C8C5',
-  border:    '#E9E9E7',
-  borderSub: '#F1F0EF',
-  surface:   '#F7F7F5',
-  paper:     '#FFFFFF',
+  // Neutrals
+  ink:       'var(--c-ink)',
+  inkMid:    'var(--c-ink-mid)',
+  slate:     'var(--c-slate)',
+  muted:     'var(--c-muted)',
+  subtle:    'var(--c-subtle)',
+  border:    'var(--c-border)',
+  borderSub: 'var(--c-border-sub)',
+  surface:   'var(--c-surface)',
+  paper:     'var(--c-paper)',
 
   // Semantic
   green:    '#0F7348',
@@ -50,21 +52,21 @@ export function createAppTheme(mode: 'light' | 'dark'): Theme {
   return createTheme({
     palette: {
       mode,
-      primary:   { main: C.blue, dark: C.blueDark, light: C.blueLight, contrastText: '#fff' },
-      secondary: { main: C.ink, contrastText: '#fff' },
+      primary:   { main: '#0D9488', dark: '#0F766E', light: '#F0FDFA', contrastText: '#fff' },
+      secondary: { main: dark ? '#E8E7E3' : '#37352F', contrastText: dark ? '#1A1916' : '#fff' },
       success:   { main: C.green },
       warning:   { main: C.amber },
       error:     { main: C.red },
       background: {
-        default: dark ? '#1A1916' : C.surface,
-        paper:   dark ? '#25231F' : C.paper,
+        default: dark ? '#1A1916' : '#F7F7F5',
+        paper:   dark ? '#25231F' : '#FFFFFF',
       },
       text: {
-        primary:   dark ? '#E8E7E3' : C.ink,
-        secondary: dark ? '#9B9A97' : C.slate,
-        disabled:  dark ? '#5C5B58' : C.muted,
+        primary:   dark ? '#E8E7E3' : '#37352F',
+        secondary: dark ? '#9B9A97' : '#73726E',
+        disabled:  dark ? '#5C5B58' : '#9B9A97',
       },
-      divider: dark ? '#3B3A37' : C.border,
+      divider: dark ? '#3B3A37' : '#E9E9E7',
     },
 
     typography: {
@@ -429,3 +431,50 @@ export function createAppTheme(mode: 'light' | 'dark'): Theme {
 }
 
 export default createAppTheme('light');
+
+// CSS custom property definitions injected by AppThemeProvider.
+// These drive all C.* references (which are var(--c-*) strings).
+export const CSS_VARS = {
+  light: `
+    :root, [data-theme="light"] {
+      --c-ink: #37352F;
+      --c-ink-mid: #4A4744;
+      --c-slate: #73726E;
+      --c-muted: #9B9A97;
+      --c-subtle: #C8C8C5;
+      --c-border: #E9E9E7;
+      --c-border-sub: #F1F0EF;
+      --c-surface: #F7F7F5;
+      --c-paper: #FFFFFF;
+      --c-blue-light: #F0FDFA;
+      --c-blue-mid: #CCFBF1;
+      --c-sidebar-bg: #FAFAF9;
+      --c-sidebar-border: #E3E2E0;
+      --c-sidebar-text: #73726E;
+      --c-sidebar-hover: #EBEBEA;
+      --c-sidebar-active: #E3E2E0;
+      --c-sidebar-active-text: #37352F;
+    }
+  `,
+  dark: `
+    [data-theme="dark"] {
+      --c-ink: #E8E7E3;
+      --c-ink-mid: #C9C8C4;
+      --c-slate: #9B9A97;
+      --c-muted: #6B6A67;
+      --c-subtle: #4A4946;
+      --c-border: #3B3A37;
+      --c-border-sub: #2D2C29;
+      --c-surface: #1F1E1B;
+      --c-paper: #25231F;
+      --c-blue-light: #0D2E2B;
+      --c-blue-mid: #0F3D39;
+      --c-sidebar-bg: #1A1916;
+      --c-sidebar-border: #2D2C29;
+      --c-sidebar-text: #9B9A97;
+      --c-sidebar-hover: #2D2C29;
+      --c-sidebar-active: #3B3A37;
+      --c-sidebar-active-text: #E8E7E3;
+    }
+  `,
+};
