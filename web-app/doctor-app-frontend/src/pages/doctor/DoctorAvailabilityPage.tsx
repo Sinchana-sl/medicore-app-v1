@@ -21,11 +21,11 @@ const SLOT_DURATIONS = [10, 15, 20, 30, 45, 60];
 const DAY_COLORS: Record<number, { bg: string; color: string }> = {
   0: { bg: '#fef3c7', color: '#92400e' },
   1: { bg: '#eff6ff', color: '#0D9488' },
-  2: { bg: '#f0fdf4', color: '#15803d' },
+  2: { bg: C.greenBg, color: '#15803d' },
   3: { bg: '#fdf4ff', color: '#7e22ce' },
   4: { bg: '#fff7ed', color: '#c2410c' },
   5: { bg: '#eff6ff', color: '#0369a1' },
-  6: { bg: '#fef2f2', color: '#b91c1c' },
+  6: { bg: C.redBg, color: '#b91c1c' },
 };
 
 interface AvailForm {
@@ -51,10 +51,10 @@ function RuleCard({ rule, onEdit, onDelete }: { rule: Availability; onEdit: () =
       {rule.clinicName && (
         <Typography sx={{ fontSize: '0.8125rem', color: C.muted }}>@ {rule.clinicName}</Typography>
       )}
-      {!rule.isActive && <Chip label="Inactive" size="small" sx={{ backgroundColor: '#fef2f2', color: '#dc2626', fontSize: '0.625rem' }} />}
+      {!rule.isActive && <Chip label="Inactive" size="small" sx={{ backgroundColor: C.redBg, color: '#dc2626', fontSize: '0.625rem' }} />}
       <Box sx={{ ml: 'auto', display: 'flex', gap: 0.5 }}>
         <IconButton size="small" onClick={onEdit} sx={{ color: C.slate, '&:hover': { color: C.ink, backgroundColor: '#eff6ff' } }}><EditIcon fontSize="small" /></IconButton>
-        <IconButton size="small" onClick={onDelete} sx={{ color: C.slate, '&:hover': { color: '#dc2626', backgroundColor: '#fef2f2' } }}><DeleteIcon fontSize="small" /></IconButton>
+        <IconButton size="small" onClick={onDelete} sx={{ color: C.slate, '&:hover': { color: '#dc2626', backgroundColor: C.redBg } }}><DeleteIcon fontSize="small" /></IconButton>
       </Box>
     </Box>
   );

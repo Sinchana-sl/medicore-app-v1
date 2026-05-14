@@ -186,9 +186,9 @@ export default function PatientAppointmentsPage() {
               <Grid container spacing={2} sx={{ mb: 3 }}>
                 {[
                   { icon: <CalendarTodayIcon />,        label: 'Total',           value: counts.all,       bg: '#F0FDFA', color: '#0D9488' },
-                  { icon: <EventAvailableIcon />,       label: 'Confirmed',       value: counts.confirmed,  bg: '#f0fdf4', color: '#16a34a' },
-                  { icon: <PendingActionsIcon />,       label: 'Pending Payment', value: counts.pending,    bg: '#fffbeb', color: '#d97706' },
-                  { icon: <EventBusyIcon />,            label: 'Cancelled',       value: counts.cancelled,  bg: '#fef2f2', color: '#dc2626' },
+                  { icon: <EventAvailableIcon />,       label: 'Confirmed',       value: counts.confirmed,  bg: C.greenBg, color: '#16a34a' },
+                  { icon: <PendingActionsIcon />,       label: 'Pending Payment', value: counts.pending,    bg: C.amberBg, color: '#d97706' },
+                  { icon: <EventBusyIcon />,            label: 'Cancelled',       value: counts.cancelled,  bg: C.redBg, color: '#dc2626' },
                 ].map(s => (
                   <Grid item xs={6} sm={3} key={s.label}>
                     {statCard(s.icon, s.label, s.value, s.bg, s.color)}

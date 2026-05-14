@@ -276,10 +276,10 @@ export default function PatientSettingsPage() {
   function renderProfile() {
     const infoRows = [
       { label: 'First Name',    value: profile?.firstName || '—', icon: <PersonIcon sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#F0FDFA' },
-      { label: 'Last Name',     value: profile?.lastName  || '—', icon: <PersonIcon sx={{ fontSize: 20, color: '#7c3aed' }} />, bg: '#faf5ff' },
+      { label: 'Last Name',     value: profile?.lastName  || '—', icon: <PersonIcon sx={{ fontSize: 20, color: '#7c3aed' }} />, bg: C.purpleBg },
       { label: 'Email',         value: profile?.email     || '—', icon: <EmailIcon  sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#ecfeff', badge: 'Verified' },
-      { label: 'Phone',         value: profile?.phone     || '—', icon: <PhoneAndroidIcon sx={{ fontSize: 20, color: '#16a34a' }} />, bg: '#f0fdf4' },
-      { label: 'Date of Birth', value: fmtDob(profile?.dateOfBirth ?? null), icon: <CakeIcon sx={{ fontSize: 20, color: '#f59e0b' }} />, bg: '#fffbeb' },
+      { label: 'Phone',         value: profile?.phone     || '—', icon: <PhoneAndroidIcon sx={{ fontSize: 20, color: '#16a34a' }} />, bg: C.greenBg },
+      { label: 'Date of Birth', value: fmtDob(profile?.dateOfBirth ?? null), icon: <CakeIcon sx={{ fontSize: 20, color: '#f59e0b' }} />, bg: C.amberBg },
       { label: 'Gender',        value: profile?.gender    || '—', icon: <WcIcon sx={{ fontSize: 20, color: '#ec4899' }} />, bg: '#fdf2f8' },
     ];
 
@@ -446,7 +446,7 @@ export default function PatientSettingsPage() {
                 {f.badge && (
                   <Chip label={f.badge} size="small"
                     icon={<CheckCircleIcon sx={{ fontSize: '12px !important', color: '#16a34a !important' }} />}
-                    sx={{ flexShrink: 0, height: 22, fontSize: '0.65rem', fontWeight: 700, backgroundColor: '#f0fdf4', color: '#16a34a' }} />
+                    sx={{ flexShrink: 0, height: 22, fontSize: '0.65rem', fontWeight: 700, backgroundColor: C.greenBg, color: '#16a34a' }} />
                 )}
               </Box>
             ))}
@@ -461,7 +461,7 @@ export default function PatientSettingsPage() {
                 label: 'Blood Type',
                 value: profile?.bloodType || 'Not set',
                 icon: <BloodtypeIcon sx={{ fontSize: 24, color: profile?.bloodType ? '#dc2626' : '#9B9A97' }} />,
-                bg: profile?.bloodType ? '#fef2f2' : '#F7F7F5',
+                bg: profile?.bloodType ? C.redBg : '#F7F7F5',
                 border: profile?.bloodType ? '#fecaca' : C.border,
                 color: profile?.bloodType ? '#dc2626' : '#9B9A97',
               },
@@ -469,7 +469,7 @@ export default function PatientSettingsPage() {
                 label: 'Date of Birth',
                 value: fmtDob(profile?.dateOfBirth ?? null),
                 icon: <CalendarMonthIcon sx={{ fontSize: 24, color: profile?.dateOfBirth ? '#f59e0b' : '#9B9A97' }} />,
-                bg: profile?.dateOfBirth ? '#fffbeb' : '#F7F7F5',
+                bg: profile?.dateOfBirth ? C.amberBg : '#F7F7F5',
                 border: profile?.dateOfBirth ? '#fde68a' : C.border,
                 color: profile?.dateOfBirth ? '#b45309' : '#9B9A97',
               },
@@ -499,7 +499,7 @@ export default function PatientSettingsPage() {
             ))}
           </Box>
           {(!profile?.bloodType || !profile?.dateOfBirth || !profile?.gender) && (
-            <Box sx={{ mt: 2, p: 1.5, borderRadius: '6px', backgroundColor: '#fffbeb', border: '1px solid #fde68a', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2 }}>
+            <Box sx={{ mt: 2, p: 1.5, borderRadius: '6px', backgroundColor: C.amberBg, border: '1px solid #fde68a', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2 }}>
               <Typography sx={{ fontSize: '0.78rem', color: '#92400e' }}>
                 Complete your health info to help doctors prepare better
               </Typography>
@@ -519,7 +519,7 @@ export default function PatientSettingsPage() {
             {[
               { label: 'User ID',      value: profile?.id ? profile.id.slice(0, 8) + '…' : '—', icon: <ShieldIcon sx={{ fontSize: 20, color: C.slate }} />, bg: '#F7F7F5' },
               { label: 'Account Type', value: 'Patient',    icon: <PersonIcon sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#F0FDFA', badge: 'Active' },
-              { label: 'Member Since', value: profile?.memberSince || '—', icon: <CalendarMonthIcon sx={{ fontSize: 20, color: '#7c3aed' }} />, bg: '#faf5ff' },
+              { label: 'Member Since', value: profile?.memberSince || '—', icon: <CalendarMonthIcon sx={{ fontSize: 20, color: '#7c3aed' }} />, bg: C.purpleBg },
             ].map(row => (
               <Box key={row.label} sx={{
                 display: 'flex', alignItems: 'center', gap: 2, p: 2,
@@ -540,7 +540,7 @@ export default function PatientSettingsPage() {
                 </Box>
                 {row.badge && (
                   <Chip label={row.badge} size="small"
-                    sx={{ flexShrink: 0, height: 22, fontSize: '0.65rem', fontWeight: 700, backgroundColor: '#f0fdf4', color: '#16a34a' }} />
+                    sx={{ flexShrink: 0, height: 22, fontSize: '0.65rem', fontWeight: 700, backgroundColor: C.greenBg, color: '#16a34a' }} />
                 )}
               </Box>
             ))}
@@ -560,7 +560,7 @@ export default function PatientSettingsPage() {
       },
       {
         icon: <VpnKeyIcon sx={{ fontSize: 20, color: '#7c3aed' }} />,
-        bg: '#faf5ff',
+        bg: C.purpleBg,
         title: 'Password Update',
         desc: 'Enter OTP + choose a strong new password',
       },
@@ -611,9 +611,9 @@ export default function PatientSettingsPage() {
                 <Box sx={{
                   display: 'flex', alignItems: 'center', gap: 2, p: 2.5,
                   borderRadius: '8px', border: '2px solid #bbf7d0',
-                  background: 'linear-gradient(135deg, #f0fdf4, #fff)',
+                  backgroundColor: C.greenBg,
                 }}>
-                  <Box sx={{ width: 48, height: 48, borderRadius: '6px', backgroundColor: '#dcfce7', flexShrink: 0,
+                  <Box sx={{ width: 48, height: 48, borderRadius: '6px', backgroundColor: C.greenBg, flexShrink: 0,
                     display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <CheckCircleIcon sx={{ fontSize: 24, color: '#16a34a' }} />
                   </Box>
@@ -626,7 +626,7 @@ export default function PatientSettingsPage() {
                     </Typography>
                   </Box>
                   <Chip label="Step 1 done" size="small"
-                    sx={{ flexShrink: 0, height: 22, fontSize: '0.65rem', fontWeight: 700, backgroundColor: '#f0fdf4', color: '#16a34a' }} />
+                    sx={{ flexShrink: 0, height: 22, fontSize: '0.65rem', fontWeight: 700, backgroundColor: C.greenBg, color: '#16a34a' }} />
                 </Box>
                 <Box sx={{
                   display: 'flex', alignItems: 'center', gap: 2, p: 2.5,
@@ -679,7 +679,7 @@ export default function PatientSettingsPage() {
                       <Chip key={r.label} label={r.label} size="small"
                         icon={r.ok ? <CheckCircleIcon sx={{ fontSize: '12px !important' }} /> : undefined}
                         sx={{ fontSize: '0.65rem', fontWeight: 700, height: 22,
-                          backgroundColor: r.ok ? '#f0fdf4' : C.borderSub,
+                          backgroundColor: r.ok ? C.greenBg : C.borderSub,
                           color: r.ok ? '#16a34a' : '#9B9A97' }} />
                     ))}
                   </Box>
@@ -703,9 +703,9 @@ export default function PatientSettingsPage() {
             <Box sx={{
               display: 'flex', alignItems: 'center', gap: 2, p: 2.5,
               borderRadius: '8px', border: '2px solid #bbf7d0',
-              background: 'linear-gradient(135deg, #f0fdf4, #fff)',
+              backgroundColor: C.greenBg,
             }}>
-              <Box sx={{ width: 48, height: 48, borderRadius: '6px', backgroundColor: '#dcfce7', flexShrink: 0,
+              <Box sx={{ width: 48, height: 48, borderRadius: '6px', backgroundColor: C.greenBg, flexShrink: 0,
                 display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <DevicesIcon sx={{ color: '#16a34a', fontSize: 24 }} />
               </Box>
@@ -718,17 +718,17 @@ export default function PatientSettingsPage() {
                 </Typography>
               </Box>
               <Chip label="Active" size="small"
-                sx={{ flexShrink: 0, height: 22, fontSize: '0.65rem', fontWeight: 700, backgroundColor: '#f0fdf4', color: '#16a34a' }} />
+                sx={{ flexShrink: 0, height: 22, fontSize: '0.65rem', fontWeight: 700, backgroundColor: C.greenBg, color: '#16a34a' }} />
             </Box>
 
             <Box onClick={logout} sx={{
               display: 'flex', alignItems: 'center', gap: 2, p: 2.5,
               borderRadius: '8px', border: '2px solid #fecaca', cursor: 'pointer',
-              background: 'linear-gradient(135deg, #fef2f2, #fff)',
+              backgroundColor: C.redBg,
               transition: 'all 0.15s',
-              '&:hover': { borderColor: '#dc2626', background: 'linear-gradient(135deg, #fee2e2, #fff)' },
+              '&:hover': { borderColor: '#dc2626', backgroundColor: C.redBg },
             }}>
-              <Box sx={{ width: 48, height: 48, borderRadius: '6px', backgroundColor: '#fee2e2', flexShrink: 0,
+              <Box sx={{ width: 48, height: 48, borderRadius: '6px', backgroundColor: C.redBg, flexShrink: 0,
                 display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <LogoutIcon sx={{ color: '#dc2626', fontSize: 24 }} />
               </Box>
@@ -741,7 +741,7 @@ export default function PatientSettingsPage() {
                 </Typography>
               </Box>
               <Chip label="Danger" size="small"
-                sx={{ flexShrink: 0, height: 22, fontSize: '0.65rem', fontWeight: 700, backgroundColor: '#fef2f2', color: '#dc2626' }} />
+                sx={{ flexShrink: 0, height: 22, fontSize: '0.65rem', fontWeight: 700, backgroundColor: C.redBg, color: '#dc2626' }} />
             </Box>
           </Box>
         </SettingsCard>
@@ -756,7 +756,7 @@ export default function PatientSettingsPage() {
         subtitle: 'Get notified about upcoming appointments',
         rows: [
           { key: 'email_reminders',    label: 'Email reminders',    desc: '24 hours before your appointment', icon: <EmailIcon sx={{ fontSize: 18 }} />, iconBg: '#F0FDFA', iconColor: '#0D9488' },
-          { key: 'whatsapp_reminders', label: 'WhatsApp reminders', desc: 'Quick message before your visit',  icon: <SmartphoneIcon sx={{ fontSize: 18 }} />, iconBg: '#f0fdf4', iconColor: '#16a34a' },
+          { key: 'whatsapp_reminders', label: 'WhatsApp reminders', desc: 'Quick message before your visit',  icon: <SmartphoneIcon sx={{ fontSize: 18 }} />, iconBg: C.greenBg, iconColor: '#16a34a' },
           { key: 'sms_reminders',      label: 'SMS reminders',      desc: 'Text reminder 2 hours before',    icon: <SmsIcon sx={{ fontSize: 18 }} />, iconBg: '#F0FDFA', iconColor: '#0D9488' },
         ],
       },
@@ -764,9 +764,9 @@ export default function PatientSettingsPage() {
         title: 'Updates & Activity',
         subtitle: 'Stay informed about your health activity',
         rows: [
-          { key: 'booking_confirm',  label: 'Booking confirmations', desc: 'When an appointment is confirmed',  icon: <DoneAllIcon sx={{ fontSize: 18 }} />, iconBg: '#f0fdf4', iconColor: '#16a34a' },
-          { key: 'cancellation',     label: 'Cancellation alerts',   desc: 'If your appointment is cancelled', icon: <NotificationImportantIcon sx={{ fontSize: 18 }} />, iconBg: '#fffbeb', iconColor: '#f59e0b' },
-          { key: 'payment_receipts', label: 'Payment receipts',      desc: 'Email receipt after payment',      icon: <ReceiptLongIcon sx={{ fontSize: 18 }} />, iconBg: '#faf5ff', iconColor: '#7c3aed' },
+          { key: 'booking_confirm',  label: 'Booking confirmations', desc: 'When an appointment is confirmed',  icon: <DoneAllIcon sx={{ fontSize: 18 }} />, iconBg: C.greenBg, iconColor: '#16a34a' },
+          { key: 'cancellation',     label: 'Cancellation alerts',   desc: 'If your appointment is cancelled', icon: <NotificationImportantIcon sx={{ fontSize: 18 }} />, iconBg: C.amberBg, iconColor: '#f59e0b' },
+          { key: 'payment_receipts', label: 'Payment receipts',      desc: 'Email receipt after payment',      icon: <ReceiptLongIcon sx={{ fontSize: 18 }} />, iconBg: C.purpleBg, iconColor: '#7c3aed' },
           { key: 'report_ready',     label: 'Report available',      desc: 'When a new report is shared',      icon: <DescriptionIcon sx={{ fontSize: 18 }} />, iconBg: '#F0FDFA', iconColor: '#0D9488' },
         ],
       },
@@ -774,9 +774,9 @@ export default function PatientSettingsPage() {
         title: 'Health & Wellness',
         subtitle: 'Personalised health content',
         rows: [
-          { key: 'health_tips',  label: 'Daily health tips',     desc: 'Morning wellness tips via email',  icon: <LightbulbIcon sx={{ fontSize: 18 }} />, iconBg: '#fffbeb', iconColor: '#f59e0b' },
+          { key: 'health_tips',  label: 'Daily health tips',     desc: 'Morning wellness tips via email',  icon: <LightbulbIcon sx={{ fontSize: 18 }} />, iconBg: C.amberBg, iconColor: '#f59e0b' },
           { key: 'water_remind', label: 'Water intake reminder', desc: 'Hydration nudges during the day', icon: <OpacityIcon sx={{ fontSize: 18 }} />, iconBg: '#F0FDFA', iconColor: '#0D9488' },
-          { key: 'med_remind',   label: 'Medication reminders',  desc: 'Reminders for your tracked meds', icon: <MedicalServicesIcon sx={{ fontSize: 18 }} />, iconBg: '#fef2f2', iconColor: '#dc2626' },
+          { key: 'med_remind',   label: 'Medication reminders',  desc: 'Reminders for your tracked meds', icon: <MedicalServicesIcon sx={{ fontSize: 18 }} />, iconBg: C.redBg, iconColor: '#dc2626' },
         ],
       },
     ];
@@ -958,7 +958,7 @@ export default function PatientSettingsPage() {
         </SettingsCard>
 
         <SettingsCard title="Delete Account" subtitle="Permanently remove your account and all associated data">
-          <Box sx={{ p: 2, borderRadius: '6px', backgroundColor: '#fef2f2', border: '1px solid #fecaca', mb: 2 }}>
+          <Box sx={{ p: 2, borderRadius: '6px', backgroundColor: C.redBg, border: '1px solid #fecaca', mb: 2 }}>
             <Typography sx={{ fontSize: '0.82rem', color: '#b91c1c', fontWeight: 600, mb: 0.5 }}>⚠️ This action is irreversible</Typography>
             <Typography sx={{ fontSize: '0.78rem', color: '#ef4444', lineHeight: 1.65 }}>
               Deleting your account will permanently remove all your appointments, medical records, and personal information. This cannot be undone.

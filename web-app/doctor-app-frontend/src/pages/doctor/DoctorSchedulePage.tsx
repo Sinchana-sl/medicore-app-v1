@@ -34,11 +34,11 @@ const SLOT_DURATIONS = [15, 30, 45, 60];
 const DAY_COLORS: Record<number, { bg: string; color: string }> = {
   0: { bg: '#fef3c7', color: '#92400e' },
   1: { bg: '#eff6ff', color: '#0D9488' },
-  2: { bg: '#f0fdf4', color: '#15803d' },
+  2: { bg: C.greenBg, color: '#15803d' },
   3: { bg: '#fdf4ff', color: '#7e22ce' },
   4: { bg: '#fff7ed', color: '#c2410c' },
   5: { bg: '#e0f2fe', color: '#0369a1' },
-  6: { bg: '#fef2f2', color: '#b91c1c' },
+  6: { bg: C.redBg, color: '#b91c1c' },
 };
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -491,7 +491,7 @@ export default function DoctorSchedulePage() {
                         <Tooltip key={rule.id} title="Remove" placement="left">
                           <IconButton
                             size="small" onClick={() => handleDelete(rule)}
-                            sx={{ color: '#cbd5e1', borderRadius: 1.5, '&:hover': { color: '#dc2626', backgroundColor: '#fef2f2' } }}
+                            sx={{ color: '#cbd5e1', borderRadius: 1.5, '&:hover': { color: '#dc2626', backgroundColor: C.redBg } }}
                           >
                             <DeleteIcon sx={{ fontSize: '1rem' }} />
                           </IconButton>

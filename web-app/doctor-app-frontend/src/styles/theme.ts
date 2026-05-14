@@ -31,17 +31,19 @@ export const C = {
   surface:   'var(--c-surface)',
   paper:     'var(--c-paper)',
 
-  // Semantic
-  green:    '#0F7348',
-  greenBg:  '#F3FBF6',
-  amber:    '#B45309',
-  amberBg:  '#FFFBEB',
-  red:      '#C73535',
-  redBg:    '#FEF2F2',
-  purple:   '#6B48C8',
-  purpleBg: '#F3F0FF',
-  teal:     '#0D9488',
-  tealBg:   '#F0FDFA',
+  // Semantic foreground — fixed (same intensity works on both modes)
+  green:  '#0F7348',
+  amber:  '#B45309',
+  red:    '#C73535',
+  purple: '#6B48C8',
+  teal:   '#0D9488',
+
+  // Semantic background — CSS vars so dark mode gets muted tints
+  greenBg:  'var(--c-green-bg)',
+  amberBg:  'var(--c-amber-bg)',
+  redBg:    'var(--c-red-bg)',
+  purpleBg: 'var(--c-purple-bg)',
+  tealBg:   'var(--c-blue-light)',
 } as const;
 
 const ease = 'cubic-bezier(0.4, 0, 0.2, 1)';
@@ -53,20 +55,20 @@ export function createAppTheme(mode: 'light' | 'dark'): Theme {
     palette: {
       mode,
       primary:   { main: '#0D9488', dark: '#0F766E', light: '#F0FDFA', contrastText: '#fff' },
-      secondary: { main: dark ? '#E8E7E3' : '#37352F', contrastText: dark ? '#1A1916' : '#fff' },
-      success:   { main: C.green },
-      warning:   { main: C.amber },
-      error:     { main: C.red },
+      secondary: { main: dark ? '#E4E8F0' : '#37352F', contrastText: dark ? '#13151C' : '#fff' },
+      success:   { main: '#0F7348' },
+      warning:   { main: '#B45309' },
+      error:     { main: '#C73535' },
       background: {
-        default: dark ? '#1A1916' : '#F7F7F5',
-        paper:   dark ? '#25231F' : '#FFFFFF',
+        default: dark ? '#13151C' : '#F7F7F5',
+        paper:   dark ? '#1C1F28' : '#FFFFFF',
       },
       text: {
-        primary:   dark ? '#E8E7E3' : '#37352F',
-        secondary: dark ? '#9B9A97' : '#73726E',
-        disabled:  dark ? '#5C5B58' : '#9B9A97',
+        primary:   dark ? '#E4E8F0' : '#37352F',
+        secondary: dark ? '#8891A2' : '#73726E',
+        disabled:  dark ? '#545F72' : '#9B9A97',
       },
-      divider: dark ? '#3B3A37' : '#E9E9E7',
+      divider: dark ? '#2D3240' : '#E9E9E7',
     },
 
     typography: {
@@ -156,7 +158,7 @@ export function createAppTheme(mode: 'light' | 'dark'): Theme {
           root: {
             fontSize: '0.8438rem',
             borderRadius: 6,
-            backgroundColor: dark ? '#25231F' : C.paper,
+            backgroundColor: dark ? '#1C1F28' : C.paper,
             transition: `box-shadow 0.12s ${ease}, border-color 0.12s ${ease}`,
             '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: C.subtle },
             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
@@ -198,7 +200,7 @@ export function createAppTheme(mode: 'light' | 'dark'): Theme {
           root: {
             backgroundImage: 'none',
             borderRadius: 8,
-            border: `1px solid ${dark ? '#3B3A37' : C.border}`,
+            border: `1px solid ${dark ? '#2D3240' : C.border}`,
             boxShadow: 'none',
           },
         },
@@ -448,6 +450,10 @@ export const CSS_VARS = {
       --c-paper: #FFFFFF;
       --c-blue-light: #F0FDFA;
       --c-blue-mid: #CCFBF1;
+      --c-green-bg: #F0FDF4;
+      --c-amber-bg: #FFFBEB;
+      --c-red-bg: #FEF2F2;
+      --c-purple-bg: #F5F3FF;
       --c-sidebar-bg: #FAFAF9;
       --c-sidebar-border: #E3E2E0;
       --c-sidebar-text: #73726E;
@@ -458,23 +464,27 @@ export const CSS_VARS = {
   `,
   dark: `
     [data-theme="dark"] {
-      --c-ink: #E8E7E3;
-      --c-ink-mid: #C9C8C4;
-      --c-slate: #9B9A97;
-      --c-muted: #6B6A67;
-      --c-subtle: #4A4946;
-      --c-border: #3B3A37;
-      --c-border-sub: #2D2C29;
-      --c-surface: #1F1E1B;
-      --c-paper: #25231F;
-      --c-blue-light: #0D2E2B;
-      --c-blue-mid: #0F3D39;
-      --c-sidebar-bg: #1A1916;
-      --c-sidebar-border: #2D2C29;
-      --c-sidebar-text: #9B9A97;
-      --c-sidebar-hover: #2D2C29;
-      --c-sidebar-active: #3B3A37;
-      --c-sidebar-active-text: #E8E7E3;
+      --c-ink: #E4E8F0;
+      --c-ink-mid: #B4BCCB;
+      --c-slate: #8891A2;
+      --c-muted: #545F72;
+      --c-subtle: #363D4F;
+      --c-border: #2D3240;
+      --c-border-sub: #21242F;
+      --c-surface: #13151C;
+      --c-paper: #1C1F28;
+      --c-blue-light: #0A2520;
+      --c-blue-mid: #0D3530;
+      --c-green-bg: #0C1F12;
+      --c-amber-bg: #1E1408;
+      --c-red-bg: #1E0C0C;
+      --c-purple-bg: #130F20;
+      --c-sidebar-bg: #0F1118;
+      --c-sidebar-border: #232733;
+      --c-sidebar-text: #8891A2;
+      --c-sidebar-hover: #1C2030;
+      --c-sidebar-active: #242838;
+      --c-sidebar-active-text: #E4E8F0;
     }
   `,
 };

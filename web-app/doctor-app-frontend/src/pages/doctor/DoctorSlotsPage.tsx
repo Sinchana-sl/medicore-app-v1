@@ -11,9 +11,9 @@ import { getSlots, generateSlots, blockSlot, getClinics, type Slot, type Clinic 
 import { useToast } from '../../contexts/ToastContext';
 
 const STATUS_STYLE: Record<string, { label: string; bg: string; color: string }> = {
-  AVAILABLE: { label: 'Available', bg: '#f0fdf4', color: '#16a34a' },
+  AVAILABLE: { label: 'Available', bg: C.greenBg, color: '#16a34a' },
   BOOKED:    { label: 'Booked',    bg: '#F0FDFA', color: '#0D9488' },
-  BLOCKED:   { label: 'Blocked',   bg: '#fef2f2', color: '#dc2626' },
+  BLOCKED:   { label: 'Blocked',   bg: C.redBg, color: '#dc2626' },
 };
 
 function today(): string {
@@ -46,7 +46,7 @@ function SlotRow({ slot, onBlock }: { slot: Slot; onBlock: () => void }) {
 
       {slot.status === 'AVAILABLE' && (
         <Button size="small" startIcon={<LockIcon sx={{ fontSize: '0.875rem !important' }} />} onClick={onBlock}
-          sx={{ color: C.slate, borderColor: C.border, border: '1px solid', borderRadius: 1.5, fontSize: '0.75rem', px: 1.5, py: 0.5, '&:hover': { backgroundColor: '#fef2f2', color: '#dc2626', borderColor: '#fca5a5' } }}>
+          sx={{ color: C.slate, borderColor: C.border, border: '1px solid', borderRadius: 1.5, fontSize: '0.75rem', px: 1.5, py: 0.5, '&:hover': { backgroundColor: C.redBg, color: '#dc2626', borderColor: '#fca5a5' } }}>
           Block
         </Button>
       )}
@@ -154,9 +154,9 @@ export default function DoctorSlotsPage() {
             {/* Summary chips */}
             {!slotsLoading && slots.length > 0 && (
               <Box sx={{ display: 'flex', gap: 1, mb: 3, flexWrap: 'wrap' }}>
-                <Chip label={`${available} Available`} size="small" sx={{ backgroundColor: '#f0fdf4', color: '#16a34a', fontWeight: 600 }} />
+                <Chip label={`${available} Available`} size="small" sx={{ backgroundColor: C.greenBg, color: '#16a34a', fontWeight: 600 }} />
                 <Chip label={`${booked} Booked`}       size="small" sx={{ backgroundColor: '#F0FDFA', color: '#0D9488', fontWeight: 600 }} />
-                <Chip label={`${blocked} Blocked`}     size="small" sx={{ backgroundColor: '#fef2f2', color: '#dc2626', fontWeight: 600 }} />
+                <Chip label={`${blocked} Blocked`}     size="small" sx={{ backgroundColor: C.redBg, color: '#dc2626', fontWeight: 600 }} />
               </Box>
             )}
 

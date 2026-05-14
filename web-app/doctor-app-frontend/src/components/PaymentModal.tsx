@@ -216,7 +216,7 @@ export default function PaymentModal({
 
       {/* Timer warning strip */}
       {secondsLeft <= 120 && stage !== 'success' && stage !== 'expired' && (
-        <Box sx={{ backgroundColor: secondsLeft <= 60 ? '#fef2f2' : '#fffbeb', px: 2.5, py: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={{ backgroundColor: secondsLeft <= 60 ? C.redBg : C.amberBg, px: 2.5, py: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
           <AccessTimeIcon sx={{ fontSize: 14, color: secondsLeft <= 60 ? '#dc2626' : '#b45309' }} />
           <Typography sx={{ fontSize: '0.75rem', fontWeight: 700, color: secondsLeft <= 60 ? '#dc2626' : '#b45309' }}>
             {secondsLeft <= 60
@@ -238,7 +238,7 @@ export default function PaymentModal({
               label={stage === 'success' ? 'Confirmed' : 'Awaiting Payment'}
               size="small"
               sx={{
-                backgroundColor: stage === 'success' ? '#f0fdf4' : '#fffbeb',
+                backgroundColor: stage === 'success' ? C.greenBg : C.amberBg,
                 color: stage === 'success' ? '#15803d' : '#b45309',
                 fontWeight: 700, fontSize: '0.65rem', height: 20,
               }}
@@ -280,7 +280,7 @@ export default function PaymentModal({
         )}
 
         {stage === 'success' && (
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 2, backgroundColor: '#f0fdf4', borderRadius: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 2, backgroundColor: C.greenBg, borderRadius: 2 }}>
             <CheckCircleIcon sx={{ color: '#16a34a', fontSize: 22 }} />
             <Typography sx={{ fontSize: '0.82rem', color: '#15803d', fontWeight: 600 }}>
               Payment successful! Your appointment is confirmed.
@@ -289,14 +289,14 @@ export default function PaymentModal({
         )}
 
         {stage === 'error' && (
-          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5, p: 2, backgroundColor: '#fef2f2', borderRadius: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5, p: 2, backgroundColor: C.redBg, borderRadius: 2 }}>
             <ErrorOutlineIcon sx={{ color: '#dc2626', fontSize: 22, flexShrink: 0, mt: 0.1 }} />
             <Typography sx={{ fontSize: '0.82rem', color: '#b91c1c' }}>{error}</Typography>
           </Box>
         )}
 
         {stage === 'expired' && (
-          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5, p: 2, backgroundColor: '#fef2f2', borderRadius: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5, p: 2, backgroundColor: C.redBg, borderRadius: 2 }}>
             <AccessTimeIcon sx={{ color: '#dc2626', fontSize: 22, flexShrink: 0, mt: 0.1 }} />
             <Box>
               <Typography sx={{ fontSize: '0.82rem', color: '#b91c1c', fontWeight: 700 }}>

@@ -33,8 +33,8 @@ const STATUS_TABS: { value: StatusFilter; label: string }[] = [
 const STATUS_STYLE: Record<string, { label: string; bg: string; color: string }> = {
   PENDING:   { label: 'Pending',   bg: '#F0FDFA', color: '#0D9488' },
   CONFIRMED: { label: 'Confirmed', bg: '#F1F0EF', color: C.slate },
-  COMPLETED: { label: 'Completed', bg: '#f0fdf4', color: '#16a34a' },
-  CANCELLED: { label: 'Cancelled', bg: '#fef2f2', color: '#dc2626' },
+  COMPLETED: { label: 'Completed', bg: C.greenBg, color: '#16a34a' },
+  CANCELLED: { label: 'Cancelled', bg: C.redBg, color: '#dc2626' },
 };
 
 function AppointmentRow({ appt, onCompleted }: { appt: DoctorAppointment; onCompleted: (updated: DoctorAppointment) => void }) {
@@ -125,7 +125,7 @@ function AppointmentRow({ appt, onCompleted }: { appt: DoctorAppointment; onComp
                 size="small"
                 onClick={handleComplete}
                 disabled={completing}
-                sx={{ borderColor: '#16a34a', color: '#16a34a', borderRadius: '6px', fontSize: '0.8125rem', px: 2.5, py: 0.75, '&:hover': { backgroundColor: '#f0fdf4', borderColor: '#16a34a' } }}
+                sx={{ borderColor: '#16a34a', color: '#16a34a', borderRadius: '6px', fontSize: '0.8125rem', px: 2.5, py: 0.75, '&:hover': { backgroundColor: C.greenBg, borderColor: '#16a34a' } }}
               >
                 {completing ? <CircularProgress size={14} sx={{ color: '#16a34a' }} /> : 'Mark Complete'}
               </Button>
@@ -186,9 +186,9 @@ export default function DoctorAppointmentsPage() {
       <Grid container spacing={2} sx={{ mb: 4 }}>
         {[
           { label: 'Pending',   value: counts.PENDING,   bg: '#F0FDFA', color: '#0D9488', icon: <PendingActionsIcon sx={{ fontSize: '1.25rem' }} /> },
-          { label: 'Confirmed', value: counts.CONFIRMED, bg: '#f0fdf4', color: '#15803d', icon: <CalendarTodayIcon   sx={{ fontSize: '1.25rem' }} /> },
-          { label: 'Completed', value: counts.COMPLETED, bg: '#f0fdf4', color: '#16a34a', icon: <CheckCircleIcon     sx={{ fontSize: '1.25rem' }} /> },
-          { label: 'Cancelled', value: counts.CANCELLED, bg: '#fef2f2', color: '#dc2626', icon: <CalendarTodayIcon   sx={{ fontSize: '1.25rem' }} /> },
+          { label: 'Confirmed', value: counts.CONFIRMED, bg: C.greenBg, color: '#15803d', icon: <CalendarTodayIcon   sx={{ fontSize: '1.25rem' }} /> },
+          { label: 'Completed', value: counts.COMPLETED, bg: C.greenBg, color: '#16a34a', icon: <CheckCircleIcon     sx={{ fontSize: '1.25rem' }} /> },
+          { label: 'Cancelled', value: counts.CANCELLED, bg: C.redBg, color: '#dc2626', icon: <CalendarTodayIcon   sx={{ fontSize: '1.25rem' }} /> },
         ].map(({ label, value, bg, color, icon }) => (
           <Grid key={label} item xs={6} md={3}>
             <Box sx={{ backgroundColor: C.paper, p: 2.5, borderRadius: '8px', border: `1px solid ${C.border}`, boxShadow: 'none', display: 'flex', alignItems: 'center', gap: 2 }}>

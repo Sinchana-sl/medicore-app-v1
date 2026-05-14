@@ -67,7 +67,7 @@ function nowHHMM() { const n = new Date(); return `${String(n.getHours()).padSta
 
 const CONSULT_META: Record<string, { label: string; icon: React.ReactNode; bg: string; color: string }> = {
   IN_PERSON: { label: 'In-Person', icon: <PersonIcon sx={{ fontSize: 11 }} />, bg: '#F0FDFA', color: '#1d4ed8' },
-  AUDIO:     { label: 'Audio',     icon: <HeadsetMicOutlinedIcon sx={{ fontSize: 11 }} />, bg: '#f0fdf4', color: '#15803d' },
+  AUDIO:     { label: 'Audio',     icon: <HeadsetMicOutlinedIcon sx={{ fontSize: 11 }} />, bg: C.greenBg, color: '#15803d' },
   VIDEO:     { label: 'Video',     icon: <VideocamOutlinedIcon sx={{ fontSize: 11 }} />,   bg: '#fdf4ff', color: '#7e22ce' },
 };
 
@@ -85,7 +85,7 @@ function DoctorResultCard({ doc, onSelect }: { doc: PublicDoctorResult; onSelect
         <Box sx={{ flex: 1, minWidth: 0 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
             <Typography sx={{ fontWeight: 800, fontSize: '0.9375rem', color: C.ink, fontFamily: 'inherit' }}>{doctorFullName(doc)}</Typography>
-            <Chip label="Accepting Patients" size="small" sx={{ height: 18, fontSize: '0.6rem', fontWeight: 700, backgroundColor: '#f0fdf4', color: '#16a34a', letterSpacing: '0.02em' }} />
+            <Chip label="Accepting Patients" size="small" sx={{ height: 18, fontSize: '0.6rem', fontWeight: 700, backgroundColor: C.greenBg, color: '#16a34a', letterSpacing: '0.02em' }} />
           </Box>
           <Typography sx={{ fontSize: '0.8125rem', color: '#0D9488', fontWeight: 600, mt: 0.25 }}>{doc.specialization ?? 'General'}</Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 0.75, flexWrap: 'wrap' }}>
@@ -148,7 +148,7 @@ function NearbyFacilityCard({ facility: c }: { facility: NearbyClinic }) {
   const isHospital = c.type === 'hospital';
   return (
     <Box sx={{ backgroundColor: C.paper, borderRadius: 2.5, border: `1px solid ${C.border}`, p: 2, display: 'flex', gap: 1.75, alignItems: 'flex-start', boxShadow: '0 1px 4px rgba(0,0,0,0.04)' }}>
-      <Box sx={{ width: 38, height: 38, borderRadius: 2, flexShrink: 0, backgroundColor: isHospital ? '#F0FDFA' : '#f0fdf4', color: isHospital ? '#0D9488' : '#15803d', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><LocalHospitalIcon sx={{ fontSize: 19 }} /></Box>
+      <Box sx={{ width: 38, height: 38, borderRadius: 2, flexShrink: 0, backgroundColor: isHospital ? '#F0FDFA' : C.greenBg, color: isHospital ? '#0D9488' : '#15803d', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><LocalHospitalIcon sx={{ fontSize: 19 }} /></Box>
       <Box sx={{ flex: 1, minWidth: 0 }}>
         <Typography sx={{ fontWeight: 700, fontSize: '0.875rem', color: C.ink }}>{c.name}</Typography>
         <Typography sx={{ fontSize: '0.75rem', color: isHospital ? '#0D9488' : '#15803d', fontWeight: 600, textTransform: 'capitalize', mt: 0.125 }}>{c.type}</Typography>
@@ -658,7 +658,7 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
               {/* WhatsApp toggle */}
               <Box sx={{ backgroundColor: C.paper, borderRadius: 3, px: 2.5, py: 2, border: `2px solid ${whatsappUpdates ? '#22c55e' : '#E9E9E7'}`, boxShadow: '0 1px 4px rgba(0,0,0,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, cursor: 'pointer', transition: 'border-color 0.15s' }} onClick={() => setWhatsappUpdates(v => !v)}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                  <Box sx={{ width: 38, height: 38, borderRadius: 2, flexShrink: 0, backgroundColor: whatsappUpdates ? '#f0fdf4' : '#F7F7F5', color: whatsappUpdates ? '#16a34a' : '#9B9A97', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><WhatsAppIcon sx={{ fontSize: 20 }} /></Box>
+                  <Box sx={{ width: 38, height: 38, borderRadius: 2, flexShrink: 0, backgroundColor: whatsappUpdates ? C.greenBg : '#F7F7F5', color: whatsappUpdates ? '#16a34a' : '#9B9A97', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><WhatsAppIcon sx={{ fontSize: 20 }} /></Box>
                   <Box>
                     <Typography sx={{ fontSize: '0.875rem', fontWeight: 700, color: C.ink }}>Get updates on WhatsApp</Typography>
                     <Typography sx={{ fontSize: '0.75rem', color: C.slate }}>Receive appointment reminders &amp; confirmations</Typography>
@@ -710,7 +710,7 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
 
           {/* Timer warning */}
           {secondsLeft <= 120 && secondsLeft > 0 && payStage !== 'success' && (
-            <Box sx={{ backgroundColor: secondsLeft <= 60 ? '#fef2f2' : '#fffbeb', px: 2.5, py: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Box sx={{ backgroundColor: secondsLeft <= 60 ? C.redBg : C.amberBg, px: 2.5, py: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
               <AccessTimeIcon sx={{ fontSize: 14, color: secondsLeft <= 60 ? '#dc2626' : '#b45309' }} />
               <Typography sx={{ fontSize: '0.75rem', fontWeight: 700, color: secondsLeft <= 60 ? '#dc2626' : '#b45309' }}>
                 {secondsLeft <= 60 ? `Hurry! Session expires in ${secondsLeft}s` : `Session expires in ${fmtCountdown(secondsLeft)}`}
@@ -727,7 +727,7 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Typography sx={{ fontSize: '0.78rem', color: C.slate }}>{bookedAppt.appointmentDate} · {bookedAppt.startTime}</Typography>
                 <Chip label={payStage === 'success' ? 'Confirmed' : 'Awaiting Payment'} size="small"
-                  sx={{ backgroundColor: payStage === 'success' ? '#f0fdf4' : '#fffbeb', color: payStage === 'success' ? '#15803d' : '#b45309', fontWeight: 700, fontSize: '0.65rem', height: 20 }} />
+                  sx={{ backgroundColor: payStage === 'success' ? C.greenBg : C.amberBg, color: payStage === 'success' ? '#15803d' : '#b45309', fontWeight: 700, fontSize: '0.65rem', height: 20 }} />
               </Box>
             </Box>
 
@@ -760,19 +760,19 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
               </Box>
             )}
             {payStage === 'success' && (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 2, backgroundColor: '#f0fdf4', borderRadius: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 2, backgroundColor: C.greenBg, borderRadius: 2 }}>
                 <CheckCircleIcon sx={{ color: '#16a34a', fontSize: 22 }} />
                 <Typography sx={{ fontSize: '0.82rem', color: '#15803d', fontWeight: 600 }}>Payment successful! Your appointment is confirmed.</Typography>
               </Box>
             )}
             {payStage === 'error' && (
-              <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5, p: 2, backgroundColor: '#fef2f2', borderRadius: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5, p: 2, backgroundColor: C.redBg, borderRadius: 2 }}>
                 <ErrorOutlineIcon sx={{ color: '#dc2626', fontSize: 22, flexShrink: 0, mt: 0.1 }} />
                 <Typography sx={{ fontSize: '0.82rem', color: '#b91c1c' }}>{payError}</Typography>
               </Box>
             )}
             {secondsLeft === 0 && payStage !== 'success' && (
-              <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5, p: 2, backgroundColor: '#fef2f2', borderRadius: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5, p: 2, backgroundColor: C.redBg, borderRadius: 2 }}>
                 <AccessTimeIcon sx={{ color: '#dc2626', fontSize: 22, flexShrink: 0, mt: 0.1 }} />
                 <Typography sx={{ fontSize: '0.82rem', color: '#b91c1c', fontWeight: 600 }}>Payment session expired. Your slot is reserved — retry from My Appointments.</Typography>
               </Box>

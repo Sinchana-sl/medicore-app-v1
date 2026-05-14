@@ -50,7 +50,7 @@ const emptyForm = (): ClinicForm => ({
 // ── Consultation type meta ─────────────────────────────────────────────────────
 
 const TYPE_META: Record<ConsultationType, { label: string; icon: React.ReactNode; color: string; bg: string }> = {
-  IN_PERSON: { label: 'In-Person',   icon: <PersonPinCircleIcon sx={{ fontSize: 16 }} />, color: '#15803d', bg: '#f0fdf4' },
+  IN_PERSON: { label: 'In-Person',   icon: <PersonPinCircleIcon sx={{ fontSize: 16 }} />, color: '#15803d', bg: C.greenBg },
   AUDIO:     { label: 'Audio Call',  icon: <PhoneInTalkIcon     sx={{ fontSize: 16 }} />, color: '#0D9488', bg: '#F0FDFA' },
   VIDEO:     { label: 'Video Call',  icon: <VideocamIcon        sx={{ fontSize: 16 }} />, color: '#7c3aed', bg: '#f5f3ff' },
 };
@@ -127,7 +127,7 @@ function ClinicCard({ clinic, onEdit, onDelete }: { clinic: Clinic; onEdit: () =
             <EditIcon fontSize="small" />
           </IconButton>
           <IconButton size="small" onClick={onDelete}
-            sx={{ color: C.slate, '&:hover': { color: '#dc2626', backgroundColor: '#fef2f2' } }}>
+            sx={{ color: C.slate, '&:hover': { color: '#dc2626', backgroundColor: C.redBg } }}>
             <DeleteIcon fontSize="small" />
           </IconButton>
         </Box>

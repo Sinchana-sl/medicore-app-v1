@@ -134,8 +134,8 @@ interface VitalProps {
 }
 
 const statusChip = {
-  normal: { bg: '#f0fdf4', color: '#15803d', label: 'Normal' },
-  warning: { bg: '#fffbeb', color: '#b45309', label: 'Review' },
+  normal: { bg: C.greenBg, color: '#15803d', label: 'Normal' },
+  warning: { bg: C.amberBg, color: '#b45309', label: 'Review' },
   empty: { bg: '#f1f5f9', color: C.muted, label: 'Not logged' },
 };
 
@@ -407,7 +407,7 @@ export default function PatientDashboard() {
       value: vitals.bloodPressure,
       unit: 'mmHg',
       status: bpStatus,
-      accentBg: '#fef2f2',
+      accentBg: C.redBg,
       accentColor: '#dc2626',
     },
  
@@ -426,7 +426,7 @@ export default function PatientDashboard() {
       value: vitals.weight,
       unit: 'kg',
       status: vitals.weight ? 'normal' : 'empty',
-      accentBg: '#f0fdf4',
+      accentBg: C.greenBg,
       accentColor: '#16a34a',
     },
     {
@@ -871,7 +871,7 @@ export default function PatientDashboard() {
                       })}
                     </Box>
                     {symptomResult && (
-                      <Box sx={{ p: 2, borderRadius: 2.5, backgroundColor: symptomResult.urgency === 'urgent' ? '#fef2f2' : symptomResult.urgency === 'soon' ? '#fffbeb' : '#f0fdf4', border: `1px solid ${symptomResult.urgency === 'urgent' ? '#fecaca' : symptomResult.urgency === 'soon' ? '#fde68a' : '#bbf7d0'}` }}>
+                      <Box sx={{ p: 2, borderRadius: 2.5, backgroundColor: symptomResult.urgency === 'urgent' ? C.redBg : symptomResult.urgency === 'soon' ? C.amberBg : C.greenBg, border: `1px solid ${symptomResult.urgency === 'urgent' ? '#fecaca' : symptomResult.urgency === 'soon' ? '#fde68a' : '#bbf7d0'}` }}>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 0.5 }}>
                           <Typography sx={{ fontWeight: 800, fontSize: '0.95rem', color: C.ink }}>👨‍⚕️ {symptomResult.specialist}</Typography>
                           <Chip label={symptomResult.urgency.toUpperCase()} size="small" sx={{ fontSize: '0.6rem', fontWeight: 700, height: 18, backgroundColor: symptomResult.urgency === 'urgent' ? '#fecaca' : symptomResult.urgency === 'soon' ? '#fde68a' : '#bbf7d0', color: symptomResult.urgency === 'urgent' ? '#b91c1c' : symptomResult.urgency === 'soon' ? '#b45309' : '#15803d' }} />

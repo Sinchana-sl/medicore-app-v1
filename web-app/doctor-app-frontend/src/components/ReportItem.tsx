@@ -15,14 +15,14 @@ interface ReportItemProps {
 }
 
 const iconMap = {
-  pdf:          { icon: <PictureAsPdfIcon sx={{ fontSize: 18 }} />, bg: '#fef2f2', color: '#dc2626' },
+  pdf:          { icon: <PictureAsPdfIcon sx={{ fontSize: 18 }} />, bg: C.redBg, color: '#dc2626' },
   doc:          { icon: <DescriptionIcon sx={{ fontSize: 18 }} />,  bg: '#F0FDFA', color: '#2563eb' },
-  prescription: { icon: <MedicationIcon sx={{ fontSize: 18 }} />,  bg: '#faf5ff', color: '#9333ea' },
+  prescription: { icon: <MedicationIcon sx={{ fontSize: 18 }} />,  bg: C.purpleBg, color: '#9333ea' },
 };
 
 const statusStyles: Record<ReportStatus, { bg: string; color: string }> = {
-  Ready:   { bg: '#f0fdf4', color: '#15803d' },
-  Pending: { bg: '#fffbeb', color: '#b45309' },
+  Ready:   { bg: C.greenBg, color: '#15803d' },
+  Pending: { bg: C.amberBg, color: '#b45309' },
 };
 
 export default function ReportItem({ title, subtitle, type, status }: ReportItemProps) {
