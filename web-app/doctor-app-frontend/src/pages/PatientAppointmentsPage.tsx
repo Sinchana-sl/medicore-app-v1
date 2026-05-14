@@ -122,12 +122,12 @@ export default function PatientAppointmentsPage() {
   };
 
   const tabDefs = [
-    { label: 'All',             count: counts.all,       color: '#0D9488' },
-    { label: 'Upcoming',        count: counts.upcoming,  color: '#0D9488' },
-    { label: 'Confirmed',       count: counts.confirmed, color: '#16a34a' },
-    { label: 'Pending Payment', count: counts.pending,   color: '#d97706' },
+    { label: 'All',             count: counts.all,       color: C.blue },
+    { label: 'Upcoming',        count: counts.upcoming,  color: C.blue },
+    { label: 'Confirmed',       count: counts.confirmed, color: C.green },
+    { label: 'Pending Payment', count: counts.pending,   color: C.amber },
     { label: 'Past',            count: counts.past,      color: C.slate },
-    { label: 'Cancelled',       count: counts.cancelled, color: '#dc2626' },
+    { label: 'Cancelled',       count: counts.cancelled, color: C.slate },
   ];
 
   // ── card style ─────────────────────────────────────────────────────────────
@@ -185,10 +185,10 @@ export default function PatientAppointmentsPage() {
             {!loading && (
               <Grid container spacing={2} sx={{ mb: 3 }}>
                 {[
-                  { icon: <CalendarTodayIcon />,        label: 'Total',           value: counts.all,       bg: '#F0FDFA', color: '#0D9488' },
-                  { icon: <EventAvailableIcon />,       label: 'Confirmed',       value: counts.confirmed,  bg: C.greenBg, color: '#16a34a' },
-                  { icon: <PendingActionsIcon />,       label: 'Pending Payment', value: counts.pending,    bg: C.amberBg, color: '#d97706' },
-                  { icon: <EventBusyIcon />,            label: 'Cancelled',       value: counts.cancelled,  bg: C.redBg, color: '#dc2626' },
+                  { icon: <CalendarTodayIcon />,        label: 'Total',           value: counts.all,       bg: C.blueLight, color: C.blue },
+                  { icon: <EventAvailableIcon />,       label: 'Confirmed',       value: counts.confirmed,  bg: C.greenBg,   color: C.green },
+                  { icon: <PendingActionsIcon />,       label: 'Pending Payment', value: counts.pending,    bg: C.amberBg,   color: C.amber },
+                  { icon: <EventBusyIcon />,            label: 'Cancelled',       value: counts.cancelled,  bg: C.borderSub, color: C.muted },
                 ].map(s => (
                   <Grid item xs={6} sm={3} key={s.label}>
                     {statCard(s.icon, s.label, s.value, s.bg, s.color)}
