@@ -754,71 +754,99 @@ export default function PatientSettingsPage() {
         title: 'Appointment Reminders',
         subtitle: 'Get notified about upcoming appointments',
         rows: [
-          { key: 'email_reminders',    label: 'Email reminders',    desc: '24 hours before your appointment', icon: <EmailIcon sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#F0FDFA' },
-          { key: 'whatsapp_reminders', label: 'WhatsApp reminders', desc: 'Quick message before your visit',  icon: <SmartphoneIcon sx={{ fontSize: 20, color: '#16a34a' }} />, bg: '#f0fdf4' },
-          { key: 'sms_reminders',      label: 'SMS reminders',      desc: 'Text reminder 2 hours before',    icon: <SmsIcon sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#ecfeff' },
+          { key: 'email_reminders',    label: 'Email reminders',    desc: '24 hours before your appointment', icon: <EmailIcon sx={{ fontSize: 18 }} />, iconBg: '#F0FDFA', iconColor: '#0D9488' },
+          { key: 'whatsapp_reminders', label: 'WhatsApp reminders', desc: 'Quick message before your visit',  icon: <SmartphoneIcon sx={{ fontSize: 18 }} />, iconBg: '#f0fdf4', iconColor: '#16a34a' },
+          { key: 'sms_reminders',      label: 'SMS reminders',      desc: 'Text reminder 2 hours before',    icon: <SmsIcon sx={{ fontSize: 18 }} />, iconBg: '#F0FDFA', iconColor: '#0D9488' },
         ],
       },
       {
         title: 'Updates & Activity',
         subtitle: 'Stay informed about your health activity',
         rows: [
-          { key: 'booking_confirm',  label: 'Booking confirmations', desc: 'When an appointment is confirmed',  icon: <DoneAllIcon sx={{ fontSize: 20, color: '#16a34a' }} />, bg: '#f0fdf4' },
-          { key: 'cancellation',     label: 'Cancellation alerts',   desc: 'If your appointment is cancelled', icon: <NotificationImportantIcon sx={{ fontSize: 20, color: '#f59e0b' }} />, bg: '#fffbeb' },
-          { key: 'payment_receipts', label: 'Payment receipts',      desc: 'Email receipt after payment',      icon: <ReceiptLongIcon sx={{ fontSize: 20, color: '#7c3aed' }} />, bg: '#faf5ff' },
-          { key: 'report_ready',     label: 'Report available',      desc: 'When a new report is shared',      icon: <DescriptionIcon sx={{ fontSize: 20, color: '#0D9488' }} />, bg: '#ecfeff' },
+          { key: 'booking_confirm',  label: 'Booking confirmations', desc: 'When an appointment is confirmed',  icon: <DoneAllIcon sx={{ fontSize: 18 }} />, iconBg: '#f0fdf4', iconColor: '#16a34a' },
+          { key: 'cancellation',     label: 'Cancellation alerts',   desc: 'If your appointment is cancelled', icon: <NotificationImportantIcon sx={{ fontSize: 18 }} />, iconBg: '#fffbeb', iconColor: '#f59e0b' },
+          { key: 'payment_receipts', label: 'Payment receipts',      desc: 'Email receipt after payment',      icon: <ReceiptLongIcon sx={{ fontSize: 18 }} />, iconBg: '#faf5ff', iconColor: '#7c3aed' },
+          { key: 'report_ready',     label: 'Report available',      desc: 'When a new report is shared',      icon: <DescriptionIcon sx={{ fontSize: 18 }} />, iconBg: '#F0FDFA', iconColor: '#0D9488' },
         ],
       },
       {
         title: 'Health & Wellness',
         subtitle: 'Personalised health content',
         rows: [
-          { key: 'health_tips',  label: 'Daily health tips',     desc: 'Morning wellness tips via email',    icon: <LightbulbIcon sx={{ fontSize: 20, color: '#f59e0b' }} />, bg: '#fffbeb' },
-          { key: 'water_remind', label: 'Water intake reminder', desc: 'Hydration nudges during the day',   icon: <OpacityIcon sx={{ fontSize: 20, color: '#0284c7' }} />, bg: '#f0f9ff' },
-          { key: 'med_remind',   label: 'Medication reminders',  desc: 'Reminders for your tracked meds',   icon: <MedicalServicesIcon sx={{ fontSize: 20, color: '#dc2626' }} />, bg: '#fef2f2' },
+          { key: 'health_tips',  label: 'Daily health tips',     desc: 'Morning wellness tips via email',  icon: <LightbulbIcon sx={{ fontSize: 18 }} />, iconBg: '#fffbeb', iconColor: '#f59e0b' },
+          { key: 'water_remind', label: 'Water intake reminder', desc: 'Hydration nudges during the day', icon: <OpacityIcon sx={{ fontSize: 18 }} />, iconBg: '#F0FDFA', iconColor: '#0D9488' },
+          { key: 'med_remind',   label: 'Medication reminders',  desc: 'Reminders for your tracked meds', icon: <MedicalServicesIcon sx={{ fontSize: 18 }} />, iconBg: '#fef2f2', iconColor: '#dc2626' },
         ],
       },
     ];
+
+    const switchSx = {
+      width: 44, height: 24, p: 0,
+      '& .MuiSwitch-switchBase': {
+        p: 0, m: '3px',
+        '&.Mui-checked': {
+          transform: 'translateX(20px)',
+          color: '#fff',
+          '& + .MuiSwitch-track': { backgroundColor: '#0D9488', opacity: 1, border: 0 },
+        },
+      },
+      '& .MuiSwitch-thumb': { width: 18, height: 18, boxShadow: '0 1px 3px rgba(0,0,0,0.2)' },
+      '& .MuiSwitch-track': { borderRadius: 12, backgroundColor: '#C8C8C5', opacity: 1 },
+    };
 
     return (
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
         {groups.map(g => (
           <SettingsCard key={g.title} title={g.title} subtitle={g.subtitle}>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
-              {g.rows.map(row => {
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              {g.rows.map((row, i) => {
                 const on = notifs[row.key] ?? true;
                 return (
-                  <Box key={row.key} onClick={() => saveNotif(row.key, !on)} sx={{
-                    flex: '1 1 120px',
-                    p: 2, borderRadius: '8px', cursor: 'pointer', textAlign: 'center',
-                    border: `2px solid ${on ? '#0D9488' : '#e2e8f0'}`,
-                    background: on ? `linear-gradient(135deg, ${row.bg}, #fff)` : 'linear-gradient(135deg, #f8fafc, #fff)',
-                    transition: 'all 0.15s',
-                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1,
-                    '&:hover': { borderColor: '#0D9488' },
-                  }}>
-                    <Box sx={{ width: 44, height: 44, borderRadius: '6px',
-                      backgroundColor: on ? row.bg : '#F1F0EF',
+                  <Box
+                    key={row.key}
+                    onClick={() => saveNotif(row.key, !on)}
+                    sx={{
+                      display: 'flex', alignItems: 'center', gap: 2,
+                      py: 1.5, px: 0.5, cursor: 'pointer',
+                      borderBottom: i < g.rows.length - 1 ? '1px solid #F1F0EF' : 'none',
+                      borderRadius: '6px',
+                      '&:hover': { backgroundColor: '#FAFAF9' },
+                      transition: 'background 0.1s',
+                    }}
+                  >
+                    {/* Icon */}
+                    <Box sx={{
+                      width: 36, height: 36, borderRadius: '8px', flexShrink: 0,
+                      backgroundColor: on ? row.iconBg : '#F1F0EF',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      transition: 'background 0.15s' }}>
+                      color: on ? row.iconColor : '#C8C8C5',
+                      transition: 'all 0.15s',
+                    }}>
                       {row.icon}
                     </Box>
-                    <Typography sx={{ fontSize: '0.82rem', fontWeight: 700, color: on ? '#37352F' : '#9B9A97', lineHeight: 1.3 }}>
-                      {row.label}
-                    </Typography>
-                    <Typography sx={{ fontSize: '0.68rem', color: '#9B9A97', lineHeight: 1.4 }}>
-                      {row.desc}
-                    </Typography>
-                    <Switch
-                      checked={on}
-                      onChange={e => { e.stopPropagation(); saveNotif(row.key, e.target.checked); }}
-                      onClick={e => e.stopPropagation()}
-                      size="small"
-                      sx={{
-                        '& .MuiSwitch-switchBase.Mui-checked': { color: '#0D9488' },
-                        '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { backgroundColor: '#0D9488' },
-                      }}
-                    />
+
+                    {/* Label + description */}
+                    <Box sx={{ flex: 1, minWidth: 0 }}>
+                      <Typography sx={{ fontSize: '0.875rem', fontWeight: 600, color: on ? '#37352F' : '#9B9A97', lineHeight: 1.3 }}>
+                        {row.label}
+                      </Typography>
+                      <Typography sx={{ fontSize: '0.75rem', color: '#9B9A97', mt: 0.2, lineHeight: 1.4 }}>
+                        {row.desc}
+                      </Typography>
+                    </Box>
+
+                    {/* Toggle */}
+                    <Box sx={{ flexShrink: 0, display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Typography sx={{ fontSize: '0.72rem', fontWeight: 600, color: on ? '#0D9488' : '#C8C8C5', minWidth: 20, textAlign: 'right' }}>
+                        {on ? 'On' : 'Off'}
+                      </Typography>
+                      <Switch
+                        checked={on}
+                        onChange={e => { e.stopPropagation(); saveNotif(row.key, e.target.checked); }}
+                        onClick={e => e.stopPropagation()}
+                        sx={switchSx}
+                      />
+                    </Box>
                   </Box>
                 );
               })}
