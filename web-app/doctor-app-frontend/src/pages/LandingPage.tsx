@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, Button, Grid, Avatar, TextField } from '@mui/material';
+import { Box, Typography, Button, Grid, TextField } from '@mui/material';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
@@ -19,91 +19,58 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SendIcon from '@mui/icons-material/Send';
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 
-// ─── Design tokens ─────────────────────────────────────────────────────────────
-const SANS   = "'Plus Jakarta Sans', system-ui, sans-serif";
-const TEAL   = '#0D9488';
-const TEAL_D = '#0F766E';
+// ─── Design tokens (matching reference: container-max=1280, margin-desktop=64px, section-gap=120px)
+const INTER = "'Inter', system-ui, sans-serif";
+const PRIMARY   = '#0D9488'; // teal brand colour
+const PRIMARY_D = '#0F766E';
 
-// Unified horizontal padding + max-width used by every section
-const PX  = { xs: '20px', sm: '40px', lg: '80px' } as const;
-const MXW = 1280;
+// Matches: max-w-container-max mx-auto px-margin-desktop
+const GUTTER: Record<string, string> = { xs: '20px', md: '40px', lg: '64px' };
+const MAX_W = 1280;
 
-const glass: React.CSSProperties = {
-  background:           'rgba(255,255,255,0.55)',
-  backdropFilter:       'blur(18px)',
-  WebkitBackdropFilter: 'blur(18px)',
-  border:               '1px solid rgba(255,255,255,0.30)',
-};
+const glass = {
+  background:           'rgba(255,255,255,0.4)',
+  backdropFilter:       'blur(20px)',
+  WebkitBackdropFilter: 'blur(20px)',
+  border:               '1px solid rgba(255,255,255,0.2)',
+} as const;
 
 // ─── Data ──────────────────────────────────────────────────────────────────────
-const STATS = [
-  { v: '500+', l: 'Verified Doctors' },
-  { v: '4.9★', l: 'Average Rating' },
-  { v: '120K+', l: 'Active Patients' },
-  { v: '24/7', l: 'Support' },
-];
-
 const DOCTORS = [
-  { name: 'Dr. Anjali Sharma', role: 'Cardiologist · 12 yrs',  rating: 4.9, color: TEAL,      img: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=480&q=80&auto=format&fit=crop' },
-  { name: 'Dr. Sarah Chen',    role: 'Pediatrician · 8 yrs',   rating: 5.0, color: '#6B48C8', img: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=480&q=80&auto=format&fit=crop' },
-  { name: 'Dr. Michael Ray',   role: 'Dermatologist · 15 yrs', rating: 4.8, color: '#0F7348', img: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=480&q=80&auto=format&fit=crop' },
-  { name: 'Dr. Elena Vance',   role: 'Neurologist · 10 yrs',   rating: 4.9, color: '#B45309', img: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=480&q=80&auto=format&fit=crop' },
+  { name: 'Dr. Anjali Sharma', role: 'Cardiologist, 12 yrs exp',  rating: 4.9,
+    img: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=480&q=80&auto=format&fit=crop' },
+  { name: 'Dr. Sarah Chen',    role: 'Pediatrician, 8 yrs exp',   rating: 5.0,
+    img: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=480&q=80&auto=format&fit=crop' },
+  { name: 'Dr. Michael Ray',   role: 'Dermatologist, 15 yrs exp', rating: 4.8,
+    img: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=480&q=80&auto=format&fit=crop' },
+  { name: 'Dr. Elena Vance',   role: 'Neurologist, 10 yrs exp',   rating: 4.9,
+    img: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=480&q=80&auto=format&fit=crop' },
 ];
 
 const TESTIMONIALS = [
   { name: 'Alexandra Smith', role: 'Marketing Director', highlight: false,
-    img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80&auto=format&fit=crop',
-    text: '"The easiest doctor\'s appointment I\'ve ever booked. Found a specialist and confirmed within minutes. The video call was crystal clear!"' },
-  { name: 'David Chen', role: 'Software Engineer', highlight: true,
-    img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80&auto=format&fit=crop',
-    text: '"Being able to see credentials before booking is a game changer. I felt so much more confident going into my consultation."' },
-  { name: 'Emma Wilson', role: 'Graphic Designer', highlight: false,
-    img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&q=80&auto=format&fit=crop',
-    text: '"MediCore saved me so much time. I used to spend hours calling clinics for an opening. Now it\'s done in 60 seconds."' },
+    img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=96&q=80&auto=format&fit=crop',
+    text: '"The easiest doctor\'s appointment I\'ve ever booked. Found a specialist, saw their availability, and was booked within minutes. The video call was crystal clear!"' },
+  { name: 'David Chen',      role: 'Software Engineer',  highlight: true,
+    img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&q=80&auto=format&fit=crop',
+    text: '"Being able to see reviews and credentials before booking is a game changer. I felt so much more confident going into my consultation with my specialist."' },
+  { name: 'Emma Wilson',     role: 'Graphic Designer',   highlight: false,
+    img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=96&q=80&auto=format&fit=crop',
+    text: '"MediCore saved me so much time. I used to spend hours calling different clinics for an opening. Now I just use the app and it\'s done."' },
 ];
 
 const FAQS = [
-  { q: 'Is my medical data secure?',      a: 'Yes. We use end-to-end encryption and are fully HIPAA compliant. Your personal health information is always protected and never shared without your consent.' },
-  { q: 'How do I cancel an appointment?', a: 'You can cancel or reschedule any appointment through "My Appointments" up to 24 hours before the scheduled time at no charge.' },
-  { q: 'Do you accept insurance?',        a: 'We partner with most major insurance providers. Add your details to your profile to see covered practitioners and estimated co-pays upfront.' },
-  { q: 'Can I consult doctors online?',   a: 'Absolutely. MediCore supports HD video consultations, audio calls, and chat — so you can get care from anywhere, anytime.' },
-  { q: 'How quickly can I get an appointment?', a: 'Most doctors have same-day or next-day slots available. For urgent care, our platform shows you the earliest available slot in real time.' },
-  { q: 'Is MediCore free to use?',        a: 'The platform is free for patients. You only pay the consultation fee set by the doctor, which is shown upfront before you confirm your booking.' },
+  { q: 'Is my medical data secure?',      a: 'Yes, your privacy is our top priority. We use end-to-end encryption and are fully HIPAA compliant to ensure your personal health information is always protected.' },
+  { q: 'How do I cancel an appointment?', a: 'You can cancel or reschedule any appointment through the "My Bookings" section up to 24 hours before the scheduled time at no charge.' },
+  { q: 'Do you accept insurance?',        a: 'We partner with most major insurance providers. You can add your insurance details to your profile to see covered practitioners and estimated co-pays.' },
+  { q: 'Can I consult doctors online?',   a: 'Absolutely. MediCore supports high-definition video consultations, audio calls, and chat — so you can get care from anywhere, anytime.' },
 ];
 
-const STEPS = [
-  { n: '01', icon: <PersonSearchIcon sx={{ fontSize: 28, color: TEAL }} />, title: 'Find a Doctor', desc: 'Browse verified specialists by specialty, location, or availability. Read reviews and credentials before choosing.' },
-  { n: '02', icon: <CalendarMonthIcon sx={{ fontSize: 28, color: '#6B48C8' }} />, title: 'Book a Slot', desc: 'Pick a time that works for you — in-person or video. Instant confirmation with calendar sync.' },
-  { n: '03', icon: <CheckCircleIcon   sx={{ fontSize: 28, color: '#0F7348' }} />, title: 'Get Care', desc: 'Attend your appointment, receive your diagnosis, and access your records anytime from your dashboard.' },
-];
-
-// ─── Layout primitives ─────────────────────────────────────────────────────────
-function Section({ children, sx = {} }: { children: React.ReactNode; sx?: object }) {
+// ─── Inner content wrapper — matches max-w-container-max mx-auto px-margin-desktop
+function Inner({ children, sx = {} }: { children: React.ReactNode; sx?: object }) {
   return (
-    <Box sx={{ px: PX, ...sx }}>
-      <Box sx={{ maxWidth: MXW, mx: 'auto', width: '100%' }}>
-        {children}
-      </Box>
-    </Box>
-  );
-}
-
-function SectionHeading({ label, title, subtitle }: { label?: string; title: string; subtitle?: string }) {
-  return (
-    <Box sx={{ textAlign: 'center', mb: { xs: 4, md: 5 } }}>
-      {label && (
-        <Typography sx={{ fontSize: '0.6875rem', fontWeight: 700, color: TEAL, letterSpacing: '0.1em', textTransform: 'uppercase', fontFamily: SANS, mb: 1.25 }}>
-          {label}
-        </Typography>
-      )}
-      <Typography sx={{ fontSize: { xs: '1.75rem', md: '2.25rem' }, fontWeight: 800, color: '#0B1C30', fontFamily: SANS, letterSpacing: '-0.025em', lineHeight: 1.2, mb: subtitle ? 1.25 : 0 }}>
-        {title}
-      </Typography>
-      {subtitle && (
-        <Typography sx={{ fontSize: '1rem', color: '#424656', fontFamily: SANS, lineHeight: 1.7, maxWidth: 540, mx: 'auto' }}>
-          {subtitle}
-        </Typography>
-      )}
+    <Box sx={{ maxWidth: MAX_W, mx: 'auto', px: GUTTER, ...sx }}>
+      {children}
     </Box>
   );
 }
@@ -111,16 +78,18 @@ function SectionHeading({ label, title, subtitle }: { label?: string; title: str
 function FaqItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
   return (
-    <Box sx={{ backgroundColor: '#fff', border: '1px solid #E4E7F0', borderRadius: '14px', mb: 2, overflow: 'hidden' }}>
+    <Box sx={{ backgroundColor: '#fff', border: '1px solid rgba(194,198,216,0.2)', borderRadius: '16px', p: 3, mb: 2 }}>
       <Box onClick={() => setOpen(o => !o)}
-        sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 3, py: 2.25, cursor: 'pointer', gap: 2, '&:hover': { backgroundColor: '#FAFBFF' } }}>
-        <Typography sx={{ fontWeight: 600, fontSize: '0.9375rem', color: '#0B1C30', fontFamily: SANS }}>{q}</Typography>
-        <ExpandMoreIcon sx={{ color: TEAL, flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+        sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', gap: 2 }}>
+        <Typography sx={{ fontWeight: 600, fontSize: '1.125rem', color: '#0B1C30', fontFamily: INTER }}>
+          {q}
+        </Typography>
+        <ExpandMoreIcon sx={{ color: PRIMARY, flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
       </Box>
       {open && (
-        <Box sx={{ px: 3, pb: 2.5 }}>
-          <Typography sx={{ fontSize: '0.9rem', color: '#424656', fontFamily: SANS, lineHeight: 1.75 }}>{a}</Typography>
-        </Box>
+        <Typography sx={{ mt: 2, fontSize: '1rem', lineHeight: '1.5rem', color: '#424656', fontFamily: INTER }}>
+          {a}
+        </Typography>
       )}
     </Box>
   );
@@ -131,485 +100,554 @@ export default function LandingPage() {
   const nav = useNavigate();
 
   return (
-    <Box sx={{ fontFamily: SANS, backgroundColor: '#F8F9FF', overflowX: 'hidden' }}>
+    <Box sx={{ backgroundColor: '#f8f9ff', color: '#0B1C30', fontFamily: INTER, overflowX: 'hidden' }}>
 
-      {/* ── NAV ─────────────────────────────────────────────────────────────── */}
+      {/* ── NAV — fixed, glass, h-20 (80px) ─────────────────────────────────── */}
       <Box component="nav" sx={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200,
-        ...glass,
-        borderTop: 'none', borderLeft: 'none', borderRight: 'none',
-        borderBottom: '1px solid rgba(200,210,230,0.4)',
-        boxShadow: '0 2px 24px rgba(0,0,0,0.06)',
-        px: PX, height: 64,
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
+        backgroundColor: 'rgba(255,255,255,0.4)',
+        backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
+        borderBottom: '1px solid rgba(255,255,255,0.10)',
+        boxShadow: '0 20px 40px rgba(0,0,0,0.05)',
+        height: 80,
         display: 'flex', alignItems: 'center',
       }}>
-        <Box sx={{ maxWidth: MXW, mx: 'auto', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25 }}>
-            <Box sx={{ width: 34, height: 34, borderRadius: '10px', backgroundColor: TEAL, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <MonitorHeartIcon sx={{ fontSize: 19, color: '#fff' }} />
-            </Box>
-            <Typography sx={{ fontWeight: 800, fontSize: '1.0625rem', color: TEAL, fontFamily: SANS, letterSpacing: '-0.02em' }}>MediCore</Typography>
+        <Inner sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          {/* Logo */}
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <MonitorHeartIcon sx={{ fontSize: 30, color: PRIMARY }} />
+            <Typography sx={{ fontWeight: 700, fontSize: '1.5rem', color: PRIMARY, fontFamily: INTER }}>MediCore</Typography>
           </Box>
 
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 4, alignItems: 'center' }}>
-            {['Find a Doctor', 'Specialties', 'How it Works'].map(l => (
-              <Typography key={l} sx={{ fontSize: '0.875rem', fontWeight: 500, color: '#424656', fontFamily: SANS, cursor: 'pointer', '&:hover': { color: TEAL }, transition: 'color 0.15s' }}>{l}</Typography>
+          {/* Nav links */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 4 }}>
+            {[
+              { label: 'Home',          active: true },
+              { label: 'Find a Doctor', active: false },
+              { label: 'Specialties',   active: false },
+              { label: 'How it Works',  active: false },
+            ].map(({ label, active }) => (
+              <Typography key={label} sx={{
+                fontSize: '0.875rem', fontWeight: 500, fontFamily: INTER, cursor: 'pointer',
+                color: active ? PRIMARY : '#424656',
+                borderBottom: active ? `2px solid ${PRIMARY}` : '2px solid transparent',
+                pb: '2px',
+                '&:hover': { color: PRIMARY },
+                transition: 'color 0.15s',
+              }}>
+                {label}
+              </Typography>
             ))}
           </Box>
 
-          <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-            <Button onClick={() => nav('/login')} sx={{ color: '#424656', fontFamily: SANS, fontWeight: 600, fontSize: '0.875rem', textTransform: 'none', px: 2 }}>
-              Sign in
-            </Button>
-            <Button onClick={() => nav('/login')} sx={{ backgroundColor: TEAL, color: '#fff', fontFamily: SANS, fontWeight: 700, fontSize: '0.875rem', px: 2.5, py: 0.875, textTransform: 'none', borderRadius: '8px', boxShadow: 'none', '&:hover': { backgroundColor: TEAL_D, boxShadow: 'none' } }}>
-              Get Started
-            </Button>
-          </Box>
-        </Box>
+          {/* CTA */}
+          <Button onClick={() => nav('/login')}
+            sx={{ backgroundColor: PRIMARY, color: '#fff', fontFamily: INTER, fontWeight: 500, fontSize: '0.875rem', px: 3, py: 1.25, letterSpacing: '0.01em', textTransform: 'none', borderRadius: '8px', boxShadow: 'none', '&:hover': { backgroundColor: PRIMARY_D, boxShadow: 'none', opacity: 0.9 }, '&:active': { transform: 'scale(0.97)' } }}>
+            Book Now
+          </Button>
+        </Inner>
       </Box>
 
-      {/* ── HERO ─────────────────────────────────────────────────────────────── */}
-      <Box sx={{
-        pt: { xs: '96px', md: '112px' },
-        pb: { xs: '48px', md: '64px' },
-        px: PX,
-        background: 'linear-gradient(145deg, #F0FDFA 0%, #F8F9FF 55%, #EEF2FF 100%)',
-        position: 'relative', overflow: 'hidden',
+      {/* ── HERO — pt-40 (160px) pb-section-gap (120px) ─────────────────────── */}
+      <Box component="section" sx={{
+        position: 'relative', pt: { xs: '120px', md: '160px' }, pb: { xs: '80px', md: '120px' }, overflow: 'hidden',
       }}>
-        <Box sx={{ position: 'absolute', top: '-10%', right: '-5%', width: '50%', height: '120%', background: `radial-gradient(ellipse at center, ${TEAL}0C 0%, transparent 70%)`, pointerEvents: 'none' }} />
+        {/* right gradient blob */}
+        <Box sx={{ position: 'absolute', top: 0, right: 0, zIndex: 0, width: '66%', height: '100%', background: `linear-gradient(to left, ${PRIMARY}0D, transparent)`, borderBottomLeftRadius: '200px', pointerEvents: 'none' }} />
 
-        <Box sx={{ maxWidth: MXW, mx: 'auto', width: '100%' }}>
-          <Grid container spacing={{ xs: 4, md: 6 }} alignItems="center">
-            {/* Copy */}
-            <Grid item xs={12} md={6}>
-              <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.75, px: 1.5, py: 0.625, borderRadius: '100px', backgroundColor: '#F0FDFA', border: '1px solid #CCFBF1', mb: 2.5 }}>
-                <CheckCircleIcon sx={{ fontSize: 12, color: TEAL }} />
-                <Typography sx={{ fontSize: '0.6875rem', fontWeight: 700, color: TEAL_D, fontFamily: SANS, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-                  Trusted by 50,000+ Patients
+        <Inner sx={{ position: 'relative', zIndex: 1 }}>
+          <Grid container spacing={{ xs: 6, lg: 8 }} alignItems="center">
+            {/* Left — copy */}
+            <Grid item xs={12} lg={6}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                {/* Badge */}
+                <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.75, px: 1.5, py: 0.5, backgroundColor: '#7ed4fd33', color: '#005b78', borderRadius: '9999px', width: 'fit-content' }}>
+                  <CheckCircleIcon sx={{ fontSize: '0.875rem' }} />
+                  <Typography sx={{ fontSize: '0.75rem', fontWeight: 600, fontFamily: INTER, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+                    Trusted by 50,000+ Patients
+                  </Typography>
+                </Box>
+
+                {/* Headline */}
+                <Typography sx={{ fontSize: { xs: '2.5rem', md: '4rem' }, fontWeight: 700, lineHeight: { xs: '3rem', md: '4.5rem' }, letterSpacing: '-0.02em', fontFamily: INTER }}>
+                  Your Health,{' '}
+                  <Box component="span" sx={{ color: PRIMARY }}>Simplified</Box>
                 </Typography>
-              </Box>
 
-              <Typography sx={{ fontSize: { xs: '2.375rem', md: '3.5rem' }, fontWeight: 800, color: '#0B1C30', fontFamily: SANS, lineHeight: 1.1, letterSpacing: '-0.03em', mb: 2 }}>
-                Your Health,{' '}
-                <Box component="span" sx={{ color: TEAL }}>Simplified</Box>
-              </Typography>
+                {/* Body */}
+                <Typography sx={{ fontSize: '1.125rem', lineHeight: '1.75rem', color: '#424656', fontFamily: INTER, maxWidth: 500 }}>
+                  Access top-tier medical expertise from the comfort of your home. MediCore connects you with verified specialists instantly.
+                </Typography>
 
-              <Typography sx={{ fontSize: '1rem', color: '#424656', fontFamily: SANS, lineHeight: 1.8, mb: 3.5, maxWidth: 440 }}>
-                Access top-tier medical expertise from the comfort of your home. Connect with verified specialists instantly.
-              </Typography>
+                {/* Buttons */}
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+                  <Button onClick={() => nav('/login')}
+                    sx={{ backgroundColor: PRIMARY, color: '#fff', fontFamily: INTER, fontWeight: 500, fontSize: '0.875rem', px: 4, py: 2, letterSpacing: '0.01em', textTransform: 'none', borderRadius: '8px', boxShadow: `0 4px 24px ${PRIMARY}33`, '&:hover': { backgroundColor: PRIMARY_D, boxShadow: `0 8px 32px ${PRIMARY}55` } }}>
+                    Book Appointment
+                  </Button>
+                  <Button onClick={() => nav('/login')}
+                    sx={{ ...glass, color: PRIMARY, fontFamily: INTER, fontWeight: 500, fontSize: '0.875rem', px: 4, py: 2, letterSpacing: '0.01em', textTransform: 'none', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: 1, '&:hover': { background: 'rgba(255,255,255,0.6)' } }}>
+                    How it Works
+                  </Button>
+                </Box>
 
-              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 4 }}>
-                <Button onClick={() => nav('/login')}
-                  sx={{ backgroundColor: TEAL, color: '#fff', fontFamily: SANS, fontWeight: 700, fontSize: '0.9375rem', px: 3.5, py: 1.375, borderRadius: '10px', textTransform: 'none', boxShadow: `0 8px 24px ${TEAL}38`, '&:hover': { backgroundColor: TEAL_D } }}>
-                  Book Appointment
-                </Button>
-                <Button onClick={() => nav('/login')}
-                  sx={{ ...glass, color: TEAL, fontFamily: SANS, fontWeight: 600, fontSize: '0.9375rem', px: 3.5, py: 1.375, borderRadius: '10px', textTransform: 'none', '&:hover': { background: 'rgba(255,255,255,0.75)' } }}>
-                  How it Works
-                </Button>
-              </Box>
-
-              <Box sx={{ display: 'flex', gap: 4 }}>
-                {[{ v: '500+', l: 'Top Doctors' }, { v: '4.9/5', l: 'User Rating' }, { v: '120K+', l: 'Patients' }].map(s => (
-                  <Box key={s.l}>
-                    <Typography sx={{ fontSize: '1.375rem', fontWeight: 800, color: TEAL, fontFamily: SANS, lineHeight: 1.1 }}>{s.v}</Typography>
-                    <Typography sx={{ fontSize: '0.75rem', color: '#727687', fontFamily: SANS, mt: 0.25 }}>{s.l}</Typography>
-                  </Box>
-                ))}
+                {/* Stats */}
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 6, pt: 1 }}>
+                  {[{ v: '500+', l: 'Top Doctors' }, { v: '4.9/5', l: 'User Rating' }, { v: '120k+', l: 'Active Users' }].map(s => (
+                    <Box key={s.l}>
+                      <Typography sx={{ fontSize: '1.5rem', lineHeight: '2rem', fontWeight: 600, color: PRIMARY, fontFamily: INTER }}>{s.v}</Typography>
+                      <Typography sx={{ fontSize: '0.875rem', lineHeight: '1.25rem', letterSpacing: '0.01em', color: '#424656', fontFamily: INTER }}>{s.l}</Typography>
+                    </Box>
+                  ))}
+                </Box>
               </Box>
             </Grid>
 
-            {/* Hero image */}
-            <Grid item xs={12} md={6}>
+            {/* Right — image + floating cards */}
+            <Grid item xs={12} lg={6}>
               <Box sx={{ position: 'relative' }}>
-                <Box sx={{ borderRadius: '24px', overflow: 'hidden', boxShadow: '0 32px 80px rgba(0,0,0,0.14)', lineHeight: 0 }}>
+                {/* Main doctor image */}
+                <Box sx={{ position: 'relative', zIndex: 1, borderRadius: '32px', overflow: 'hidden', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', lineHeight: 0 }}>
                   <Box component="img"
                     src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=960&q=85&auto=format&fit=crop"
-                    alt="Doctor"
-                    sx={{ width: '100%', height: { xs: 280, md: 460 }, objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
+                    alt="Professional Doctor"
+                    sx={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
                   />
                 </Box>
 
-                {/* Float: Quick Booking */}
-                <Box sx={{ position: 'absolute', bottom: 24, left: { xs: 12, md: -12 }, ...glass, borderRadius: '14px', p: 1.75, boxShadow: '0 12px 36px rgba(0,0,0,0.12)', display: 'flex', alignItems: 'center', gap: 1.25 }}>
-                  <Box sx={{ width: 36, height: 36, borderRadius: '9px', backgroundColor: `${TEAL}18`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <CalendarMonthIcon sx={{ fontSize: 18, color: TEAL }} />
-                  </Box>
-                  <Box>
-                    <Typography sx={{ fontWeight: 700, fontSize: '0.8125rem', color: '#0B1C30', fontFamily: SANS, lineHeight: 1.2 }}>Quick Booking</Typography>
-                    <Typography sx={{ fontSize: '0.6875rem', color: '#727687', fontFamily: SANS }}>Next slot in 15 mins</Typography>
+                {/* Float card: Quick Booking — bottom left, extends beyond image */}
+                <Box sx={{
+                  ...glass, position: 'absolute', zIndex: 20,
+                  bottom: 48, left: { xs: 12, md: -48 },
+                  p: 3, borderRadius: '16px',
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.12)',
+                  maxWidth: 240,
+                }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 0.5 }}>
+                    <Box sx={{ width: 40, height: 40, borderRadius: '50%', backgroundColor: `${PRIMARY}1A`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <CalendarMonthIcon sx={{ color: PRIMARY, fontSize: 20 }} />
+                    </Box>
+                    <Box>
+                      <Typography sx={{ fontWeight: 700, fontSize: '0.875rem', letterSpacing: '0.01em', fontFamily: INTER, lineHeight: 1.3 }}>Quick Booking</Typography>
+                      <Typography sx={{ fontSize: '0.625rem', color: '#424656', fontFamily: INTER }}>Next available in 15 mins</Typography>
+                    </Box>
                   </Box>
                 </Box>
 
-                {/* Float: Rating */}
-                <Box sx={{ position: 'absolute', top: 20, right: { xs: 12, md: -12 }, ...glass, borderRadius: '14px', p: 1.75, boxShadow: '0 12px 36px rgba(0,0,0,0.12)', minWidth: 130, textAlign: 'center' }}>
-                  <Box sx={{ display: 'flex', justifyContent: 'center', mb: 0.5 }}>
-                    {[TEAL, '#6B48C8', '#0F7348'].map((c, i) => (
-                      <Avatar key={i} sx={{ width: 26, height: 26, fontSize: '0.45rem', fontWeight: 700, backgroundColor: c, ml: i > 0 ? -0.625 : 0, border: '2px solid #fff' }}>
-                        {['PS', 'AM', 'RV'][i]}
-                      </Avatar>
-                    ))}
+                {/* Float card: Joined Patients — top right */}
+                <Box sx={{
+                  ...glass, position: 'absolute', zIndex: 20,
+                  top: 48, right: { xs: 12, md: -32 },
+                  p: 3, borderRadius: '16px',
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.12)',
+                }}>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.5 }}>
+                    {/* Overlapping avatars */}
+                    <Box sx={{ display: 'flex', mb: 0.5 }}>
+                      {[
+                        'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=80&q=80&auto=format&fit=crop',
+                        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=80&auto=format&fit=crop',
+                        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=80&auto=format&fit=crop',
+                      ].map((src, i) => (
+                        <Box key={i} component="img" src={src} alt="User"
+                          sx={{ width: 40, height: 40, borderRadius: '50%', border: '2px solid #fff', objectFit: 'cover', ml: i > 0 ? -1.5 : 0 }}
+                        />
+                      ))}
+                    </Box>
+                    <Typography sx={{ fontSize: '0.75rem', fontWeight: 600, color: PRIMARY, fontFamily: INTER }}>Joined Patients</Typography>
                   </Box>
-                  <Box sx={{ display: 'flex', gap: 0.25, justifyContent: 'center', mb: 0.375 }}>
-                    {[1,2,3,4,5].map(i => <StarIcon key={i} sx={{ fontSize: 11, color: '#F59E0B' }} />)}
-                  </Box>
-                  <Typography sx={{ fontSize: '0.6875rem', color: '#727687', fontFamily: SANS }}>50K+ happy patients</Typography>
                 </Box>
               </Box>
             </Grid>
           </Grid>
-        </Box>
+        </Inner>
       </Box>
 
-      {/* ── STATS STRIP ──────────────────────────────────────────────────────── */}
-      <Box sx={{ backgroundColor: '#0B1C30', px: PX, py: { xs: '28px', md: '32px' } }}>
-        <Box sx={{ maxWidth: MXW, mx: 'auto', width: '100%' }}>
-          <Grid container spacing={2}>
-            {STATS.map(s => (
-              <Grid item xs={6} md={3} key={s.l}>
-                <Box sx={{ textAlign: 'center' }}>
-                  <Typography sx={{ fontSize: { xs: '1.5rem', md: '1.875rem' }, fontWeight: 800, color: TEAL, fontFamily: SANS, lineHeight: 1.1 }}>{s.v}</Typography>
-                  <Typography sx={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.55)', fontFamily: SANS, mt: 0.25 }}>{s.l}</Typography>
-                </Box>
+      {/* ── SEARCH BAR — overlaps hero with -mt-20 (-80px) ───────────────────── */}
+      <Box component="section" sx={{ position: 'relative', zIndex: 30, mt: { xs: '-40px', md: '-80px' } }}>
+        <Inner>
+          <Box sx={{
+            backgroundColor: 'rgba(255,255,255,0.8)',
+            backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
+            p: { xs: 2, md: 4 },
+            borderRadius: '24px',
+            boxShadow: '0 40px 80px rgba(0,0,0,0.08)',
+            border: '1px solid rgba(194,198,216,0.2)',
+          }}>
+            <Grid container spacing={2} alignItems="center">
+              {[
+                { icon: <PersonSearchIcon sx={{ fontSize: 20, color: '#424656' }} />, placeholder: 'Doctor, Specialty...', type: 'text', border: true },
+                { icon: <LocationOnIcon   sx={{ fontSize: 20, color: '#424656' }} />, placeholder: 'Location',             type: 'text', border: true },
+                { icon: <EventIcon        sx={{ fontSize: 20, color: '#424656' }} />, placeholder: '',                     type: 'date', border: false },
+              ].map((f, i) => (
+                <Grid item xs={12} md={3} key={i}>
+                  <Box sx={{
+                    position: 'relative',
+                    borderRight: { md: f.border ? '1px solid rgba(194,198,216,0.3)' : 'none' },
+                    pr: { md: f.border ? 2 : 0 },
+                  }}>
+                    <Box sx={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', zIndex: 1 }}>
+                      {f.icon}
+                    </Box>
+                    <TextField variant="outlined" placeholder={f.placeholder} type={f.type} fullWidth
+                      sx={{
+                        '& .MuiOutlinedInput-root': {
+                          pl: 4.5, backgroundColor: '#eff4ff', borderRadius: '8px', fontSize: '0.875rem', fontFamily: INTER, color: '#0B1C30',
+                          '& fieldset': { border: 'none' },
+                          '&:hover fieldset': { border: 'none' },
+                          '&.Mui-focused fieldset': { border: `2px solid ${PRIMARY}33` },
+                        },
+                        '& input': { py: 1.5 },
+                      }}
+                    />
+                  </Box>
+                </Grid>
+              ))}
+              <Grid item xs={12} md={3}>
+                <Button fullWidth onClick={() => nav('/login')} startIcon={<SearchIcon />}
+                  sx={{ backgroundColor: PRIMARY, color: '#fff', fontFamily: INTER, fontWeight: 500, fontSize: '0.875rem', py: 1.75, borderRadius: '12px', letterSpacing: '0.01em', textTransform: 'none', boxShadow: 'none', '&:hover': { backgroundColor: PRIMARY_D, opacity: 0.9, boxShadow: 'none' } }}>
+                  Find Doctor
+                </Button>
               </Grid>
-            ))}
-          </Grid>
-        </Box>
+            </Grid>
+          </Box>
+        </Inner>
       </Box>
 
-      {/* ── SEARCH BAR ───────────────────────────────────────────────────────── */}
-      <Section sx={{ py: { xs: '20px', md: '28px' } }}>
-        <Box sx={{ backgroundColor: '#fff', borderRadius: '16px', boxShadow: '0 8px 40px rgba(0,0,0,0.07)', border: '1px solid #E4E7F0', p: { xs: 1.5, md: 2 } }}>
-          <Grid container spacing={1.5} alignItems="center">
-            {[
-              { icon: <PersonSearchIcon sx={{ fontSize: 18, color: '#727687' }} />, placeholder: 'Doctor, Specialty...', xs: 12, sm: 4 },
-              { icon: <LocationOnIcon   sx={{ fontSize: 18, color: '#727687' }} />, placeholder: 'Location',             xs: 6,  sm: 3 },
-              { icon: <EventIcon        sx={{ fontSize: 18, color: '#727687' }} />, placeholder: '',                     xs: 6,  sm: 3 },
-            ].map((f, i) => (
-              <Grid item xs={f.xs} sm={f.sm} key={i}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, backgroundColor: '#F5F7FF', borderRadius: '10px', px: 1.75, height: 48 }}>
-                  {f.icon}
-                  <TextField variant="standard" placeholder={f.placeholder} type={i === 2 ? 'date' : 'text'} fullWidth
-                    InputProps={{ disableUnderline: true, sx: { fontFamily: SANS, fontSize: '0.875rem', color: '#0B1C30' } }} />
-                </Box>
-              </Grid>
-            ))}
-            <Grid item xs={12} sm={2}>
-              <Button fullWidth onClick={() => nav('/login')} startIcon={<SearchIcon />}
-                sx={{ height: 48, backgroundColor: TEAL, color: '#fff', fontFamily: SANS, fontWeight: 700, fontSize: '0.875rem', borderRadius: '10px', textTransform: 'none', boxShadow: 'none', '&:hover': { backgroundColor: TEAL_D, boxShadow: 'none' } }}>
-                Search
-              </Button>
-            </Grid>
-          </Grid>
-        </Box>
-      </Section>
-
-      {/* ── HOW IT WORKS ─────────────────────────────────────────────────────── */}
-      <Section sx={{ py: { xs: '48px', md: '64px' } }}>
-        <SectionHeading label="Simple Process" title="How It Works" subtitle="From finding a doctor to getting care — done in three easy steps." />
-        <Grid container spacing={3}>
-          {STEPS.map((step, i) => (
-            <Grid item xs={12} md={4} key={step.n}>
-              <Box sx={{
-                backgroundColor: '#fff', borderRadius: '20px', p: { xs: 3, md: 3.5 },
-                border: '1px solid #E4E7F0',
-                height: '100%',
-                position: 'relative',
-                transition: 'box-shadow 0.2s, transform 0.2s',
-                '&:hover': { boxShadow: '0 16px 48px rgba(0,0,0,0.08)', transform: 'translateY(-4px)' },
-              }}>
-                {/* Step number — top right */}
-                <Typography sx={{ position: 'absolute', top: 20, right: 24, fontSize: '2.5rem', fontWeight: 900, color: '#F0FDFA', fontFamily: SANS, lineHeight: 1, userSelect: 'none' }}>
-                  {step.n}
-                </Typography>
-                <Box sx={{ width: 52, height: 52, borderRadius: '14px', backgroundColor: '#F8F9FF', display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2.5, border: '1px solid #E4E7F0' }}>
-                  {step.icon}
-                </Box>
-                <Typography sx={{ fontWeight: 700, fontSize: '1.0625rem', color: '#0B1C30', fontFamily: SANS, mb: 1 }}>{step.title}</Typography>
-                <Typography sx={{ fontSize: '0.9rem', color: '#424656', fontFamily: SANS, lineHeight: 1.75 }}>{step.desc}</Typography>
-                {i < 2 && (
-                  <Box sx={{ display: { xs: 'none', md: 'flex' }, position: 'absolute', top: '50%', right: -16, transform: 'translateY(-50%)', zIndex: 1 }}>
-                    <ArrowForwardIcon sx={{ fontSize: 20, color: '#CBD5E1' }} />
-                  </Box>
-                )}
-              </Box>
-            </Grid>
-          ))}
-        </Grid>
-      </Section>
-
-      {/* ── FEATURES — BENTO ─────────────────────────────────────────────────── */}
-      <Box sx={{ backgroundColor: 'rgba(238,242,255,0.3)', px: PX, py: { xs: '48px', md: '64px' } }}>
-        <Box sx={{ maxWidth: MXW, mx: 'auto', width: '100%' }}>
-          <SectionHeading label="Why MediCore" title="Everything You Need, Built In" subtitle="We've redesigned the medical experience to be as seamless as ordering a coffee." />
-          <Grid container spacing={3}>
-            {/* Large — Instant Booking */}
-            <Grid item xs={12} md={8}>
-              <Box sx={{ ...glass, borderRadius: '20px', p: { xs: 3, md: 4 }, backgroundColor: 'rgba(240,253,250,0.7)', height: '100%', display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 3, alignItems: 'center' }}>
-                <Box sx={{ flex: 1, minWidth: 0 }}>
-                  <Box sx={{ width: 48, height: 48, backgroundColor: TEAL, borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
-                    <BoltIcon sx={{ fontSize: 24, color: '#fff' }} />
-                  </Box>
-                  <Typography sx={{ fontWeight: 700, fontSize: '1.125rem', color: '#0B1C30', fontFamily: SANS, mb: 1 }}>Instant Booking</Typography>
-                  <Typography sx={{ fontSize: '0.9rem', color: '#424656', fontFamily: SANS, lineHeight: 1.75, mb: 2 }}>
-                    No more waiting on hold. Book your preferred slot with any specialist in under 60 seconds — syncs directly with your calendar.
-                  </Typography>
-                  <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.75, color: TEAL, cursor: 'pointer', fontWeight: 600, fontFamily: SANS, fontSize: '0.875rem' }}>
-                    Learn more <ArrowForwardIcon sx={{ fontSize: 14 }} />
-                  </Box>
-                </Box>
-                <Box sx={{ flexShrink: 0, width: { xs: '100%', sm: 220 }, height: 180, borderRadius: '14px', overflow: 'hidden', boxShadow: '0 12px 40px rgba(0,0,0,0.10)' }}>
-                  <Box component="img" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80&auto=format&fit=crop" alt="" sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                </Box>
-              </Box>
-            </Grid>
-
-            {/* Small — Verified */}
-            <Grid item xs={12} sm={6} md={4}>
-              <Box sx={{ ...glass, borderRadius: '20px', p: { xs: 3, md: 3.5 }, height: '100%', transition: 'box-shadow 0.2s', '&:hover': { boxShadow: '0 20px 56px rgba(0,0,0,0.09)' } }}>
-                <Box sx={{ width: 48, height: 48, backgroundColor: '#EEF2FF', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
-                  <VerifiedUserIcon sx={{ fontSize: 24, color: '#4F46E5' }} />
-                </Box>
-                <Typography sx={{ fontWeight: 700, fontSize: '1.125rem', color: '#0B1C30', fontFamily: SANS, mb: 1 }}>Verified Doctors</Typography>
-                <Typography sx={{ fontSize: '0.9rem', color: '#424656', fontFamily: SANS, lineHeight: 1.75 }}>
-                  Every practitioner undergoes a rigorous 5-step background and credential verification process.
-                </Typography>
-              </Box>
-            </Grid>
-
-            {/* Small — Support */}
-            <Grid item xs={12} sm={6} md={4}>
-              <Box sx={{ ...glass, borderRadius: '20px', p: { xs: 3, md: 3.5 }, height: '100%', transition: 'box-shadow 0.2s', '&:hover': { boxShadow: '0 20px 56px rgba(0,0,0,0.09)' } }}>
-                <Box sx={{ width: 48, height: 48, backgroundColor: '#FFF7ED', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
-                  <SupportAgentIcon sx={{ fontSize: 24, color: '#B45309' }} />
-                </Box>
-                <Typography sx={{ fontWeight: 700, fontSize: '1.125rem', color: '#0B1C30', fontFamily: SANS, mb: 1 }}>24/7 Support</Typography>
-                <Typography sx={{ fontSize: '0.9rem', color: '#424656', fontFamily: SANS, lineHeight: 1.75 }}>
-                  Our dedicated patient care team is available around the clock for rescheduling or any questions.
-                </Typography>
-              </Box>
-            </Grid>
-
-            {/* Large — Virtual Consult */}
-            <Grid item xs={12} md={8}>
-              <Box sx={{ ...glass, borderRadius: '20px', p: { xs: 3, md: 4 }, backgroundColor: 'rgba(238,242,255,0.6)', height: '100%', display: 'flex', flexDirection: { xs: 'column', sm: 'row-reverse' }, gap: 3, alignItems: 'center' }}>
-                <Box sx={{ flex: 1, minWidth: 0 }}>
-                  <Box sx={{ width: 48, height: 48, backgroundColor: '#EEF2FF', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
-                    <VideocamOutlinedIcon sx={{ fontSize: 24, color: '#4F46E5' }} />
-                  </Box>
-                  <Typography sx={{ fontWeight: 700, fontSize: '1.125rem', color: '#0B1C30', fontFamily: SANS, mb: 1 }}>Virtual Consultations</Typography>
-                  <Typography sx={{ fontSize: '0.9rem', color: '#424656', fontFamily: SANS, lineHeight: 1.75, mb: 2 }}>
-                    Can't make it to the clinic? Experience HD video consultations that feel as personal as an in-office visit.
-                  </Typography>
-                  <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.75, color: TEAL, cursor: 'pointer', fontWeight: 600, fontFamily: SANS, fontSize: '0.875rem' }}>
-                    Explore Telehealth <ArrowForwardIcon sx={{ fontSize: 14 }} />
-                  </Box>
-                </Box>
-                <Box sx={{ flexShrink: 0, width: { xs: '100%', sm: 220 }, height: 180, borderRadius: '14px', overflow: 'hidden', boxShadow: '0 12px 40px rgba(0,0,0,0.10)' }}>
-                  <Box component="img" src="https://images.unsplash.com/photo-1609743522471-83c84ce23e32?w=600&q=80&auto=format&fit=crop" alt="" sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-
-      {/* ── TOP DOCTORS ───────────────────────────────────────────────────────── */}
-      <Section sx={{ py: { xs: '48px', md: '64px' } }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', mb: { xs: 3, md: 4 }, flexWrap: 'wrap', gap: 2 }}>
-          <Box>
-            <Typography sx={{ fontSize: '0.6875rem', fontWeight: 700, color: TEAL, letterSpacing: '0.1em', textTransform: 'uppercase', fontFamily: SANS, mb: 0.75 }}>Our Specialists</Typography>
-            <Typography sx={{ fontSize: { xs: '1.75rem', md: '2.25rem' }, fontWeight: 800, color: '#0B1C30', fontFamily: SANS, letterSpacing: '-0.025em', lineHeight: 1.2 }}>
-              Top Rated Doctors
+      {/* ── FEATURES — BENTO (py-section-gap = 120px) ───────────────────────── */}
+      <Box component="section" sx={{ py: { xs: '80px', md: '120px' } }}>
+        <Inner>
+          {/* Heading */}
+          <Box sx={{ textAlign: 'center', mb: 8 }}>
+            <Typography sx={{ fontSize: { xs: '2rem', md: '2rem' }, fontWeight: 600, lineHeight: '2.5rem', letterSpacing: '-0.01em', fontFamily: INTER, mb: 1.5 }}>
+              Why Choose MediCore?
+            </Typography>
+            <Typography sx={{ fontSize: '1.125rem', lineHeight: '1.75rem', color: '#424656', fontFamily: INTER, maxWidth: '42rem', mx: 'auto' }}>
+              We've redesigned the medical appointment experience to be as seamless as ordering a coffee.
             </Typography>
           </Box>
-          <Box onClick={() => nav('/login')} sx={{ display: 'flex', alignItems: 'center', gap: 0.75, color: TEAL, fontWeight: 600, fontSize: '0.9rem', fontFamily: SANS, cursor: 'pointer', whiteSpace: 'nowrap' }}>
-            View All <ArrowOutwardIcon sx={{ fontSize: 16 }} />
-          </Box>
-        </Box>
 
-        <Grid container spacing={2.5}>
-          {DOCTORS.map(doc => (
-            <Grid item xs={12} sm={6} lg={3} key={doc.name}>
-              <Box sx={{
-                backgroundColor: '#fff', borderRadius: '20px', p: 2,
-                border: '1px solid #EAECF5',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-                height: '100%', display: 'flex', flexDirection: 'column',
-                transition: 'transform 0.2s, box-shadow 0.2s',
-                '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 16px 48px rgba(0,0,0,0.09)' },
-                '&:hover .doc-img': { transform: 'scale(1.05)' },
-              }}>
-                <Box sx={{ position: 'relative', mb: 2, borderRadius: '14px', overflow: 'hidden', height: 220 }}>
-                  <Box component="img" src={doc.img} alt={doc.name} className="doc-img"
-                    sx={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block', transition: 'transform 0.4s' }}
-                  />
-                  <Box sx={{ position: 'absolute', top: 8, right: 8, backgroundColor: 'rgba(255,255,255,0.94)', backdropFilter: 'blur(6px)', px: 1, py: 0.375, borderRadius: '7px', display: 'flex', alignItems: 'center', gap: 0.375 }}>
-                    <StarIcon sx={{ fontSize: 12, color: '#F59E0B' }} />
-                    <Typography sx={{ fontSize: '0.75rem', fontWeight: 700, fontFamily: SANS }}>{doc.rating}</Typography>
+          {/* 3-col bento grid — matches md:grid-cols-3 gap-gutter(24px) */}
+          <Grid container spacing={3}>
+            {/* Large — md:col-span-2 */}
+            <Grid item xs={12} md={8}>
+              <Box sx={{ ...glass, p: { xs: 4, md: 5 }, borderRadius: '24px', display: 'flex', flexDirection: { xs: 'column', md: 'row' }, alignItems: 'center', gap: 4, backgroundColor: 'rgba(239,244,255,0.5)', height: '100%' }}>
+                <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  <Box sx={{ width: 56, height: 56, backgroundColor: PRIMARY, borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <BoltIcon sx={{ fontSize: 30, color: '#fff' }} />
+                  </Box>
+                  <Typography sx={{ fontSize: '1.5rem', fontWeight: 600, lineHeight: '2rem', fontFamily: INTER }}>Instant Booking</Typography>
+                  <Typography sx={{ color: '#424656', fontFamily: INTER, lineHeight: 1.6 }}>
+                    No more waiting on hold. Book your preferred slot with any specialist in under 60 seconds. Sync directly with your Apple or Google calendar.
+                  </Typography>
+                  <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.75, color: PRIMARY, fontSize: '0.875rem', fontWeight: 500, fontFamily: INTER, cursor: 'pointer', '&:hover .arrow': { transform: 'translateX(4px)' } }}>
+                    Learn more <ArrowForwardIcon className="arrow" sx={{ fontSize: '0.875rem', transition: 'transform 0.2s' }} />
                   </Box>
                 </Box>
-                <Box sx={{ flex: 1 }}>
-                  <Typography sx={{ fontWeight: 700, fontSize: '0.9375rem', color: '#0B1C30', fontFamily: SANS, mb: 0.25 }}>{doc.name}</Typography>
-                  <Typography sx={{ fontSize: '0.8125rem', color: doc.color, fontWeight: 600, fontFamily: SANS, mb: 1.5 }}>{doc.role}</Typography>
+                <Box sx={{ flex: 1, borderRadius: '16px', overflow: 'hidden', boxShadow: '0 4px 24px rgba(0,0,0,0.10)', lineHeight: 0 }}>
+                  <Box component="img"
+                    src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80&auto=format&fit=crop"
+                    alt=""
+                    sx={{ width: '100%', height: { xs: 200, md: 240 }, objectFit: 'cover', display: 'block' }}
+                  />
                 </Box>
-                <Button fullWidth onClick={() => nav('/login')}
-                  sx={{ backgroundColor: '#F0FDFA', color: TEAL, fontFamily: SANS, fontWeight: 600, fontSize: '0.8125rem', py: 1.125, borderRadius: '10px', textTransform: 'none', boxShadow: 'none', '&:hover': { backgroundColor: TEAL, color: '#fff', boxShadow: 'none' }, transition: 'background-color 0.2s, color 0.2s' }}>
-                  Book Appointment
-                </Button>
               </Box>
             </Grid>
-          ))}
-        </Grid>
-      </Section>
 
-      {/* ── TESTIMONIALS ─────────────────────────────────────────────────────── */}
-      <Box sx={{ backgroundColor: '#fff', px: PX, py: { xs: '48px', md: '64px' } }}>
-        <Box sx={{ maxWidth: MXW, mx: 'auto', width: '100%' }}>
-          <SectionHeading title="What Our Patients Say" subtitle="Real feedback from people who've simplified their healthcare." />
-          <Grid container spacing={2.5}>
+            {/* Small */}
+            <Grid item xs={12} md={4}>
+              <Box sx={{ ...glass, p: { xs: 4, md: 5 }, borderRadius: '24px', height: '100%', display: 'flex', flexDirection: 'column', gap: 2, transition: 'box-shadow 0.2s', '&:hover': { boxShadow: '0 20px 60px rgba(0,0,0,0.12)' } }}>
+                <Box sx={{ width: 56, height: 56, backgroundColor: '#7ed4fd33', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <VerifiedUserIcon sx={{ fontSize: 30, color: '#005b78' }} />
+                </Box>
+                <Typography sx={{ fontSize: '1.5rem', fontWeight: 600, lineHeight: '2rem', fontFamily: INTER }}>Verified Doctors</Typography>
+                <Typography sx={{ color: '#424656', fontFamily: INTER, lineHeight: 1.6 }}>
+                  Every practitioner on our platform undergoes a rigorous 5-step background and credential check.
+                </Typography>
+              </Box>
+            </Grid>
+
+            {/* Small */}
+            <Grid item xs={12} md={4}>
+              <Box sx={{ ...glass, p: { xs: 4, md: 5 }, borderRadius: '24px', height: '100%', display: 'flex', flexDirection: 'column', gap: 2, transition: 'box-shadow 0.2s', '&:hover': { boxShadow: '0 20px 60px rgba(0,0,0,0.12)' } }}>
+                <Box sx={{ width: 56, height: 56, backgroundColor: '#d3e4fe', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <SupportAgentIcon sx={{ fontSize: 30, color: PRIMARY }} />
+                </Box>
+                <Typography sx={{ fontSize: '1.5rem', fontWeight: 600, lineHeight: '2rem', fontFamily: INTER }}>24/7 Support</Typography>
+                <Typography sx={{ color: '#424656', fontFamily: INTER, lineHeight: 1.6 }}>
+                  Our dedicated patient care team is available around the clock to help with any rescheduling or questions.
+                </Typography>
+              </Box>
+            </Grid>
+
+            {/* Large — md:col-span-2, row-reverse */}
+            <Grid item xs={12} md={8}>
+              <Box sx={{ ...glass, p: { xs: 4, md: 5 }, borderRadius: '24px', display: 'flex', flexDirection: { xs: 'column', md: 'row-reverse' }, alignItems: 'center', gap: 4, backgroundColor: 'rgba(211,228,254,0.3)', height: '100%' }}>
+                <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  <Box sx={{ width: 56, height: 56, backgroundColor: '#dae1ff', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <VideocamOutlinedIcon sx={{ fontSize: 30, color: '#001849' }} />
+                  </Box>
+                  <Typography sx={{ fontSize: '1.5rem', fontWeight: 600, lineHeight: '2rem', fontFamily: INTER }}>Virtual Consultations</Typography>
+                  <Typography sx={{ color: '#424656', fontFamily: INTER, lineHeight: 1.6 }}>
+                    Can't make it to the clinic? Experience high-definition video consultations that feel as personal as an in-office visit.
+                  </Typography>
+                  <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.75, color: PRIMARY, fontSize: '0.875rem', fontWeight: 500, fontFamily: INTER, cursor: 'pointer', '&:hover .arrow': { transform: 'translateX(4px)' } }}>
+                    Explore Telehealth <ArrowForwardIcon className="arrow" sx={{ fontSize: '0.875rem', transition: 'transform 0.2s' }} />
+                  </Box>
+                </Box>
+                <Box sx={{ flex: 1, borderRadius: '16px', overflow: 'hidden', boxShadow: '0 4px 24px rgba(0,0,0,0.10)', lineHeight: 0 }}>
+                  <Box component="img"
+                    src="https://images.unsplash.com/photo-1609743522471-83c84ce23e32?w=600&q=80&auto=format&fit=crop"
+                    alt=""
+                    sx={{ width: '100%', height: { xs: 200, md: 240 }, objectFit: 'cover', display: 'block' }}
+                  />
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
+        </Inner>
+      </Box>
+
+      {/* ── TOP DOCTORS (py-section-gap, bg-surface-container-low/30) ────────── */}
+      <Box component="section" sx={{ py: { xs: '80px', md: '120px' }, backgroundColor: 'rgba(239,244,255,0.3)' }}>
+        <Inner>
+          {/* Header row */}
+          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: { md: 'flex-end' }, mb: 6, gap: 2 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+              <Typography sx={{ fontSize: { xs: '2rem', md: '2rem' }, fontWeight: 600, lineHeight: '2.5rem', letterSpacing: '-0.01em', fontFamily: INTER }}>
+                Top Rated Doctors
+              </Typography>
+              <Typography sx={{ color: '#424656', fontFamily: INTER }}>Highly specialized professionals with years of experience.</Typography>
+            </Box>
+            <Box onClick={() => nav('/login')} sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: PRIMARY, fontSize: '0.875rem', fontWeight: 500, fontFamily: INTER, cursor: 'pointer', letterSpacing: '0.01em', whiteSpace: 'nowrap', '&:hover': { textDecoration: 'underline' } }}>
+              View All Doctors <ArrowOutwardIcon sx={{ fontSize: 18 }} />
+            </Box>
+          </Box>
+
+          {/* 4-col doctor grid */}
+          <Grid container spacing={3}>
+            {DOCTORS.map(doc => (
+              <Grid item xs={12} sm={6} lg={3} key={doc.name}>
+                <Box sx={{
+                  backgroundColor: '#fff', borderRadius: '24px', p: 3,
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+                  border: '1px solid rgba(194,198,216,0.1)',
+                  height: '100%', display: 'flex', flexDirection: 'column',
+                  transition: 'transform 0.2s',
+                  '&:hover': { transform: 'translateY(-8px)' },
+                  '&:hover .doc-img': { transform: 'scale(1.10)' },
+                }}>
+                  {/* Image with rating badge */}
+                  <Box sx={{ position: 'relative', mb: 2, borderRadius: '16px', overflow: 'hidden', aspectRatio: '4/5' }}>
+                    <Box component="img" src={doc.img} alt={doc.name} className="doc-img"
+                      sx={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block', transition: 'transform 0.5s' }}
+                    />
+                    <Box sx={{ position: 'absolute', top: 12, right: 12, backgroundColor: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', px: 1, py: 0.375, borderRadius: '8px', display: 'flex', alignItems: 'center', gap: 0.375 }}>
+                      <StarIcon sx={{ fontSize: 14, color: '#EAB308', filter: 'drop-shadow(0 0 1px rgba(0,0,0,0.1))' }} />
+                      <Typography sx={{ fontSize: '0.75rem', fontWeight: 700, fontFamily: INTER }}>{doc.rating}</Typography>
+                    </Box>
+                  </Box>
+
+                  <Typography sx={{ fontSize: '1.25rem', fontWeight: 600, fontFamily: INTER, mb: 0.375 }}>{doc.name}</Typography>
+                  <Typography sx={{ color: PRIMARY, fontSize: '0.75rem', fontWeight: 600, fontFamily: INTER, mb: 2 }}>{doc.role}</Typography>
+
+                  <Button fullWidth onClick={() => nav('/login')}
+                    sx={{ mt: 'auto', backgroundColor: '#d3e4fe', color: PRIMARY, fontFamily: INTER, fontWeight: 500, fontSize: '0.875rem', py: 1.5, borderRadius: '12px', letterSpacing: '0.01em', textTransform: 'none', boxShadow: 'none', '&:hover': { backgroundColor: PRIMARY, color: '#fff', boxShadow: 'none' }, transition: 'background-color 0.2s, color 0.2s' }}>
+                    Book Appointment
+                  </Button>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+        </Inner>
+      </Box>
+
+      {/* ── TESTIMONIALS (py-section-gap) ────────────────────────────────────── */}
+      <Box component="section" sx={{ py: { xs: '80px', md: '120px' }, overflow: 'hidden' }}>
+        <Inner>
+          <Box sx={{ textAlign: 'center', mb: 8 }}>
+            <Typography sx={{ fontSize: { xs: '2rem', md: '2rem' }, fontWeight: 600, lineHeight: '2.5rem', letterSpacing: '-0.01em', fontFamily: INTER, mb: 1.5 }}>
+              What Our Patients Say
+            </Typography>
+            <Typography sx={{ fontSize: '1.125rem', lineHeight: '1.75rem', color: '#424656', fontFamily: INTER }}>
+              Real feedback from people who've simplified their healthcare.
+            </Typography>
+          </Box>
+
+          <Grid container spacing={4}>
             {TESTIMONIALS.map(t => (
               <Grid item xs={12} md={4} key={t.name}>
                 <Box sx={{
                   ...glass,
-                  ...(t.highlight ? { backgroundColor: `${TEAL}0C`, border: `1px solid ${TEAL}28` } : {}),
-                  borderRadius: '20px', p: 3,
-                  height: '100%', display: 'flex', flexDirection: 'column',
+                  ...(t.highlight ? { backgroundColor: `${PRIMARY}0D`, border: `1px solid ${PRIMARY}1A` } : {}),
+                  p: 4, borderRadius: '24px',
+                  height: '100%', display: 'flex', flexDirection: 'column', gap: 3,
                 }}>
-                  <Box sx={{ display: 'flex', gap: 0.375, mb: 2 }}>
-                    {[1,2,3,4,5].map(i => <StarIcon key={i} sx={{ fontSize: 14, color: '#F59E0B' }} />)}
+                  {/* Stars */}
+                  <Box sx={{ display: 'flex', gap: 0.25, color: '#EAB308' }}>
+                    {[1,2,3,4,5].map(i => <StarIcon key={i} sx={{ fontSize: 20 }} />)}
                   </Box>
-                  <Typography sx={{ fontSize: '0.9rem', color: '#1A1A2E', fontFamily: SANS, lineHeight: 1.78, fontStyle: 'italic', flex: 1, mb: 2.5 }}>
+
+                  <Typography sx={{ fontSize: '1rem', lineHeight: '1.5rem', fontStyle: 'italic', color: '#0B1C30', fontFamily: INTER, flex: 1 }}>
                     {t.text}
                   </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25 }}>
-                    <Box component="img" src={t.img} alt={t.name} sx={{ width: 40, height: 40, borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }} />
+
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <Box component="img" src={t.img} alt={t.name}
+                      sx={{ width: 48, height: 48, borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}
+                    />
                     <Box>
-                      <Typography sx={{ fontWeight: 700, fontSize: '0.875rem', color: '#0B1C30', fontFamily: SANS, lineHeight: 1.3 }}>{t.name}</Typography>
-                      <Typography sx={{ fontSize: '0.75rem', color: '#727687', fontFamily: SANS }}>{t.role}</Typography>
+                      <Typography sx={{ fontWeight: 700, fontSize: '0.875rem', letterSpacing: '0.01em', fontFamily: INTER, lineHeight: 1.3 }}>{t.name}</Typography>
+                      <Typography sx={{ fontSize: '0.75rem', color: '#424656', fontFamily: INTER }}>{t.role}</Typography>
                     </Box>
                   </Box>
                 </Box>
               </Grid>
             ))}
           </Grid>
-        </Box>
+        </Inner>
       </Box>
 
-      {/* ── APP SHOWCASE ──────────────────────────────────────────────────────── */}
-      <Section sx={{ py: { xs: '48px', md: '64px' } }}>
-        <Box sx={{ backgroundColor: TEAL, borderRadius: '28px', overflow: 'hidden', position: 'relative', p: { xs: '40px 24px', md: '56px 56px' } }}>
-          <Box sx={{ position: 'absolute', top: '-20%', right: '-8%', width: 400, height: 400, borderRadius: '50%', background: 'rgba(255,255,255,0.07)', filter: 'blur(60px)', pointerEvents: 'none' }} />
-          <Grid container spacing={{ xs: 4, md: 6 }} alignItems="center" sx={{ position: 'relative', zIndex: 1 }}>
-            <Grid item xs={12} lg={6}>
-              <Typography sx={{ fontSize: { xs: '1.875rem', md: '2.75rem' }, fontWeight: 800, color: '#fff', fontFamily: SANS, letterSpacing: '-0.03em', lineHeight: 1.15, mb: 1.75 }}>
-                Your Health in Your Pocket
-              </Typography>
-              <Typography sx={{ fontSize: '1rem', color: 'rgba(255,255,255,0.75)', fontFamily: SANS, lineHeight: 1.75, mb: 3, maxWidth: 400 }}>
-                Manage appointments, access records, and chat with doctors on the go.
-              </Typography>
-              {['Book appointments in 60 seconds', 'Secure medical record storage', 'AI-powered health assistant', 'Real-time doctor chat'].map(item => (
-                <Box key={item} sx={{ display: 'flex', alignItems: 'center', gap: 1.25, mb: 1.25 }}>
-                  <Box sx={{ width: 20, height: 20, borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <CheckCircleIcon sx={{ fontSize: 12, color: '#fff' }} />
+      {/* ── APP SHOWCASE (py-section-gap) ────────────────────────────────────── */}
+      <Box component="section" sx={{ py: { xs: '80px', md: '120px' } }}>
+        <Inner>
+          <Box sx={{
+            backgroundColor: PRIMARY, borderRadius: '40px',
+            p: { xs: '48px 24px', md: '96px' },
+            overflow: 'hidden', position: 'relative',
+            color: '#fff',
+          }}>
+            {/* Blur blob */}
+            <Box sx={{ position: 'absolute', top: 0, right: 0, zIndex: 0, opacity: 0.2, transform: 'translate(25%, -25%)' }}>
+              <Box sx={{ width: 600, height: 600, backgroundColor: '#fff', borderRadius: '50%', filter: 'blur(100px)' }} />
+            </Box>
+
+            <Grid container spacing={{ xs: 6, lg: 8 }} alignItems="center" sx={{ position: 'relative', zIndex: 1 }}>
+              <Grid item xs={12} lg={6}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                  <Typography sx={{ fontSize: { xs: '2.5rem', md: '4rem' }, fontWeight: 700, lineHeight: { xs: '3rem', md: '4.5rem' }, letterSpacing: '-0.02em', fontFamily: INTER }}>
+                    Your Health in Your Pocket
+                  </Typography>
+                  <Typography sx={{ fontSize: '1.125rem', lineHeight: '1.75rem', color: 'rgba(255,255,255,0.8)', fontFamily: INTER, maxWidth: 400 }}>
+                    Download the MediCore app to manage appointments, access records, and chat with doctors on the go.
+                  </Typography>
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+                    {[['Download on the', 'App Store'], ['Get it on', 'Google Play']].map(([sub, label]) => (
+                      <Box key={label} sx={{ backgroundColor: '#000', color: '#fff', px: 4, py: 1.5, borderRadius: '12px', display: 'flex', alignItems: 'center', gap: 1.5, cursor: 'pointer', '&:hover': { transform: 'scale(1.05)' }, transition: 'transform 0.2s', userSelect: 'none' }}>
+                        <PhoneIphoneIcon sx={{ fontSize: 32 }} />
+                        <Box sx={{ textAlign: 'left' }}>
+                          <Typography sx={{ fontSize: '0.625rem', textTransform: 'uppercase', fontFamily: INTER, letterSpacing: '0.06em', opacity: 0.7 }}>{sub}</Typography>
+                          <Typography sx={{ fontSize: '1.125rem', fontWeight: 700, fontFamily: INTER, lineHeight: 1 }}>{label}</Typography>
+                        </Box>
+                      </Box>
+                    ))}
                   </Box>
-                  <Typography sx={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.88)', fontFamily: SANS, fontWeight: 500 }}>{item}</Typography>
                 </Box>
-              ))}
-              <Box sx={{ display: 'flex', gap: 1.5, mt: 4, flexWrap: 'wrap' }}>
-                {[['Download on the', 'App Store'], ['Get it on', 'Google Play']].map(([sub, label]) => (
-                  <Box key={label} sx={{ backgroundColor: '#000', color: '#fff', px: 2.25, py: 1.25, borderRadius: '10px', display: 'flex', alignItems: 'center', gap: 1.25, cursor: 'pointer', '&:hover': { backgroundColor: '#111' }, userSelect: 'none' }}>
-                    <PhoneIphoneIcon sx={{ fontSize: 24 }} />
-                    <Box>
-                      <Typography sx={{ fontSize: '0.5875rem', fontFamily: SANS, opacity: 0.65, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{sub}</Typography>
-                      <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, fontFamily: SANS, lineHeight: 1.1 }}>{label}</Typography>
-                    </Box>
-                  </Box>
-                ))}
-              </Box>
-            </Grid>
-            <Grid item xs={12} lg={6} sx={{ display: 'flex', justifyContent: { xs: 'flex-start', lg: 'flex-end' } }}>
-              <Box sx={{ width: { xs: '100%', sm: 360 }, height: { xs: 240, md: 360 }, borderRadius: '24px', overflow: 'hidden', boxShadow: '0 32px 80px rgba(0,0,0,0.28)', transform: { lg: 'rotate(2deg)' } }}>
-                <Box component="img" src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=760&q=80&auto=format&fit=crop" alt="App" sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
-      </Section>
-
-      {/* ── FAQ ───────────────────────────────────────────────────────────────── */}
-      <Box sx={{ backgroundColor: '#F8F9FF', px: PX, py: { xs: '48px', md: '64px' } }}>
-        <Box sx={{ maxWidth: MXW, mx: 'auto', width: '100%' }}>
-          <SectionHeading title="Frequently Asked Questions" subtitle="Everything you need to know about using MediCore." />
-          <Grid container spacing={2}>
-            {FAQS.map(f => (
-              <Grid item xs={12} md={6} key={f.q}>
-                <FaqItem q={f.q} a={f.a} />
               </Grid>
-            ))}
-          </Grid>
+
+              <Grid item xs={12} lg={6} sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Box component="img"
+                  src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=760&q=80&auto=format&fit=crop"
+                  alt="Mobile App"
+                  sx={{ width: '100%', maxWidth: 400, borderRadius: '3rem', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.4)', transform: 'rotate(3deg)', display: 'block' }}
+                />
+              </Grid>
+            </Grid>
+          </Box>
+        </Inner>
+      </Box>
+
+      {/* ── FAQ (py-section-gap, max-w-3xl centered) ─────────────────────────── */}
+      <Box component="section" sx={{ py: { xs: '80px', md: '120px' } }}>
+        <Box sx={{ maxWidth: '48rem', mx: 'auto', px: { xs: '20px', md: '20px' } }}>
+          <Box sx={{ textAlign: 'center', mb: 8 }}>
+            <Typography sx={{ fontSize: { xs: '2rem', md: '2rem' }, fontWeight: 600, lineHeight: '2.5rem', letterSpacing: '-0.01em', fontFamily: INTER }}>
+              Frequently Asked Questions
+            </Typography>
+          </Box>
+          <Box>
+            {FAQS.map(f => <FaqItem key={f.q} q={f.q} a={f.a} />)}
+          </Box>
         </Box>
       </Box>
 
-      {/* ── FOOTER ────────────────────────────────────────────────────────────── */}
-      <Box component="footer" sx={{ backgroundColor: '#0B1C30', px: PX, pt: { xs: '48px', md: '60px' }, pb: '28px' }}>
-        <Box sx={{ maxWidth: MXW, mx: 'auto', width: '100%' }}>
-          <Grid container spacing={4} sx={{ mb: 5 }}>
+      {/* ── FOOTER (py-section-gap, bg-surface, border-t) ───────────────────── */}
+      <Box component="footer" sx={{
+        py: { xs: '80px', md: '120px' },
+        backgroundColor: '#f8f9ff',
+        borderTop: '1px solid rgba(194,198,216,0.2)',
+      }}>
+        <Inner>
+          <Grid container spacing={3} sx={{ mb: { xs: 6, md: 10 } }}>
             {/* Brand */}
             <Grid item xs={12} md={4}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, mb: 1.75 }}>
-                <Box sx={{ width: 32, height: 32, borderRadius: '9px', backgroundColor: TEAL, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <MonitorHeartIcon sx={{ fontSize: 17, color: '#fff' }} />
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <MonitorHeartIcon sx={{ fontSize: 24, color: PRIMARY }} />
+                  <Typography sx={{ fontWeight: 700, fontSize: '1rem', fontFamily: INTER }}>MediCore</Typography>
                 </Box>
-                <Typography sx={{ fontWeight: 800, fontSize: '1rem', color: '#fff', fontFamily: SANS }}>MediCore</Typography>
+                <Typography sx={{ color: '#424656', fontFamily: INTER, lineHeight: 1.6, maxWidth: 280 }}>
+                  Empowering patients with seamless access to high-quality healthcare, anytime, anywhere.
+                </Typography>
+                <Box sx={{ display: 'flex', gap: 1.5 }}>
+                  {[SendIcon, ArrowOutwardIcon, CheckCircleIcon].map((Icon, i) => (
+                    <Box key={i} sx={{ width: 40, height: 40, borderRadius: '50%', backgroundColor: '#e5eeff', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', '&:hover': { backgroundColor: PRIMARY, color: '#fff' }, transition: 'all 0.2s' }}>
+                      <Icon sx={{ fontSize: 16 }} />
+                    </Box>
+                  ))}
+                </Box>
               </Box>
-              <Typography sx={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.5)', fontFamily: SANS, lineHeight: 1.75, maxWidth: 260 }}>
-                Empowering patients with seamless access to high-quality healthcare, anytime, anywhere.
-              </Typography>
             </Grid>
 
-            {/* Quick links */}
-            <Grid item xs={6} sm={4} md={2}>
-              <Typography sx={{ fontWeight: 700, fontSize: '0.875rem', color: '#fff', fontFamily: SANS, mb: 2 }}>Quick Links</Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.25 }}>
-                {['Find a Doctor', 'Specialties', 'How it Works', 'Pricing'].map(l => (
-                  <Typography key={l} sx={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.5)', fontFamily: SANS, cursor: 'pointer', '&:hover': { color: TEAL }, transition: 'color 0.15s' }}>{l}</Typography>
-                ))}
+            {/* Quick Links */}
+            <Grid item xs={6} md={2}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                <Typography sx={{ fontWeight: 700, fontFamily: INTER }}>Quick Links</Typography>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  {['Find a Doctor', 'Specialties', 'How it Works'].map(l => (
+                    <Typography key={l} component="a" href="#" sx={{ color: '#424656', fontFamily: INTER, fontSize: '1rem', cursor: 'pointer', textDecoration: 'none', '&:hover': { color: PRIMARY, transform: 'translateX(4px)' }, transition: 'color 0.15s, transform 0.15s', display: 'inline-block' }}>{l}</Typography>
+                  ))}
+                </Box>
               </Box>
             </Grid>
 
             {/* Support */}
-            <Grid item xs={6} sm={4} md={2}>
-              <Typography sx={{ fontWeight: 700, fontSize: '0.875rem', color: '#fff', fontFamily: SANS, mb: 2 }}>Support</Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.25 }}>
-                {['Help Center', 'Privacy Policy', 'Terms of Service', 'Contact Us'].map(l => (
-                  <Typography key={l} sx={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.5)', fontFamily: SANS, cursor: 'pointer', '&:hover': { color: TEAL }, transition: 'color 0.15s' }}>{l}</Typography>
-                ))}
+            <Grid item xs={6} md={2}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                <Typography sx={{ fontWeight: 700, fontFamily: INTER }}>Support</Typography>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  {['Help Center', 'Privacy Policy', 'Terms of Service'].map(l => (
+                    <Typography key={l} component="a" href="#" sx={{ color: '#424656', fontFamily: INTER, fontSize: '1rem', cursor: 'pointer', textDecoration: 'none', '&:hover': { color: PRIMARY, transform: 'translateX(4px)' }, transition: 'color 0.15s, transform 0.15s', display: 'inline-block' }}>{l}</Typography>
+                  ))}
+                </Box>
               </Box>
             </Grid>
 
             {/* Newsletter */}
-            <Grid item xs={12} sm={4} md={4}>
-              <Typography sx={{ fontWeight: 700, fontSize: '0.875rem', color: '#fff', fontFamily: SANS, mb: 0.75 }}>Newsletter</Typography>
-              <Typography sx={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.5)', fontFamily: SANS, lineHeight: 1.7, mb: 2 }}>
-                Stay updated with the latest health tips and platform news.
-              </Typography>
-              <Box sx={{ display: 'flex', gap: 1 }}>
-                <TextField placeholder="Your email address" size="small" fullWidth
-                  sx={{ '& .MuiOutlinedInput-root': { borderRadius: '8px', backgroundColor: 'rgba(255,255,255,0.06)', fontSize: '0.8125rem', fontFamily: SANS, color: '#fff', '& fieldset': { borderColor: 'rgba(255,255,255,0.12)' }, '&:hover fieldset': { borderColor: 'rgba(255,255,255,0.24)' } }, '& input': { color: '#fff', '&::placeholder': { color: 'rgba(255,255,255,0.4)', opacity: 1 } } }} />
-                <Button sx={{ backgroundColor: TEAL, color: '#fff', minWidth: 44, px: 1.5, borderRadius: '8px', flexShrink: 0, boxShadow: 'none', '&:hover': { backgroundColor: TEAL_D, boxShadow: 'none' } }}>
-                  <SendIcon sx={{ fontSize: 17 }} />
-                </Button>
+            <Grid item xs={12} md={4}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                <Typography sx={{ fontWeight: 700, fontFamily: INTER }}>Newsletter</Typography>
+                <Typography sx={{ color: '#424656', fontFamily: INTER, fontSize: '0.875rem' }}>
+                  Stay updated with the latest health tips and news.
+                </Typography>
+                <Box sx={{ display: 'flex', gap: 1 }}>
+                  <TextField placeholder="Email" type="email" size="small" fullWidth
+                    sx={{ '& .MuiOutlinedInput-root': { backgroundColor: '#eff4ff', borderRadius: '8px', fontSize: '0.875rem', fontFamily: INTER, '& fieldset': { border: 'none' }, '&:hover fieldset': { border: 'none' }, '&.Mui-focused fieldset': { border: `2px solid ${PRIMARY}33` } } }}
+                  />
+                  <Button sx={{ backgroundColor: PRIMARY, color: '#fff', minWidth: 48, px: 1.5, borderRadius: '8px', flexShrink: 0, boxShadow: 'none', '&:hover': { backgroundColor: PRIMARY_D, boxShadow: 'none' } }}>
+                    <SendIcon sx={{ fontSize: 18 }} />
+                  </Button>
+                </Box>
               </Box>
             </Grid>
           </Grid>
 
-          <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.08)', pt: 2.5, textAlign: 'center' }}>
-            <Typography sx={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.3)', fontFamily: SANS }}>
+          <Box sx={{ mt: { xs: 6, md: 10 }, pt: 4, borderTop: '1px solid rgba(194,198,216,0.1)', textAlign: 'center' }}>
+            <Typography sx={{ color: '#424656', fontSize: '0.875rem', fontFamily: INTER }}>
               © 2026 MediCore Healthcare. All rights reserved.
             </Typography>
           </Box>
-        </Box>
+        </Inner>
       </Box>
     </Box>
   );
