@@ -1,3 +1,4 @@
+import { C } from '../styles/theme';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import {
   Dialog, DialogContent, DialogActions,
@@ -227,12 +228,12 @@ export default function PaymentModal({
 
       <DialogContent sx={{ p: 3 }}>
         {/* Appointment summary */}
-        <Box sx={{ backgroundColor: '#F7F7F5', borderRadius: 2, p: 2, mb: 2, border: '1px solid #E9E9E7' }}>
-          <Typography sx={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a' }}>{doctorName}</Typography>
+        <Box sx={{ backgroundColor: C.surface, borderRadius: 2, p: 2, mb: 2, border: `1px solid ${C.border}` }}>
+          <Typography sx={{ fontWeight: 700, fontSize: '0.9rem', color: C.ink }}>{doctorName}</Typography>
           <Typography sx={{ fontSize: '0.78rem', color: '#0D9488', fontWeight: 600, mt: 0.25 }}>{specialty}</Typography>
           <Divider sx={{ my: 1.25 }} />
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography sx={{ fontSize: '0.78rem', color: '#73726E' }}>{date} · {time}</Typography>
+            <Typography sx={{ fontSize: '0.78rem', color: C.slate }}>{date} · {time}</Typography>
             <Chip
               label={stage === 'success' ? 'Confirmed' : 'Awaiting Payment'}
               size="small"
@@ -262,7 +263,7 @@ export default function PaymentModal({
 
         {/* Amount */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-          <Typography sx={{ fontSize: '0.85rem', color: '#73726E', fontWeight: 600 }}>Consultation Fee</Typography>
+          <Typography sx={{ fontSize: '0.85rem', color: C.slate, fontWeight: 600 }}>Consultation Fee</Typography>
           <Typography sx={{ fontSize: '1.35rem', fontWeight: 800, color: '#0D9488', fontFamily: 'inherit' }}>
             {amount}
           </Typography>
@@ -308,7 +309,7 @@ export default function PaymentModal({
           </Box>
         )}
 
-        <Typography sx={{ fontSize: '0.68rem', color: '#9B9A97', mt: 2, textAlign: 'center' }}>
+        <Typography sx={{ fontSize: '0.68rem', color: C.muted, mt: 2, textAlign: 'center' }}>
           256-bit encrypted • PCI-DSS compliant • Supports UPI, cards, net banking & wallets
         </Typography>
       </DialogContent>
@@ -343,7 +344,7 @@ export default function PaymentModal({
               background: 'linear-gradient(90deg, #7c3aed, #6d28d9)',
               borderRadius: 2, fontWeight: 700, boxShadow: 'none', py: 1,
               '&:hover': { background: 'linear-gradient(90deg, #6d28d9, #5b21b6)', boxShadow: '0 3px 8px rgba(109,40,217,0.35)' },
-              '&.Mui-disabled': { backgroundColor: '#E9E9E7', color: '#9B9A97' },
+              '&.Mui-disabled': { backgroundColor: C.border, color: C.muted },
             }}
           >
             Simulate Payment (Test Mode)
@@ -356,7 +357,7 @@ export default function PaymentModal({
             disabled={isBlocked}
             variant="outlined"
             size="small"
-            sx={{ borderColor: '#E9E9E7', color: '#73726E', borderRadius: 2, fontWeight: 600, flex: 1 }}
+            sx={{ borderColor: C.border, color: C.slate, borderRadius: 2, fontWeight: 600, flex: 1 }}
           >
             {stage === 'expired' ? 'Close' : 'Cancel'}
           </Button>
@@ -370,7 +371,7 @@ export default function PaymentModal({
               sx={{
                 backgroundColor: '#0D9488', borderRadius: 2, fontWeight: 700, flex: 2, boxShadow: 'none',
                 '&:hover': { backgroundColor: '#0F766E' },
-                '&.Mui-disabled': { backgroundColor: '#E9E9E7', color: '#9B9A97' },
+                '&.Mui-disabled': { backgroundColor: C.border, color: C.muted },
               }}
             >
               {stage === 'loading' ? 'Preparing…' : `Pay via Razorpay`}

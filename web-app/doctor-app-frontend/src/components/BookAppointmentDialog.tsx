@@ -1,3 +1,4 @@
+import { C } from '../styles/theme';
 import { useRef, useState, useCallback, useEffect } from 'react';
 import {
   Box, Stack, Typography, Button, CircularProgress, Alert,
@@ -78,28 +79,28 @@ const TYPE_LABELS: Record<string, string> = { IN_PERSON: 'In-Person Visit', AUDI
 function DoctorResultCard({ doc, onSelect }: { doc: PublicDoctorResult; onSelect: (d: PublicDoctorResult, clinicId: string) => void }) {
   const color = avatarColor(doc.firstName + doc.lastName);
   return (
-    <Box sx={{ backgroundColor: '#fff', borderRadius: 3, overflow: 'hidden', border: '1px solid #E9E9E7', boxShadow: '0 2px 8px -2px rgba(0,0,0,0.06)', transition: 'box-shadow 0.15s, border-color 0.15s', '&:hover': { borderColor: '#93c5fd', boxShadow: '0 6px 24px -4px rgba(0,97,165,0.12)' } }}>
+    <Box sx={{ backgroundColor: C.paper, borderRadius: 3, overflow: 'hidden', border: `1px solid ${C.border}`, boxShadow: '0 2px 8px -2px rgba(0,0,0,0.06)', transition: 'box-shadow 0.15s, border-color 0.15s', '&:hover': { borderColor: C.blueMid, boxShadow: '0 6px 24px -4px rgba(0,97,165,0.12)' } }}>
       <Box sx={{ p: 2.5, display: 'flex', gap: 2, alignItems: 'flex-start' }}>
         <Avatar sx={{ width: 52, height: 52, backgroundColor: color, fontSize: '1rem', fontWeight: 800, flexShrink: 0, fontFamily: 'inherit' }}>{doctorInitials(doc)}</Avatar>
         <Box sx={{ flex: 1, minWidth: 0 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
-            <Typography sx={{ fontWeight: 800, fontSize: '0.9375rem', color: '#0f172a', fontFamily: 'inherit' }}>{doctorFullName(doc)}</Typography>
+            <Typography sx={{ fontWeight: 800, fontSize: '0.9375rem', color: C.ink, fontFamily: 'inherit' }}>{doctorFullName(doc)}</Typography>
             <Chip label="Accepting Patients" size="small" sx={{ height: 18, fontSize: '0.6rem', fontWeight: 700, backgroundColor: '#f0fdf4', color: '#16a34a', letterSpacing: '0.02em' }} />
           </Box>
           <Typography sx={{ fontSize: '0.8125rem', color: '#0D9488', fontWeight: 600, mt: 0.25 }}>{doc.specialization ?? 'General'}</Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 0.75, flexWrap: 'wrap' }}>
-            {doc.yearsExperience != null && <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}><StarIcon sx={{ fontSize: 12, color: '#f59e0b' }} /><Typography sx={{ fontSize: '0.75rem', color: '#73726E' }}>{doc.yearsExperience} yrs</Typography></Box>}
-            {doc.consultationFee != null && <Typography sx={{ fontSize: '0.75rem', color: '#73726E' }}>from <Box component="span" sx={{ fontWeight: 700, color: '#0f172a' }}>₹{doc.consultationFee}</Box></Typography>}
+            {doc.yearsExperience != null && <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}><StarIcon sx={{ fontSize: 12, color: '#f59e0b' }} /><Typography sx={{ fontSize: '0.75rem', color: C.slate }}>{doc.yearsExperience} yrs</Typography></Box>}
+            {doc.consultationFee != null && <Typography sx={{ fontSize: '0.75rem', color: C.slate }}>from <Box component="span" sx={{ fontWeight: 700, color: C.ink }}>₹{doc.consultationFee}</Box></Typography>}
             {doc.distanceKm != null && <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}><LocationOnIcon sx={{ fontSize: 12, color: '#0D9488' }} /><Typography sx={{ fontSize: '0.75rem', fontWeight: 700, color: '#0D9488' }}>{fmtDist(doc.distanceKm)} away</Typography></Box>}
           </Box>
-          {doc.bio && <Typography sx={{ fontSize: '0.75rem', color: '#9B9A97', mt: 0.75, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: 1.5 }}>{doc.bio}</Typography>}
+          {doc.bio && <Typography sx={{ fontSize: '0.75rem', color: C.muted, mt: 0.75, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: 1.5 }}>{doc.bio}</Typography>}
         </Box>
       </Box>
       {doc.clinics && doc.clinics.length > 0 && (
         <>
-          <Box sx={{ mx: 2.5, borderTop: '1px solid #F1F0EF' }} />
+          <Box sx={{ mx: 2.5, borderTop: `1px solid ${C.borderSub}` }} />
           <Box sx={{ px: 2.5, pt: 1.75, pb: 2.5, display: 'flex', flexDirection: 'column', gap: 1.25 }}>
-            <Typography sx={{ fontSize: '0.6875rem', fontWeight: 700, color: '#9B9A97', textTransform: 'uppercase', letterSpacing: '0.08em', mb: 0.25 }}>Clinics</Typography>
+            <Typography sx={{ fontSize: '0.6875rem', fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: '0.08em', mb: 0.25 }}>Clinics</Typography>
             {doc.clinics.map((clinic) => <ClinicInfoRow key={clinic.id} clinic={clinic} onBook={() => onSelect(doc, clinic.id)} />)}
           </Box>
         </>
@@ -110,20 +111,20 @@ function DoctorResultCard({ doc, onSelect }: { doc: PublicDoctorResult; onSelect
 
 function ClinicInfoRow({ clinic, onBook }: { clinic: PublicClinicInfo; onBook?: () => void }) {
   return (
-    <Box sx={{ p: 1.5, borderRadius: 2, backgroundColor: '#F7F7F5', border: '1px solid #F1F0EF' }}>
+    <Box sx={{ p: 1.5, borderRadius: 2, backgroundColor: C.surface, border: `1px solid ${C.borderSub}` }}>
       <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 1 }}>
         <Box sx={{ flex: 1, minWidth: 0 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
             <LocalHospitalIcon sx={{ fontSize: 13, color: '#0D9488', flexShrink: 0 }} />
-            <Typography sx={{ fontSize: '0.8125rem', fontWeight: 700, color: '#0f172a' }} noWrap>{clinic.name}</Typography>
+            <Typography sx={{ fontSize: '0.8125rem', fontWeight: 700, color: C.ink }} noWrap>{clinic.name}</Typography>
             {clinic.isPrimary && <Box sx={{ px: 0.75, py: 0.125, borderRadius: 10, backgroundColor: '#fef3c7', border: '1px solid #fcd34d' }}><Typography sx={{ fontSize: '0.55rem', fontWeight: 700, color: '#92400e', letterSpacing: '0.04em' }}>PRIMARY</Typography></Box>}
           </Box>
-          {(clinic.address || clinic.city) && <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 0.5 }}><LocationOnIcon sx={{ fontSize: 11, color: '#9B9A97', flexShrink: 0 }} /><Typography sx={{ fontSize: '0.75rem', color: '#73726E' }} noWrap>{[clinic.address, clinic.city, clinic.state].filter(Boolean).join(', ')}</Typography></Box>}
-          {clinic.phone && <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 0.375 }}><PhoneOutlinedIcon sx={{ fontSize: 11, color: '#9B9A97', flexShrink: 0 }} /><Typography sx={{ fontSize: '0.75rem', color: '#73726E' }}>{clinic.phone}</Typography></Box>}
+          {(clinic.address || clinic.city) && <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 0.5 }}><LocationOnIcon sx={{ fontSize: 11, color: C.muted, flexShrink: 0 }} /><Typography sx={{ fontSize: '0.75rem', color: C.slate }} noWrap>{[clinic.address, clinic.city, clinic.state].filter(Boolean).join(', ')}</Typography></Box>}
+          {clinic.phone && <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 0.375 }}><PhoneOutlinedIcon sx={{ fontSize: 11, color: C.muted, flexShrink: 0 }} /><Typography sx={{ fontSize: '0.75rem', color: C.slate }}>{clinic.phone}</Typography></Box>}
           {clinic.consultationTypes && clinic.consultationTypes.length > 0 && (
             <Box sx={{ display: 'flex', gap: 0.625, mt: 0.75, flexWrap: 'wrap' }}>
               {clinic.consultationTypes.map((ct) => {
-                const meta = CONSULT_META[ct.type] ?? { label: ct.type, icon: null, bg: '#F1F0EF', color: '#73726E' };
+                const meta = CONSULT_META[ct.type] ?? { label: ct.type, icon: null, bg: '#F1F0EF', color: C.slate };
                 return (
                   <Box key={ct.type} sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5, px: 1, py: 0.375, borderRadius: 10, backgroundColor: meta.bg, color: meta.color, border: `1px solid ${meta.color}22` }}>
                     {meta.icon}<Typography sx={{ fontSize: '0.6875rem', fontWeight: 700, color: 'inherit' }}>{meta.label}</Typography>
@@ -135,7 +136,7 @@ function ClinicInfoRow({ clinic, onBook }: { clinic: PublicClinicInfo; onBook?: 
           )}
         </Box>
         <Box sx={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 0.75 }}>
-          {clinic.distanceKm != null && <Box><Typography sx={{ fontSize: '0.75rem', fontWeight: 700, color: '#0D9488', textAlign: 'right' }}>{fmtDist(clinic.distanceKm)}</Typography><Typography sx={{ fontSize: '0.6rem', color: '#9B9A97', textAlign: 'right' }}>away</Typography></Box>}
+          {clinic.distanceKm != null && <Box><Typography sx={{ fontSize: '0.75rem', fontWeight: 700, color: '#0D9488', textAlign: 'right' }}>{fmtDist(clinic.distanceKm)}</Typography><Typography sx={{ fontSize: '0.6rem', color: C.muted, textAlign: 'right' }}>away</Typography></Box>}
           {onBook && <Button onClick={onBook} size="small" variant="contained" sx={{ backgroundColor: '#0D9488', borderRadius: 1.5, fontWeight: 700, fontSize: '0.7rem', px: 1.5, py: 0.5, minWidth: 0, boxShadow: 'none', '&:hover': { backgroundColor: '#0F766E', boxShadow: '0 3px 8px rgba(0,97,165,0.3)' } }}>Book</Button>}
         </Box>
       </Box>
@@ -146,13 +147,13 @@ function ClinicInfoRow({ clinic, onBook }: { clinic: PublicClinicInfo; onBook?: 
 function NearbyFacilityCard({ facility: c }: { facility: NearbyClinic }) {
   const isHospital = c.type === 'hospital';
   return (
-    <Box sx={{ backgroundColor: '#fff', borderRadius: 2.5, border: '1px solid #E9E9E7', p: 2, display: 'flex', gap: 1.75, alignItems: 'flex-start', boxShadow: '0 1px 4px rgba(0,0,0,0.04)' }}>
+    <Box sx={{ backgroundColor: C.paper, borderRadius: 2.5, border: `1px solid ${C.border}`, p: 2, display: 'flex', gap: 1.75, alignItems: 'flex-start', boxShadow: '0 1px 4px rgba(0,0,0,0.04)' }}>
       <Box sx={{ width: 38, height: 38, borderRadius: 2, flexShrink: 0, backgroundColor: isHospital ? '#F0FDFA' : '#f0fdf4', color: isHospital ? '#0D9488' : '#15803d', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><LocalHospitalIcon sx={{ fontSize: 19 }} /></Box>
       <Box sx={{ flex: 1, minWidth: 0 }}>
-        <Typography sx={{ fontWeight: 700, fontSize: '0.875rem', color: '#0f172a' }}>{c.name}</Typography>
+        <Typography sx={{ fontWeight: 700, fontSize: '0.875rem', color: C.ink }}>{c.name}</Typography>
         <Typography sx={{ fontSize: '0.75rem', color: isHospital ? '#0D9488' : '#15803d', fontWeight: 600, textTransform: 'capitalize', mt: 0.125 }}>{c.type}</Typography>
-        {c.address && <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 0.5 }}><LocationOnIcon sx={{ fontSize: 12, color: '#9B9A97', flexShrink: 0 }} /><Typography sx={{ fontSize: '0.75rem', color: '#73726E' }} noWrap>{c.address}</Typography></Box>}
-        {c.phone && <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.375, mt: 0.375 }}><PhoneOutlinedIcon sx={{ fontSize: 11, color: '#9B9A97' }} /><Typography sx={{ fontSize: '0.75rem', color: '#73726E' }}>{c.phone}</Typography></Box>}
+        {c.address && <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 0.5 }}><LocationOnIcon sx={{ fontSize: 12, color: C.muted, flexShrink: 0 }} /><Typography sx={{ fontSize: '0.75rem', color: C.slate }} noWrap>{c.address}</Typography></Box>}
+        {c.phone && <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.375, mt: 0.375 }}><PhoneOutlinedIcon sx={{ fontSize: 11, color: C.muted }} /><Typography sx={{ fontSize: '0.75rem', color: C.slate }}>{c.phone}</Typography></Box>}
       </Box>
       <Box sx={{ flexShrink: 0, textAlign: 'right' }}>
         <Box sx={{ px: 1, py: 0.375, borderRadius: 10, backgroundColor: '#F0FDFA' }}><Typography sx={{ fontSize: '0.6875rem', fontWeight: 700, color: '#0D9488' }}>{fmtDist(c.distanceKm)}</Typography></Box>
@@ -451,7 +452,7 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
       {/* ── Step 1: Search ── */}
       {step === 'search' && (
         <>
-          <DialogTitle sx={{ fontFamily: 'inherit', fontWeight: 700, color: '#0f172a', fontSize: '1.125rem', px: 3, pt: 3.5, pb: 1 }}>
+          <DialogTitle sx={{ fontFamily: 'inherit', fontWeight: 700, color: C.ink, fontSize: '1.125rem', px: 3, pt: 3.5, pb: 1 }}>
             Find a Doctor
           </DialogTitle>
           <DialogContent sx={{ px: 3, pt: '20px !important', pb: 2 }}>
@@ -465,7 +466,7 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
                   onChange={(e) => handleLocationInput(e.target.value)}
                   onKeyDown={(e) => { if (e.key === 'Enter') { setLocationOptions([]); handleSearch(); } }}
                   slotProps={{ input: {
-                    startAdornment: <InputAdornment position="start"><LocationOnIcon sx={{ color: '#9B9A97', fontSize: 20 }} /></InputAdornment>,
+                    startAdornment: <InputAdornment position="start"><LocationOnIcon sx={{ color: C.muted, fontSize: 20 }} /></InputAdornment>,
                     endAdornment: (<>
                       {locationLoading && <CircularProgress size={16} sx={{ mr: 1 }} />}
                       <InputAdornment position="end">
@@ -477,12 +478,12 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
                   }}}
                 />
                 {locationOptions.length > 0 && (
-                  <Paper elevation={4} sx={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 1300, mt: 0.5, borderRadius: 2, overflow: 'hidden', border: '1px solid #E9E9E7' }}>
+                  <Paper elevation={4} sx={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 1300, mt: 0.5, borderRadius: 2, overflow: 'hidden', border: `1px solid ${C.border}` }}>
                     <List dense disablePadding>
                       {locationOptions.map((opt) => (
                         <ListItemButton key={opt.name} onClick={() => { setLocation(opt.name); setLocationCoords({ lat: opt.lat, lon: opt.lon }); setLocationOptions([]); }} sx={{ px: 2, py: 1, '&:hover': { backgroundColor: '#f0f7ff' } }}>
                           <LocationOnIcon sx={{ fontSize: 16, color: '#0D9488', mr: 1.5, flexShrink: 0 }} />
-                          <Typography sx={{ fontSize: '0.875rem', color: '#0f172a' }}>{opt.name}</Typography>
+                          <Typography sx={{ fontSize: '0.875rem', color: C.ink }}>{opt.name}</Typography>
                         </ListItemButton>
                       ))}
                     </List>
@@ -490,13 +491,13 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
                 )}
               </Box>
               <TextField select label="Specialization *" value={specialty} onChange={(e) => { setSpecialty(e.target.value); setError(''); }} fullWidth
-                slotProps={{ input: { startAdornment: <InputAdornment position="start"><LocalHospitalIcon sx={{ color: '#9B9A97', fontSize: 20 }} /></InputAdornment> } }}>
+                slotProps={{ input: { startAdornment: <InputAdornment position="start"><LocalHospitalIcon sx={{ color: C.muted, fontSize: 20 }} /></InputAdornment> } }}>
                 {SPECIALTIES.map((s) => <MenuItem key={s} value={s}>{s}</MenuItem>)}
               </TextField>
             </Stack>
           </DialogContent>
           <DialogActions sx={{ px: 3, pb: 3.5, pt: 2, gap: 1 }}>
-            <Button onClick={handleClose} sx={{ color: '#73726E' }}>Cancel</Button>
+            <Button onClick={handleClose} sx={{ color: C.slate }}>Cancel</Button>
             <Button onClick={handleSearch} disabled={searching} variant="contained"
               startIcon={searching ? <CircularProgress size={16} color="inherit" /> : <SearchIcon />}
               sx={{ backgroundColor: '#0D9488', borderRadius: 2, fontWeight: 600, px: 3, '&:hover': { backgroundColor: '#0F766E' } }}>
@@ -509,25 +510,25 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
       {/* ── Step 2: Results ── */}
       {step === 'results' && (
         <>
-          <Box sx={{ px: 3, py: 2.5, borderBottom: '1px solid #F1F0EF', display: 'flex', alignItems: 'center', gap: 1.5, backgroundColor: '#fff' }}>
-            <IconButton size="small" onClick={() => setStep('search')} sx={{ color: '#73726E', flexShrink: 0, border: '1px solid #E9E9E7', borderRadius: 1.5, p: 0.75, '&:hover': { backgroundColor: '#F7F7F5' } }}>
+          <Box sx={{ px: 3, py: 2.5, borderBottom: `1px solid ${C.borderSub}`, display: 'flex', alignItems: 'center', gap: 1.5, backgroundColor: C.paper }}>
+            <IconButton size="small" onClick={() => setStep('search')} sx={{ color: C.slate, flexShrink: 0, border: `1px solid ${C.border}`, borderRadius: 1.5, p: 0.75, '&:hover': { backgroundColor: C.surface } }}>
               <ArrowBackIcon sx={{ fontSize: 16 }} />
             </IconButton>
             <Box flex={1} minWidth={0}>
-              <Typography sx={{ fontFamily: 'inherit', fontWeight: 700, fontSize: '1rem', color: '#0f172a' }}>
+              <Typography sx={{ fontFamily: 'inherit', fontWeight: 700, fontSize: '1rem', color: C.ink }}>
                 {results.length} <Box component="span" sx={{ color: '#0D9488' }}>{specialty}</Box> {results.length === 1 ? 'doctor' : 'doctors'} found
-                {location && <Box component="span" sx={{ fontSize: '0.8125rem', fontWeight: 400, color: '#9B9A97' }}> near {location}</Box>}
+                {location && <Box component="span" sx={{ fontSize: '0.8125rem', fontWeight: 400, color: C.muted }}> near {location}</Box>}
               </Typography>
-              <Typography sx={{ fontSize: '0.75rem', color: '#9B9A97' }}>Select a clinic to book</Typography>
+              <Typography sx={{ fontSize: '0.75rem', color: C.muted }}>Select a clinic to book</Typography>
             </Box>
           </Box>
           <DialogContent sx={{ p: 0, backgroundColor: '#f4f6fb', maxHeight: '70vh', overflowY: 'auto' }}>
             <Box sx={{ p: 2.5, display: 'flex', flexDirection: 'column', gap: 2 }}>
               {results.length === 0 ? (
-                <Box sx={{ textAlign: 'center', py: 6, backgroundColor: '#fff', borderRadius: 3, border: '1px solid #F1F0EF' }}>
-                  <LocalHospitalIcon sx={{ fontSize: 44, color: '#C8C8C5', mb: 1.5 }} />
-                  <Typography sx={{ fontSize: '0.9375rem', fontWeight: 600, color: '#73726E' }}>No {specialty} doctors registered yet</Typography>
-                  <Typography sx={{ fontSize: '0.8rem', color: '#9B9A97', mt: 0.5 }}>Check the nearby facilities below</Typography>
+                <Box sx={{ textAlign: 'center', py: 6, backgroundColor: C.paper, borderRadius: 3, border: `1px solid ${C.borderSub}` }}>
+                  <LocalHospitalIcon sx={{ fontSize: 44, color: C.subtle, mb: 1.5 }} />
+                  <Typography sx={{ fontSize: '0.9375rem', fontWeight: 600, color: C.slate }}>No {specialty} doctors registered yet</Typography>
+                  <Typography sx={{ fontSize: '0.8rem', color: C.muted, mt: 0.5 }}>Check the nearby facilities below</Typography>
                 </Box>
               ) : (
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -554,13 +555,13 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
       {/* ── Step 3: Confirm ── */}
       {step === 'confirm' && selected && (
         <>
-          <Box sx={{ px: 3, py: 2.5, borderBottom: '1px solid #F1F0EF', display: 'flex', alignItems: 'center', gap: 1.5 }}>
-            <IconButton size="small" onClick={() => setStep('results')} sx={{ color: '#73726E', border: '1px solid #E9E9E7', borderRadius: 1.5, p: 0.75, '&:hover': { backgroundColor: '#F7F7F5' } }}>
+          <Box sx={{ px: 3, py: 2.5, borderBottom: `1px solid ${C.borderSub}`, display: 'flex', alignItems: 'center', gap: 1.5 }}>
+            <IconButton size="small" onClick={() => setStep('results')} sx={{ color: C.slate, border: `1px solid ${C.border}`, borderRadius: 1.5, p: 0.75, '&:hover': { backgroundColor: C.surface } }}>
               <ArrowBackIcon sx={{ fontSize: 16 }} />
             </IconButton>
             <Box>
-              <Typography sx={{ fontFamily: 'inherit', fontWeight: 700, fontSize: '1rem', color: '#0f172a' }}>Book Appointment</Typography>
-              <Typography sx={{ fontSize: '0.75rem', color: '#9B9A97' }}>
+              <Typography sx={{ fontFamily: 'inherit', fontWeight: 700, fontSize: '1rem', color: C.ink }}>Book Appointment</Typography>
+              <Typography sx={{ fontSize: '0.75rem', color: C.muted }}>
                 {doctorFullName(selected)} · {selected.specialization ?? 'General'}
                 {selectedClinicId && selected.clinics?.find(c => c.id === selectedClinicId)?.name
                   ? ` · ${selected.clinics!.find(c => c.id === selectedClinicId)!.name}` : ''}
@@ -573,8 +574,8 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
               {error && <Alert severity="error" sx={{ borderRadius: 2 }} onClose={() => setError('')}>{error}</Alert>}
 
               {/* Date & Slot */}
-              <Box sx={{ backgroundColor: '#fff', borderRadius: 3, p: 2.5, border: '1px solid #E9E9E7', boxShadow: '0 1px 4px rgba(0,0,0,0.04)' }}>
-                <Typography sx={{ fontSize: '0.6875rem', fontWeight: 700, color: '#9B9A97', textTransform: 'uppercase', letterSpacing: '0.08em', mb: 1.75 }}>Select Date &amp; Time</Typography>
+              <Box sx={{ backgroundColor: C.paper, borderRadius: 3, p: 2.5, border: `1px solid ${C.border}`, boxShadow: '0 1px 4px rgba(0,0,0,0.04)' }}>
+                <Typography sx={{ fontSize: '0.6875rem', fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: '0.08em', mb: 1.75 }}>Select Date &amp; Time</Typography>
                 <TextField label="Appointment Date *" type="date" value={date} onChange={(e) => handleDateChange(e.target.value)}
                   slotProps={{ inputLabel: { shrink: true }, htmlInput: { min: TODAY } }}
                   fullWidth size="small" sx={{ mb: date ? 2 : 0 }}
@@ -589,13 +590,13 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
                   </Box>
                 ) : (
                   <>
-                    <Typography sx={{ fontSize: '0.75rem', fontWeight: 600, color: '#73726E', mb: 1 }}>{slots.length} slots available</Typography>
+                    <Typography sx={{ fontSize: '0.75rem', fontWeight: 600, color: C.slate, mb: 1 }}>{slots.length} slots available</Typography>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.875 }}>
                       {slots.map((slot) => {
                         const active = selectedSlot?.id === slot.id;
                         return (
                           <Box key={slot.id} onClick={() => setSelectedSlot(slot)} sx={{ px: 1.75, py: 0.75, borderRadius: 2, cursor: 'pointer', backgroundColor: active ? '#0D9488' : '#F7F7F5', border: `2px solid ${active ? '#0D9488' : '#E9E9E7'}`, transition: 'all 0.12s', '&:hover': { borderColor: '#0D9488', backgroundColor: active ? '#0D9488' : '#F0FDFA' } }}>
-                            <Typography sx={{ fontSize: '0.8125rem', fontWeight: 700, color: active ? '#fff' : '#334155' }}>{fmtSlotTime(slot.startTime)}</Typography>
+                            <Typography sx={{ fontSize: '0.8125rem', fontWeight: 700, color: active ? '#fff' : C.inkMid }}>{fmtSlotTime(slot.startTime)}</Typography>
                           </Box>
                         );
                       })}
@@ -611,8 +612,8 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
               </Box>
 
               {/* Who is this for */}
-              <Box sx={{ backgroundColor: '#fff', borderRadius: 3, p: 2.5, border: '1px solid #E9E9E7', boxShadow: '0 1px 4px rgba(0,0,0,0.04)' }}>
-                <Typography sx={{ fontSize: '0.6875rem', fontWeight: 700, color: '#9B9A97', textTransform: 'uppercase', letterSpacing: '0.08em', mb: 1.75 }}>Who is this appointment for?</Typography>
+              <Box sx={{ backgroundColor: C.paper, borderRadius: 3, p: 2.5, border: `1px solid ${C.border}`, boxShadow: '0 1px 4px rgba(0,0,0,0.04)' }}>
+                <Typography sx={{ fontSize: '0.6875rem', fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: '0.08em', mb: 1.75 }}>Who is this appointment for?</Typography>
                 <Box sx={{ display: 'flex', gap: 1.25, mb: isForSelf ? 0 : 2.5 }}>
                   {[{ value: true, label: 'Myself', icon: <PersonIcon sx={{ fontSize: 18 }} /> }, { value: false, label: 'Someone Else', icon: <GroupIcon sx={{ fontSize: 18 }} /> }].map(({ value, label, icon }) => (
                     <Box key={String(value)} onClick={() => setIsForSelf(value)} sx={{ flex: 1, p: 1.5, borderRadius: 2.5, cursor: 'pointer', textAlign: 'center', border: `2px solid ${isForSelf === value ? '#0D9488' : '#E9E9E7'}`, backgroundColor: isForSelf === value ? '#F0FDFA' : '#F7F7F5', transition: 'all 0.12s', '&:hover': { borderColor: '#0D9488' } }}>
@@ -636,8 +637,8 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
               </Box>
 
               {/* Consultation type + reason */}
-              <Box sx={{ backgroundColor: '#fff', borderRadius: 3, p: 2.5, border: '1px solid #E9E9E7', boxShadow: '0 1px 4px rgba(0,0,0,0.04)' }}>
-                <Typography sx={{ fontSize: '0.6875rem', fontWeight: 700, color: '#9B9A97', textTransform: 'uppercase', letterSpacing: '0.08em', mb: 1.75 }}>Appointment Details</Typography>
+              <Box sx={{ backgroundColor: C.paper, borderRadius: 3, p: 2.5, border: `1px solid ${C.border}`, boxShadow: '0 1px 4px rgba(0,0,0,0.04)' }}>
+                <Typography sx={{ fontSize: '0.6875rem', fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: '0.08em', mb: 1.75 }}>Appointment Details</Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.75 }}>
                   <TextField select label="Consultation Type *" value={consultationType} onChange={(e) => setConsultationType(e.target.value)} fullWidth size="small">
                     {availableTypes.map(({ type, fee }) => (
@@ -655,12 +656,12 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
               </Box>
 
               {/* WhatsApp toggle */}
-              <Box sx={{ backgroundColor: '#fff', borderRadius: 3, px: 2.5, py: 2, border: `2px solid ${whatsappUpdates ? '#22c55e' : '#E9E9E7'}`, boxShadow: '0 1px 4px rgba(0,0,0,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, cursor: 'pointer', transition: 'border-color 0.15s' }} onClick={() => setWhatsappUpdates(v => !v)}>
+              <Box sx={{ backgroundColor: C.paper, borderRadius: 3, px: 2.5, py: 2, border: `2px solid ${whatsappUpdates ? '#22c55e' : '#E9E9E7'}`, boxShadow: '0 1px 4px rgba(0,0,0,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, cursor: 'pointer', transition: 'border-color 0.15s' }} onClick={() => setWhatsappUpdates(v => !v)}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                   <Box sx={{ width: 38, height: 38, borderRadius: 2, flexShrink: 0, backgroundColor: whatsappUpdates ? '#f0fdf4' : '#F7F7F5', color: whatsappUpdates ? '#16a34a' : '#9B9A97', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><WhatsAppIcon sx={{ fontSize: 20 }} /></Box>
                   <Box>
-                    <Typography sx={{ fontSize: '0.875rem', fontWeight: 700, color: '#0f172a' }}>Get updates on WhatsApp</Typography>
-                    <Typography sx={{ fontSize: '0.75rem', color: '#73726E' }}>Receive appointment reminders &amp; confirmations</Typography>
+                    <Typography sx={{ fontSize: '0.875rem', fontWeight: 700, color: C.ink }}>Get updates on WhatsApp</Typography>
+                    <Typography sx={{ fontSize: '0.75rem', color: C.slate }}>Receive appointment reminders &amp; confirmations</Typography>
                   </Box>
                 </Box>
                 <Switch checked={whatsappUpdates} onChange={(e) => { e.stopPropagation(); setWhatsappUpdates(e.target.checked); }} sx={{ '& .MuiSwitch-switchBase.Mui-checked': { color: '#16a34a' }, '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { backgroundColor: '#22c55e' } }} />
@@ -668,8 +669,8 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
             </Box>
           </DialogContent>
 
-          <DialogActions sx={{ px: 2.5, pb: 2.5, pt: 2, gap: 1, backgroundColor: '#fff', borderTop: '1px solid #F1F0EF' }}>
-            <Button onClick={handleClose} sx={{ color: '#73726E', fontWeight: 600 }}>Cancel</Button>
+          <DialogActions sx={{ px: 2.5, pb: 2.5, pt: 2, gap: 1, backgroundColor: C.paper, borderTop: `1px solid ${C.borderSub}` }}>
+            <Button onClick={handleClose} sx={{ color: C.slate, fontWeight: 600 }}>Cancel</Button>
             <Button onClick={handleConfirmBook} disabled={booking || !selectedSlot} variant="contained"
               sx={{ flex: 1, backgroundColor: '#0D9488', borderRadius: 2, fontWeight: 700, py: 1.25, boxShadow: 'none', '&:hover': { backgroundColor: '#0F766E', boxShadow: '0 4px 12px rgba(0,97,165,0.3)' } }}>
               {booking ? <CircularProgress size={20} color="inherit" /> : currentFeeDisplay ? `Confirm & Pay ${currentFeeDisplay}` : 'Confirm Booking'}
@@ -719,12 +720,12 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
 
           <DialogContent sx={{ p: 3 }}>
             {/* Appointment summary */}
-            <Box sx={{ backgroundColor: '#F7F7F5', borderRadius: 2, p: 2, mb: 2, border: '1px solid #E9E9E7' }}>
-              <Typography sx={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a' }}>{bookedAppt.doctorName}</Typography>
+            <Box sx={{ backgroundColor: C.surface, borderRadius: 2, p: 2, mb: 2, border: `1px solid ${C.border}` }}>
+              <Typography sx={{ fontWeight: 700, fontSize: '0.9rem', color: C.ink }}>{bookedAppt.doctorName}</Typography>
               <Typography sx={{ fontSize: '0.78rem', color: '#0D9488', fontWeight: 600, mt: 0.25 }}>{bookedAppt.doctorSpecialty}</Typography>
               <Divider sx={{ my: 1.25 }} />
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography sx={{ fontSize: '0.78rem', color: '#73726E' }}>{bookedAppt.appointmentDate} · {bookedAppt.startTime}</Typography>
+                <Typography sx={{ fontSize: '0.78rem', color: C.slate }}>{bookedAppt.appointmentDate} · {bookedAppt.startTime}</Typography>
                 <Chip label={payStage === 'success' ? 'Confirmed' : 'Awaiting Payment'} size="small"
                   sx={{ backgroundColor: payStage === 'success' ? '#f0fdf4' : '#fffbeb', color: payStage === 'success' ? '#15803d' : '#b45309', fontWeight: 700, fontSize: '0.65rem', height: 20 }} />
               </Box>
@@ -745,7 +746,7 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
 
             {/* Amount */}
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-              <Typography sx={{ fontSize: '0.85rem', color: '#73726E', fontWeight: 600 }}>Consultation Fee</Typography>
+              <Typography sx={{ fontSize: '0.85rem', color: C.slate, fontWeight: 600 }}>Consultation Fee</Typography>
               <Typography sx={{ fontSize: '1.35rem', fontWeight: 800, color: '#0D9488', fontFamily: 'inherit' }}>
                 {((bookedAppt.amountPaise ?? 0) / 100).toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}
               </Typography>
@@ -777,7 +778,7 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
               </Box>
             )}
 
-            <Typography sx={{ fontSize: '0.68rem', color: '#9B9A97', mt: 2, textAlign: 'center' }}>
+            <Typography sx={{ fontSize: '0.68rem', color: C.muted, mt: 2, textAlign: 'center' }}>
               256-bit encrypted · PCI-DSS compliant · UPI, cards, net banking &amp; wallets
             </Typography>
           </DialogContent>
@@ -790,19 +791,19 @@ export default function BookAppointmentDialog({ open, onClose, onBooked }: BookD
             {payStage !== 'success' && secondsLeft > 0 && (
               <Button onClick={handleSimulatePayment} disabled={isPayBlocked} variant="contained" fullWidth size="small"
                 startIcon={payStage === 'verifying' ? <CircularProgress size={14} color="inherit" /> : <span>🧪</span>}
-                sx={{ background: 'linear-gradient(90deg, #7c3aed, #6d28d9)', borderRadius: 2, fontWeight: 700, boxShadow: 'none', py: 1, '&:hover': { background: 'linear-gradient(90deg, #6d28d9, #5b21b6)' }, '&.Mui-disabled': { backgroundColor: '#E9E9E7', color: '#9B9A97' } }}>
+                sx={{ background: 'linear-gradient(90deg, #7c3aed, #6d28d9)', borderRadius: 2, fontWeight: 700, boxShadow: 'none', py: 1, '&:hover': { background: 'linear-gradient(90deg, #6d28d9, #5b21b6)' }, '&.Mui-disabled': { backgroundColor: C.border, color: C.muted } }}>
                 Simulate Payment (Test Mode)
               </Button>
             )}
             <Box sx={{ display: 'flex', gap: 1, width: '100%' }}>
               <Button onClick={handleClose} disabled={isPayBlocked} variant="outlined" size="small"
-                sx={{ borderColor: '#E9E9E7', color: '#73726E', borderRadius: 2, fontWeight: 600, flex: 1 }}>
+                sx={{ borderColor: C.border, color: C.slate, borderRadius: 2, fontWeight: 600, flex: 1 }}>
                 {secondsLeft === 0 || payStage === 'success' ? 'Close' : 'Cancel'}
               </Button>
               {payStage !== 'success' && secondsLeft > 0 && (
                 <Button onClick={handlePay} disabled={isPayBlocked || payStage === 'checkout'} variant="contained" size="small"
                   startIcon={payStage === 'loading' ? <CircularProgress size={14} color="inherit" /> : <PaymentIcon />}
-                  sx={{ backgroundColor: '#0D9488', borderRadius: 2, fontWeight: 700, flex: 2, boxShadow: 'none', '&:hover': { backgroundColor: '#0F766E' }, '&.Mui-disabled': { backgroundColor: '#E9E9E7', color: '#9B9A97' } }}>
+                  sx={{ backgroundColor: '#0D9488', borderRadius: 2, fontWeight: 700, flex: 2, boxShadow: 'none', '&:hover': { backgroundColor: '#0F766E' }, '&.Mui-disabled': { backgroundColor: C.border, color: C.muted } }}>
                   {payStage === 'loading' ? 'Preparing…' : 'Pay via Razorpay'}
                 </Button>
               )}

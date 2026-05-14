@@ -1,3 +1,4 @@
+import { C } from '../../styles/theme';
 import { useEffect, useState, useMemo } from 'react';
 import {
   Box, Typography, Chip, Button, CircularProgress,
@@ -31,7 +32,7 @@ const STATUS_TABS: { value: StatusFilter; label: string }[] = [
 
 const STATUS_STYLE: Record<string, { label: string; bg: string; color: string }> = {
   PENDING:   { label: 'Pending',   bg: '#F0FDFA', color: '#0D9488' },
-  CONFIRMED: { label: 'Confirmed', bg: '#F1F0EF', color: '#73726E' },
+  CONFIRMED: { label: 'Confirmed', bg: '#F1F0EF', color: C.slate },
   COMPLETED: { label: 'Completed', bg: '#f0fdf4', color: '#16a34a' },
   CANCELLED: { label: 'Cancelled', bg: '#fef2f2', color: '#dc2626' },
 };
@@ -39,7 +40,7 @@ const STATUS_STYLE: Record<string, { label: string; bg: string; color: string }>
 function AppointmentRow({ appt, onCompleted }: { appt: DoctorAppointment; onCompleted: (updated: DoctorAppointment) => void }) {
   const toast = useToast();
   const [completing, setCompleting] = useState(false);
-  const s = STATUS_STYLE[appt.status.toUpperCase()] ?? { label: appt.status, bg: '#F1F0EF', color: '#73726E' };
+  const s = STATUS_STYLE[appt.status.toUpperCase()] ?? { label: appt.status, bg: '#F1F0EF', color: C.slate };
   const isActive = !['COMPLETED', 'CANCELLED'].includes(appt.status.toUpperCase());
 
   const handleComplete = async () => {
@@ -57,10 +58,10 @@ function AppointmentRow({ appt, onCompleted }: { appt: DoctorAppointment; onComp
 
   return (
     <Box sx={{
-      backgroundColor: '#fff',
+      backgroundColor: C.paper,
       p: 3,
       borderRadius: '8px',
-      border: '1px solid #E9E9E7',
+      border: `1px solid ${C.border}`,
       borderLeft: appt.status.toUpperCase() === 'CONFIRMED' ? '4px solid #66affe'
         : appt.status.toUpperCase() === 'COMPLETED' ? '4px solid #16a34a'
         : appt.status.toUpperCase() === 'CANCELLED' ? '4px solid #fca5a5'
@@ -74,13 +75,13 @@ function AppointmentRow({ appt, onCompleted }: { appt: DoctorAppointment; onComp
         {/* Date/time block */}
         <Box sx={{
           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-          backgroundColor: '#F7F7F5', borderRadius: '6px', p: 2, minWidth: 100, flexShrink: 0,
+          backgroundColor: C.surface, borderRadius: '6px', p: 2, minWidth: 100, flexShrink: 0,
         }}>
-          <CalendarTodayIcon sx={{ fontSize: '1rem', color: '#9B9A97', mb: 0.5 }} />
-          <Typography sx={{ fontSize: '0.75rem', fontWeight: 600, color: '#37352F', fontFamily: 'inherit' }}>
+          <CalendarTodayIcon sx={{ fontSize: '1rem', color: C.muted, mb: 0.5 }} />
+          <Typography sx={{ fontSize: '0.75rem', fontWeight: 600, color: C.ink, fontFamily: 'inherit' }}>
             {fmtDate(appt.appointmentDate)}
           </Typography>
-          <Typography sx={{ fontSize: '0.8125rem', color: '#73726E', mt: 0.25 }}>
+          <Typography sx={{ fontSize: '0.8125rem', color: C.slate, mt: 0.25 }}>
             {appt.startTime}
           </Typography>
         </Box>
@@ -89,10 +90,10 @@ function AppointmentRow({ appt, onCompleted }: { appt: DoctorAppointment; onComp
         <Box sx={{ flex: 1 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1, gap: 1, flexWrap: 'wrap' }}>
             <Box>
-              <Typography sx={{ fontSize: '1.0625rem', fontWeight: 700, color: '#37352F', fontFamily: 'inherit' }}>
+              <Typography sx={{ fontSize: '1.0625rem', fontWeight: 700, color: C.ink, fontFamily: 'inherit' }}>
                 {appt.patientName || appt.patientEmail}
               </Typography>
-              <Typography sx={{ fontSize: '0.8125rem', color: '#73726E', mt: 0.25 }}>
+              <Typography sx={{ fontSize: '0.8125rem', color: C.slate, mt: 0.25 }}>
                 {appt.reason || '—'}
               </Typography>
             </Box>
@@ -100,7 +101,7 @@ function AppointmentRow({ appt, onCompleted }: { appt: DoctorAppointment; onComp
               <Chip
                 label={appt.consultationType.replace('_', ' ')}
                 size="small"
-                sx={{ backgroundColor: '#F1F0EF', color: '#73726E', fontWeight: 600, fontSize: '0.6875rem', borderRadius: 6, height: 24 }}
+                sx={{ backgroundColor: C.borderSub, color: C.slate, fontWeight: 600, fontSize: '0.6875rem', borderRadius: 6, height: 24 }}
               />
               <Chip
                 label={s.label}
@@ -190,13 +191,13 @@ export default function DoctorAppointmentsPage() {
           { label: 'Cancelled', value: counts.CANCELLED, bg: '#fef2f2', color: '#dc2626', icon: <CalendarTodayIcon   sx={{ fontSize: '1.25rem' }} /> },
         ].map(({ label, value, bg, color, icon }) => (
           <Grid key={label} item xs={6} md={3}>
-            <Box sx={{ backgroundColor: '#fff', p: 2.5, borderRadius: '8px', border: '1px solid #E9E9E7', boxShadow: 'none', display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box sx={{ backgroundColor: C.paper, p: 2.5, borderRadius: '8px', border: `1px solid ${C.border}`, boxShadow: 'none', display: 'flex', alignItems: 'center', gap: 2 }}>
               <Box sx={{ width: 40, height: 40, borderRadius: '50%', backgroundColor: bg, display: 'flex', alignItems: 'center', justifyContent: 'center', color, flexShrink: 0 }}>
                 {icon}
               </Box>
               <Box>
-                <Typography sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#37352F', fontFamily: 'inherit', lineHeight: 1.1 }}>{value}</Typography>
-                <Typography sx={{ fontSize: '0.75rem', color: '#9B9A97', fontWeight: 500 }}>{label}</Typography>
+                <Typography sx={{ fontSize: '1.5rem', fontWeight: 700, color: C.ink, fontFamily: 'inherit', lineHeight: 1.1 }}>{value}</Typography>
+                <Typography sx={{ fontSize: '0.75rem', color: C.muted, fontWeight: 500 }}>{label}</Typography>
               </Box>
             </Box>
           </Grid>
@@ -204,7 +205,7 @@ export default function DoctorAppointmentsPage() {
       </Grid>
 
       {/* Filters */}
-      <Box sx={{ backgroundColor: '#fff', p: 2.5, borderRadius: '8px', border: '1px solid #E9E9E7', mb: 3, boxShadow: 'none' }}>
+      <Box sx={{ backgroundColor: C.paper, p: 2.5, borderRadius: '8px', border: `1px solid ${C.border}`, mb: 3, boxShadow: 'none' }}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12} md={4}>
             <TextField
@@ -213,7 +214,7 @@ export default function DoctorAppointmentsPage() {
               placeholder="Search patient name, email or reason…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon sx={{ color: '#9B9A97', fontSize: '1.1rem' }} /></InputAdornment> }}
+              InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon sx={{ color: C.muted, fontSize: '1.1rem' }} /></InputAdornment> }}
               sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
             />
           </Grid>
@@ -248,7 +249,7 @@ export default function DoctorAppointmentsPage() {
       </Box>
 
       {/* Status tabs */}
-      <Box sx={{ backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #E9E9E7', mb: 3, boxShadow: 'none', overflow: 'hidden' }}>
+      <Box sx={{ backgroundColor: C.paper, borderRadius: '8px', border: `1px solid ${C.border}`, mb: 3, boxShadow: 'none', overflow: 'hidden' }}>
         <Tabs
           value={statusFilter}
           onChange={(_, v) => setStatusFilter(v)}
@@ -275,10 +276,10 @@ export default function DoctorAppointmentsPage() {
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}><CircularProgress /></Box>
       ) : filtered.length === 0 ? (
-        <Box sx={{ backgroundColor: '#fff', p: 6, borderRadius: '8px', border: '1px solid #E9E9E7', textAlign: 'center', boxShadow: 'none' }}>
+        <Box sx={{ backgroundColor: C.paper, p: 6, borderRadius: '8px', border: `1px solid ${C.border}`, textAlign: 'center', boxShadow: 'none' }}>
           <CalendarTodayIcon sx={{ fontSize: 48, color: '#cbd5e1', mb: 2 }} />
-          <Typography sx={{ color: '#73726E', fontWeight: 600, mb: 0.5 }}>No appointments found</Typography>
-          <Typography sx={{ fontSize: '0.875rem', color: '#9B9A97' }}>
+          <Typography sx={{ color: C.slate, fontWeight: 600, mb: 0.5 }}>No appointments found</Typography>
+          <Typography sx={{ fontSize: '0.875rem', color: C.muted }}>
             {search || fromDate || toDate || statusFilter !== 'ALL' ? 'Try adjusting your filters.' : 'No appointments have been booked yet.'}
           </Typography>
         </Box>
@@ -291,7 +292,7 @@ export default function DoctorAppointmentsPage() {
               onCompleted={(updated) => setAppointments(prev => prev.map(x => x.id === updated.id ? updated : x))}
             />
           ))}
-          <Typography sx={{ fontSize: '0.8125rem', color: '#9B9A97', textAlign: 'center', py: 1 }}>
+          <Typography sx={{ fontSize: '0.8125rem', color: C.muted, textAlign: 'center', py: 1 }}>
             Showing {filtered.length} of {appointments.length} appointment{appointments.length !== 1 ? 's' : ''}
           </Typography>
         </Box>

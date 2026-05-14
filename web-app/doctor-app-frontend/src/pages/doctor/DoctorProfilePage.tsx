@@ -1,3 +1,4 @@
+import { C } from '../../styles/theme';
 import { useEffect, useState, type FormEvent } from 'react';
 import {
   Box, Button, TextField, Typography, Switch, FormControlLabel,
@@ -18,7 +19,7 @@ function getInitials(name: string) {
 
 function SectionLabel({ children }: { children: string }) {
   return (
-    <Typography sx={{ fontSize: '0.6875rem', fontWeight: 700, color: '#9B9A97', textTransform: 'uppercase', letterSpacing: '0.08em', mb: 2, mt: 0.5 }}>
+    <Typography sx={{ fontSize: '0.6875rem', fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: '0.08em', mb: 2, mt: 0.5 }}>
       {children}
     </Typography>
   );
@@ -93,12 +94,12 @@ export default function DoctorProfilePage() {
           <Grid container spacing={3}>
             {/* Left column – avatar + availability */}
             <Grid item xs={12} md={4} lg={3}>
-              <Box sx={{ backgroundColor: '#fff', p: 3, borderRadius: '8px', border: '1px solid #E9E9E7', boxShadow: 'none', textAlign: 'center' }}>
+              <Box sx={{ backgroundColor: C.paper, p: 3, borderRadius: '8px', border: `1px solid ${C.border}`, boxShadow: 'none', textAlign: 'center' }}>
                 <Avatar sx={{ width: 96, height: 96, backgroundColor: '#0D9488', fontSize: '2rem', fontWeight: 700, mx: 'auto', mb: 2, border: '3px solid #e2e8f0' }}>
                   {displayName ? getInitials(displayName) : <PersonIcon sx={{ fontSize: 48 }} />}
                 </Avatar>
-                <Typography sx={{ fontWeight: 700, fontSize: '1.125rem', color: '#37352F', fontFamily: 'inherit' }}>{displayName || '—'}</Typography>
-                <Typography sx={{ fontSize: '0.8125rem', color: '#73726E', mb: 2 }}>{profile?.email}</Typography>
+                <Typography sx={{ fontWeight: 700, fontSize: '1.125rem', color: C.ink, fontFamily: 'inherit' }}>{displayName || '—'}</Typography>
+                <Typography sx={{ fontSize: '0.8125rem', color: C.slate, mb: 2 }}>{profile?.email}</Typography>
                 <Divider sx={{ mb: 2 }} />
                 <FormControlLabel
                   control={
@@ -117,7 +118,7 @@ export default function DoctorProfilePage() {
 
             {/* Right column – form fields */}
             <Grid item xs={12} md={8} lg={9}>
-              <Box sx={{ backgroundColor: '#fff', p: 3, borderRadius: '8px', border: '1px solid #E9E9E7', boxShadow: 'none' }}>
+              <Box sx={{ backgroundColor: C.paper, p: 3, borderRadius: '8px', border: `1px solid ${C.border}`, boxShadow: 'none' }}>
                 <SectionLabel>Personal Information</SectionLabel>
                 <Grid container spacing={2} sx={{ mb: 3 }}>
                   <Grid item xs={12} sm={6}>

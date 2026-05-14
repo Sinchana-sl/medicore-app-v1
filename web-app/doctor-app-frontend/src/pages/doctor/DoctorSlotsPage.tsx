@@ -1,3 +1,4 @@
+import { C } from '../../styles/theme';
 import { useEffect, useState, type FormEvent } from 'react';
 import {
   Box, Button, Typography, Chip, CircularProgress, Alert,
@@ -20,18 +21,18 @@ function today(): string {
 }
 
 function SlotRow({ slot, onBlock }: { slot: Slot; onBlock: () => void }) {
-  const s = STATUS_STYLE[slot.status] ?? { label: slot.status, bg: '#F1F0EF', color: '#73726E' };
+  const s = STATUS_STYLE[slot.status] ?? { label: slot.status, bg: '#F1F0EF', color: C.slate };
   return (
     <Box sx={{
       display: 'flex', alignItems: 'center', gap: 2, p: 2, borderRadius: '6px',
-      border: '1px solid #E9E9E7', backgroundColor: '#fff',
+      border: `1px solid ${C.border}`, backgroundColor: C.paper,
       '&:hover': { boxShadow: '0 2px 8px -2px rgba(26,54,93,0.08)' },
     }}>
-      <Box sx={{ minWidth: 100, textAlign: 'center', backgroundColor: '#F7F7F5', borderRadius: 1.5, px: 2, py: 1 }}>
-        <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#37352F', fontFamily: 'inherit' }}>
+      <Box sx={{ minWidth: 100, textAlign: 'center', backgroundColor: C.surface, borderRadius: 1.5, px: 2, py: 1 }}>
+        <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: C.ink, fontFamily: 'inherit' }}>
           {String(slot.startTime).slice(0, 5)}
         </Typography>
-        <Typography sx={{ fontSize: '0.6875rem', color: '#9B9A97' }}>
+        <Typography sx={{ fontSize: '0.6875rem', color: C.muted }}>
           – {String(slot.endTime).slice(0, 5)}
         </Typography>
       </Box>
@@ -39,13 +40,13 @@ function SlotRow({ slot, onBlock }: { slot: Slot; onBlock: () => void }) {
       <Box sx={{ flex: 1 }}>
         <Chip label={s.label} size="small" sx={{ backgroundColor: s.bg, color: s.color, fontWeight: 600, fontSize: '0.6875rem', borderRadius: 6, height: 24 }} />
         {slot.clinicName && (
-          <Typography sx={{ fontSize: '0.75rem', color: '#9B9A97', mt: 0.5 }}>@ {slot.clinicName}</Typography>
+          <Typography sx={{ fontSize: '0.75rem', color: C.muted, mt: 0.5 }}>@ {slot.clinicName}</Typography>
         )}
       </Box>
 
       {slot.status === 'AVAILABLE' && (
         <Button size="small" startIcon={<LockIcon sx={{ fontSize: '0.875rem !important' }} />} onClick={onBlock}
-          sx={{ color: '#73726E', borderColor: '#E9E9E7', border: '1px solid', borderRadius: 1.5, fontSize: '0.75rem', px: 1.5, py: 0.5, '&:hover': { backgroundColor: '#fef2f2', color: '#dc2626', borderColor: '#fca5a5' } }}>
+          sx={{ color: C.slate, borderColor: C.border, border: '1px solid', borderRadius: 1.5, fontSize: '0.75rem', px: 1.5, py: 0.5, '&:hover': { backgroundColor: '#fef2f2', color: '#dc2626', borderColor: '#fca5a5' } }}>
           Block
         </Button>
       )}
@@ -118,9 +119,9 @@ export default function DoctorSlotsPage() {
       <Grid container spacing={3}>
         {/* Generate section */}
         <Grid item xs={12} lg={4}>
-          <Box sx={{ backgroundColor: '#fff', p: 3, borderRadius: '8px', border: '1px solid #E9E9E7', boxShadow: 'none' }}>
-            <Typography sx={{ fontWeight: 700, fontSize: '1rem', color: '#37352F', fontFamily: 'inherit', mb: 0.5 }}>Generate Slots</Typography>
-            <Typography sx={{ fontSize: '0.8125rem', color: '#73726E', mb: 3 }}>Creates slots based on your availability schedule.</Typography>
+          <Box sx={{ backgroundColor: C.paper, p: 3, borderRadius: '8px', border: `1px solid ${C.border}`, boxShadow: 'none' }}>
+            <Typography sx={{ fontWeight: 700, fontSize: '1rem', color: C.ink, fontFamily: 'inherit', mb: 0.5 }}>Generate Slots</Typography>
+            <Typography sx={{ fontSize: '0.8125rem', color: C.slate, mb: 3 }}>Creates slots based on your availability schedule.</Typography>
 
             {genResult && <Alert severity="success" sx={{ mb: 2 }} onClose={() => setGenResult(null)}>{genResult}</Alert>}
             {genError  && <Alert severity="error"   sx={{ mb: 2 }} onClose={() => setGenError(null)}>{genError}</Alert>}
@@ -144,9 +145,9 @@ export default function DoctorSlotsPage() {
 
         {/* View section */}
         <Grid item xs={12} lg={8}>
-          <Box sx={{ backgroundColor: '#fff', p: 3, borderRadius: '8px', border: '1px solid #E9E9E7', boxShadow: 'none' }}>
+          <Box sx={{ backgroundColor: C.paper, p: 3, borderRadius: '8px', border: `1px solid ${C.border}`, boxShadow: 'none' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, mb: 3, flexWrap: 'wrap' }}>
-              <Typography sx={{ fontWeight: 700, fontSize: '1rem', color: '#37352F', fontFamily: 'inherit' }}>Slots for Date</Typography>
+              <Typography sx={{ fontWeight: 700, fontSize: '1rem', color: C.ink, fontFamily: 'inherit' }}>Slots for Date</Typography>
               <TextField type="date" value={viewDate} onChange={(e) => setViewDate(e.target.value)} size="small" sx={{ maxWidth: 180 }} />
             </Box>
 
@@ -164,8 +165,8 @@ export default function DoctorSlotsPage() {
             ) : slots.length === 0 ? (
               <Box sx={{ textAlign: 'center', py: 6 }}>
                 <CalendarViewDayIcon sx={{ fontSize: 48, color: '#cbd5e1', mb: 2 }} />
-                <Typography sx={{ color: '#73726E', mb: 1 }}>No slots found for this date.</Typography>
-                <Typography sx={{ fontSize: '0.8125rem', color: '#9B9A97' }}>Use Generate Slots to create them from your availability schedule.</Typography>
+                <Typography sx={{ color: C.slate, mb: 1 }}>No slots found for this date.</Typography>
+                <Typography sx={{ fontSize: '0.8125rem', color: C.muted }}>Use Generate Slots to create them from your availability schedule.</Typography>
               </Box>
             ) : (
               <Box>
@@ -173,7 +174,7 @@ export default function DoctorSlotsPage() {
                   <Box key={clinicName} sx={{ mb: 3 }}>
                     {Object.keys(grouped).length > 1 && (
                       <>
-                        <Typography sx={{ fontSize: '0.75rem', fontWeight: 700, color: '#9B9A97', textTransform: 'uppercase', letterSpacing: '0.08em', mb: 1.5 }}>{clinicName}</Typography>
+                        <Typography sx={{ fontSize: '0.75rem', fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: '0.08em', mb: 1.5 }}>{clinicName}</Typography>
                         <Divider sx={{ mb: 1.5 }} />
                       </>
                     )}

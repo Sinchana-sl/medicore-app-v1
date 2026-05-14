@@ -1,3 +1,4 @@
+import { C } from '../../styles/theme';
 import { useEffect, useState } from 'react';
 import {
   Box, Button, Chip, CircularProgress, Divider, Tooltip,
@@ -181,7 +182,7 @@ export default function DoctorSchedulePage() {
   rules.forEach(r => { byDay[r.dayOfWeek] = [...(byDay[r.dayOfWeek] ?? []), r]; });
 
   const sectionLabelSx = {
-    fontSize: '0.75rem', fontWeight: 700, color: '#9B9A97',
+    fontSize: '0.75rem', fontWeight: 700, color: C.muted,
     textTransform: 'uppercase' as const, letterSpacing: '0.08em', mb: 1.5,
   };
 
@@ -192,11 +193,11 @@ export default function DoctorSchedulePage() {
     >
       {/* ── Set Schedule Form ─────────────────────────────────────────────── */}
       <Box sx={{
-        backgroundColor: '#fff', p: { xs: 3, md: 4 },
-        borderRadius: '8px', border: '1px solid #E9E9E7',
+        backgroundColor: C.paper, p: { xs: 3, md: 4 },
+        borderRadius: '8px', border: `1px solid ${C.border}`,
         boxShadow: 'none', mb: 3,
       }}>
-        <Typography sx={{ fontWeight: 700, fontSize: '1rem', color: '#37352F', fontFamily: 'inherit', mb: 3 }}>
+        <Typography sx={{ fontWeight: 700, fontSize: '1rem', color: C.ink, fontFamily: 'inherit', mb: 3 }}>
           Set Your Weekly Schedule
         </Typography>
 
@@ -233,9 +234,9 @@ export default function DoctorSchedulePage() {
             {clinics.map(c => (
               <MenuItem key={c.id} value={c.id}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                  <LocalHospitalIcon sx={{ fontSize: 18, color: '#73726E', flexShrink: 0 }} />
+                  <LocalHospitalIcon sx={{ fontSize: 18, color: C.slate, flexShrink: 0 }} />
                   <Box>
-                    <Typography sx={{ fontWeight: 600, fontSize: '0.9rem', color: '#37352F' }}>
+                    <Typography sx={{ fontWeight: 600, fontSize: '0.9rem', color: C.ink }}>
                       {c.name}
                       {c.isPrimary && (
                         <Typography component="span" sx={{ ml: 1, fontSize: '0.7rem', color: '#0D9488', fontWeight: 700 }}>
@@ -244,7 +245,7 @@ export default function DoctorSchedulePage() {
                       )}
                     </Typography>
                     {(c.address || c.city) && (
-                      <Typography sx={{ fontSize: '0.75rem', color: '#73726E' }}>
+                      <Typography sx={{ fontSize: '0.75rem', color: C.slate }}>
                         {[c.address, c.city].filter(Boolean).join(', ')}
                       </Typography>
                     )}
@@ -292,7 +293,7 @@ export default function DoctorSchedulePage() {
                 inputProps={{ step: 300 }}
                 sx={{ flex: 1 }}
               />
-              <Typography sx={{ color: '#9B9A97', fontWeight: 700 }}>–</Typography>
+              <Typography sx={{ color: C.muted, fontWeight: 700 }}>–</Typography>
               <TextField
                 label="End" type="time" value={endTime}
                 onChange={e => setEndTime(e.target.value)}
@@ -333,7 +334,7 @@ export default function DoctorSchedulePage() {
                 minWidth: 80, borderRadius: '6px', fontWeight: 600, fontSize: '0.875rem', py: 1,
                 ...(slotDuration === d
                   ? { backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#37352F' }, boxShadow: 'none' }
-                  : { borderColor: '#E9E9E7', color: '#73726E', '&:hover': { borderColor: '#9B9A97', backgroundColor: '#F7F7F5' } }
+                  : { borderColor: C.border, color: C.slate, '&:hover': { borderColor: '#9B9A97', backgroundColor: C.surface } }
                 ),
               }}
             >
@@ -358,8 +359,8 @@ export default function DoctorSchedulePage() {
 
       {/* ── Current Schedule ──────────────────────────────────────────────── */}
       <Box sx={{
-        backgroundColor: '#fff', borderRadius: '8px',
-        border: '1px solid #E9E9E7',
+        backgroundColor: C.paper, borderRadius: '8px',
+        border: `1px solid ${C.border}`,
         boxShadow: 'none',
       }}>
         <Box sx={{
@@ -368,11 +369,11 @@ export default function DoctorSchedulePage() {
           flexWrap: 'wrap', gap: 2,
         }}>
           <Box>
-            <Typography sx={{ fontWeight: 700, fontSize: '1rem', color: '#37352F', fontFamily: 'inherit' }}>
+            <Typography sx={{ fontWeight: 700, fontSize: '1rem', color: C.ink, fontFamily: 'inherit' }}>
               Weekly Schedule
             </Typography>
             {!loading && rules.length > 0 && (
-              <Typography sx={{ fontSize: '0.8125rem', color: '#9B9A97', mt: 0.25 }}>
+              <Typography sx={{ fontSize: '0.8125rem', color: C.muted, mt: 0.25 }}>
                 {rules.length} rule{rules.length !== 1 ? 's' : ''} across {Object.keys(byDay).length} day{Object.keys(byDay).length !== 1 ? 's' : ''}
               </Typography>
             )}
@@ -397,8 +398,8 @@ export default function DoctorSchedulePage() {
         ) : rules.length === 0 ? (
           <Box sx={{ textAlign: 'center', py: 8 }}>
             <EventAvailableIcon sx={{ fontSize: 48, color: '#cbd5e1', mb: 2 }} />
-            <Typography sx={{ color: '#73726E', fontWeight: 500 }}>No schedule set up yet.</Typography>
-            <Typography sx={{ fontSize: '0.8125rem', color: '#9B9A97', mt: 0.5 }}>
+            <Typography sx={{ color: C.slate, fontWeight: 500 }}>No schedule set up yet.</Typography>
+            <Typography sx={{ fontSize: '0.8125rem', color: C.muted, mt: 0.5 }}>
               Select a clinic, days, and time above to get started.
             </Typography>
           </Box>
@@ -448,7 +449,7 @@ export default function DoctorSchedulePage() {
                               {/* Time */}
                               <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
                                 <AccessTimeIcon sx={{ fontSize: '0.875rem', color: dc.color }} />
-                                <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: '#1e293b', fontFamily: 'inherit', whiteSpace: 'nowrap' }}>
+                                <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: C.ink, fontFamily: 'inherit', whiteSpace: 'nowrap' }}>
                                   {to12hr(rule.startTime)} – {to12hr(rule.endTime)}
                                 </Typography>
                               </Box>
@@ -462,7 +463,7 @@ export default function DoctorSchedulePage() {
 
                               {/* Slot count */}
                               <Tooltip title="Slots per day" placement="top" arrow>
-                                <Typography sx={{ fontSize: '0.75rem', color: '#9B9A97', whiteSpace: 'nowrap' }}>
+                                <Typography sx={{ fontSize: '0.75rem', color: C.muted, whiteSpace: 'nowrap' }}>
                                   {count} slot{count !== 1 ? 's' : ''}/day
                                 </Typography>
                               </Tooltip>
@@ -470,8 +471,8 @@ export default function DoctorSchedulePage() {
                               {/* Clinic badge */}
                               {rule.clinicName && (
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                                  <LocalHospitalIcon sx={{ fontSize: 13, color: '#9B9A97', flexShrink: 0 }} />
-                                  <Typography sx={{ fontSize: '0.75rem', color: '#73726E', whiteSpace: 'nowrap', fontWeight: 600 }}>
+                                  <LocalHospitalIcon sx={{ fontSize: 13, color: C.muted, flexShrink: 0 }} />
+                                  <Typography sx={{ fontSize: '0.75rem', color: C.slate, whiteSpace: 'nowrap', fontWeight: 600 }}>
                                     {rule.clinicName}
                                   </Typography>
                                 </Box>

@@ -1,3 +1,4 @@
+import { C } from '../styles/theme';
 import { Box, Typography, Chip, IconButton } from '@mui/material';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -33,7 +34,7 @@ export default function ReportItem({ title, subtitle, type, status }: ReportItem
       sx={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         p: 1.75, borderRadius: 2.5,
-        border: '1px solid #F1F0EF',
+        border: `1px solid ${C.borderSub}`,
         backgroundColor: '#fafbfd',
         gap: 1.5,
         transition: 'background 0.15s, border-color 0.15s',
@@ -53,10 +54,10 @@ export default function ReportItem({ title, subtitle, type, status }: ReportItem
           {icon}
         </Box>
         <Box sx={{ minWidth: 0 }}>
-          <Typography sx={{ fontWeight: 700, fontSize: '0.8125rem', color: '#0f172a', lineHeight: 1.3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <Typography sx={{ fontWeight: 700, fontSize: '0.8125rem', color: C.ink, lineHeight: 1.3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {title}
           </Typography>
-          <Typography sx={{ fontSize: '0.72rem', color: '#9B9A97', mt: 0.25, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <Typography sx={{ fontSize: '0.72rem', color: C.muted, mt: 0.25, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {subtitle}
           </Typography>
         </Box>
