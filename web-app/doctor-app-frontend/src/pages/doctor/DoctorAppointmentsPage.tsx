@@ -33,7 +33,7 @@ const STATUS_TABS: { value: StatusFilter; label: string }[] = [
 const STATUS_STYLE: Record<string, { label: string; bg: string; color: string }> = {
   PENDING:   { label: 'Pending',   bg: '#F0FDFA', color: '#0D9488' },
   CONFIRMED: { label: 'Confirmed', bg: '#F1F0EF', color: C.slate },
-  COMPLETED: { label: 'Completed', bg: C.greenBg, color: '#16a34a' },
+  COMPLETED: { label: 'Completed', bg: C.greenBg, color: C.green },
   CANCELLED: { label: 'Cancelled', bg: C.redBg, color: '#dc2626' },
 };
 
@@ -62,10 +62,10 @@ function AppointmentRow({ appt, onCompleted }: { appt: DoctorAppointment; onComp
       p: 3,
       borderRadius: '8px',
       border: `1px solid ${C.border}`,
-      borderLeft: appt.status.toUpperCase() === 'CONFIRMED' ? '4px solid #66affe'
-        : appt.status.toUpperCase() === 'COMPLETED' ? '4px solid #16a34a'
-        : appt.status.toUpperCase() === 'CANCELLED' ? '4px solid #fca5a5'
-        : '4px solid #c7d2fe',
+      borderLeft: appt.status.toUpperCase() === 'CONFIRMED' ? `4px solid ${C.blue}`
+        : appt.status.toUpperCase() === 'COMPLETED' ? `4px solid ${C.green}`
+        : appt.status.toUpperCase() === 'CANCELLED' ? `4px solid ${C.subtle}`
+        : `4px solid ${C.border}`,
       boxShadow: 'none',
       opacity: appt.status.toUpperCase() === 'CANCELLED' ? 0.65 : 1,
       transition: 'box-shadow 0.15s',
@@ -116,7 +116,7 @@ function AppointmentRow({ appt, onCompleted }: { appt: DoctorAppointment; onComp
               <Button
                 variant="contained"
                 size="small"
-                sx={{ backgroundColor: '#37352F', borderRadius: '6px', fontSize: '0.8125rem', px: 2.5, py: 0.75, '&:hover': { backgroundColor: '#0F766E' } }}
+                sx={{ backgroundColor: C.blue, borderRadius: '6px', fontSize: '0.8125rem', px: 2.5, py: 0.75, '&:hover': { backgroundColor: C.blueDark } }}
               >
                 Start Consultation
               </Button>
@@ -125,9 +125,9 @@ function AppointmentRow({ appt, onCompleted }: { appt: DoctorAppointment; onComp
                 size="small"
                 onClick={handleComplete}
                 disabled={completing}
-                sx={{ borderColor: '#16a34a', color: '#16a34a', borderRadius: '6px', fontSize: '0.8125rem', px: 2.5, py: 0.75, '&:hover': { backgroundColor: C.greenBg, borderColor: '#16a34a' } }}
+                sx={{ borderColor: C.green, color: C.green, borderRadius: '6px', fontSize: '0.8125rem', px: 2.5, py: 0.75, '&:hover': { backgroundColor: C.greenBg, borderColor: C.green } }}
               >
-                {completing ? <CircularProgress size={14} sx={{ color: '#16a34a' }} /> : 'Mark Complete'}
+                {completing ? <CircularProgress size={14} sx={{ color: C.green }} /> : 'Mark Complete'}
               </Button>
             </Box>
           )}
@@ -187,7 +187,7 @@ export default function DoctorAppointmentsPage() {
         {[
           { label: 'Pending',   value: counts.PENDING,   bg: '#F0FDFA', color: '#0D9488', icon: <PendingActionsIcon sx={{ fontSize: '1.25rem' }} /> },
           { label: 'Confirmed', value: counts.CONFIRMED, bg: C.greenBg, color: '#15803d', icon: <CalendarTodayIcon   sx={{ fontSize: '1.25rem' }} /> },
-          { label: 'Completed', value: counts.COMPLETED, bg: C.greenBg, color: '#16a34a', icon: <CheckCircleIcon     sx={{ fontSize: '1.25rem' }} /> },
+          { label: 'Completed', value: counts.COMPLETED, bg: C.greenBg, color: C.green, icon: <CheckCircleIcon     sx={{ fontSize: '1.25rem' }} /> },
           { label: 'Cancelled', value: counts.CANCELLED, bg: C.redBg, color: '#dc2626', icon: <CalendarTodayIcon   sx={{ fontSize: '1.25rem' }} /> },
         ].map(({ label, value, bg, color, icon }) => (
           <Grid key={label} item xs={6} md={3}>
@@ -259,7 +259,7 @@ export default function DoctorAppointmentsPage() {
             px: 1,
             '& .MuiTab-root': { fontWeight: 600, fontSize: '0.875rem', textTransform: 'none', minHeight: 48, fontFamily: 'inherit' },
             '& .Mui-selected': { color: '#0D9488' },
-            '& .MuiTabs-indicator': { backgroundColor: '#37352F' },
+            '& .MuiTabs-indicator': { backgroundColor: C.blue },
           }}
         >
           {STATUS_TABS.map(({ value, label }) => (

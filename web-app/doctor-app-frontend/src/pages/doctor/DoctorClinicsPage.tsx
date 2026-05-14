@@ -78,7 +78,7 @@ function ClinicCard({ clinic, onEdit, onDelete }: { clinic: Clinic; onEdit: () =
                 {clinic.name}
               </Typography>
               {clinic.isPrimary && (
-                <Chip label="Primary" size="small" sx={{ backgroundColor: '#37352F', color: '#fff', fontSize: '0.625rem', height: 20 }} />
+                <Chip label="Primary" size="small" sx={{ backgroundColor: C.blue, color: '#fff', fontSize: '0.625rem', height: 20 }} />
               )}
             </Box>
 
@@ -339,7 +339,7 @@ function ClinicDialog({ open, onClose, onSaved, initial, clinicId }: {
       <DialogActions sx={{ px: 3, pb: 3 }}>
         <Button onClick={onClose} sx={{ color: C.slate }}>Cancel</Button>
         <Button variant="contained" onClick={handleSave} disabled={saving}
-          sx={{ backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#37352F' }, borderRadius: '6px', px: 3 }}>
+          sx={{ backgroundColor: C.blue, '&:hover': { backgroundColor: C.blueDark }, borderRadius: '6px', px: 3 }}>
           {saving ? 'Saving…' : clinicId ? 'Save Changes' : 'Add Clinic'}
         </Button>
       </DialogActions>
@@ -401,7 +401,7 @@ export default function DoctorClinicsPage() {
     <DoctorPageLayout title="My Clinics" subtitle="Manage your clinic locations, addresses, and consultation types">
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 3 }}>
         <Button variant="contained" startIcon={<AddIcon />} onClick={openAdd}
-          sx={{ backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#37352F' }, borderRadius: '6px', px: 3, py: 1.25, fontWeight: 600 }}>
+          sx={{ backgroundColor: C.blue, '&:hover': { backgroundColor: C.blueDark }, borderRadius: '6px', px: 3, py: 1.25, fontWeight: 600 }}>
           Add Clinic
         </Button>
       </Box>
@@ -412,7 +412,7 @@ export default function DoctorClinicsPage() {
         <Box sx={{ backgroundColor: C.paper, p: 6, borderRadius: '8px', border: `1px solid ${C.border}`, textAlign: 'center' }}>
           <LocalHospitalIcon sx={{ fontSize: 48, color: '#cbd5e1', mb: 2 }} />
           <Typography sx={{ color: C.slate, mb: 2 }}>No clinics added yet.</Typography>
-          <Button variant="outlined" onClick={openAdd} sx={{ borderColor: '#37352F', color: C.ink, borderRadius: 2 }}>
+          <Button variant="outlined" onClick={openAdd} sx={{ borderColor: C.border, color: C.ink, borderRadius: 2 }}>
             Add your first clinic
           </Button>
         </Box>

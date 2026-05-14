@@ -101,18 +101,32 @@ export default function DoctorProfilePage() {
                 <Typography sx={{ fontWeight: 700, fontSize: '1.125rem', color: C.ink, fontFamily: 'inherit' }}>{displayName || '—'}</Typography>
                 <Typography sx={{ fontSize: '0.8125rem', color: C.slate, mb: 2 }}>{profile?.email}</Typography>
                 <Divider sx={{ mb: 2 }} />
-                <FormControlLabel
-                  control={
-                    <Switch checked={isAvailable} onChange={(e) => setIsAvailable(e.target.checked)} color="success" />
-                  }
-                  label={
-                    <Typography sx={{ fontSize: '0.875rem', fontWeight: 600, color: isAvailable ? '#16a34a' : '#9B9A97' }}>
+                <Box
+                  onClick={() => setIsAvailable(v => !v)}
+                  sx={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    px: 1.5, py: 1.25, borderRadius: '8px', cursor: 'pointer',
+                    backgroundColor: isAvailable ? C.greenBg : C.borderSub,
+                    border: `1px solid ${isAvailable ? C.green + '30' : C.border}`,
+                    transition: 'all 0.15s',
+                  }}
+                >
+                  <Box>
+                    <Typography sx={{ fontSize: '0.8125rem', fontWeight: 700, color: isAvailable ? C.green : C.slate, lineHeight: 1.2 }}>
                       {isAvailable ? 'Accepting patients' : 'Not available'}
                     </Typography>
-                  }
-                  labelPlacement="start"
-                  sx={{ ml: 0, justifyContent: 'space-between', width: '100%' }}
-                />
+                    <Typography sx={{ fontSize: '0.6875rem', color: C.muted, mt: 0.25 }}>
+                      {isAvailable ? 'Visible to new patients' : 'Hidden from bookings'}
+                    </Typography>
+                  </Box>
+                  <Switch
+                    checked={isAvailable}
+                    onChange={(e) => { e.stopPropagation(); setIsAvailable(e.target.checked); }}
+                    onClick={(e) => e.stopPropagation()}
+                    size="small"
+                    sx={{ ml: 1, flexShrink: 0 }}
+                  />
+                </Box>
               </Box>
             </Grid>
 
@@ -154,7 +168,7 @@ export default function DoctorProfilePage() {
 
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                   <Button type="submit" variant="contained" disabled={saving}
-                    sx={{ px: 4, py: 1.5, backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#37352F' }, borderRadius: '6px', fontWeight: 600 }}>
+                    sx={{ px: 4, py: 1.5, backgroundColor: C.blue, '&:hover': { backgroundColor: C.blueDark }, borderRadius: '6px', fontWeight: 600 }}>
                     {saving ? 'Saving…' : 'Save Profile'}
                   </Button>
                 </Box>

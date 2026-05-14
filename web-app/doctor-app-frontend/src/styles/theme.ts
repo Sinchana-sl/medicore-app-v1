@@ -417,15 +417,15 @@ export function createAppTheme(mode: 'light' | 'dark'): Theme {
 
       MuiSwitch: {
         styleOverrides: {
-          root: { padding: 0 },
+          root: { padding: 0, width: 38, height: 22 },
           switchBase: {
-            padding: 2,
-            '&.Mui-checked': { transform: 'translateX(18px)' },
+            padding: 3,
+            '&.Mui-checked': { transform: 'translateX(16px)' },
             '&.Mui-checked + .MuiSwitch-track': { backgroundColor: C.blue, opacity: 1 },
           },
           thumb: { width: 16, height: 16, boxShadow: 'none' },
-          track: { borderRadius: 10, backgroundColor: C.subtle, opacity: 1 },
-          sizeSmall: { width: 36, height: 20 },
+          track: { borderRadius: 11, backgroundColor: C.subtle, opacity: 1 },
+          sizeSmall: { width: 32, height: 18 },
         },
       },
     },

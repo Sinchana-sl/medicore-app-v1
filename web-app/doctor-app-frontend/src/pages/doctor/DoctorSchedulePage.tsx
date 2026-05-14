@@ -333,7 +333,7 @@ export default function DoctorSchedulePage() {
               sx={{
                 minWidth: 80, borderRadius: '6px', fontWeight: 600, fontSize: '0.875rem', py: 1,
                 ...(slotDuration === d
-                  ? { backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#37352F' }, boxShadow: 'none' }
+                  ? { backgroundColor: C.blue, '&:hover': { backgroundColor: C.blueDark }, boxShadow: 'none' }
                   : { borderColor: C.border, color: C.slate, '&:hover': { borderColor: '#9B9A97', backgroundColor: C.surface } }
                 ),
               }}
@@ -349,7 +349,7 @@ export default function DoctorSchedulePage() {
           disabled={saving || selectedDays.length === 0 || !clinicId}
           sx={{
             px: 4, py: 1.25, borderRadius: '6px', fontWeight: 700, fontSize: '0.9375rem',
-            backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#37352F' },
+            backgroundColor: C.blue, '&:hover': { backgroundColor: C.blueDark },
             boxShadow: 'none',
           }}
         >
@@ -383,7 +383,7 @@ export default function DoctorSchedulePage() {
             onClick={handleGenerateSlots}
             disabled={generating || rules.length === 0}
             sx={{
-              backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#37352F' },
+              backgroundColor: C.blue, '&:hover': { backgroundColor: C.blueDark },
               borderRadius: '6px', fontWeight: 600, px: 2.5, py: 1, boxShadow: 'none', fontSize: '0.8125rem',
             }}
           >

@@ -131,7 +131,7 @@ function AvailDialog({ open, onClose, onSaved, clinics, initial, ruleId }: {
       <DialogActions sx={{ px: 3, pb: 3 }}>
         <Button onClick={onClose} sx={{ color: C.slate }}>Cancel</Button>
         <Button variant="contained" onClick={handleSave} disabled={saving}
-          sx={{ backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#37352F' }, borderRadius: '6px', px: 3 }}>
+          sx={{ backgroundColor: C.blue, '&:hover': { backgroundColor: C.blueDark }, borderRadius: '6px', px: 3 }}>
           {saving ? 'Saving…' : ruleId ? 'Save Changes' : 'Add Schedule'}
         </Button>
       </DialogActions>
@@ -180,7 +180,7 @@ export default function DoctorAvailabilityPage() {
     <DoctorPageLayout title="Availability Schedule" subtitle="Set your weekly working hours and slot durations">
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 3 }}>
         <Button variant="contained" startIcon={<AddIcon />} onClick={openAdd}
-          sx={{ backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#37352F' }, borderRadius: '6px', px: 3, py: 1.25, fontWeight: 600 }}>
+          sx={{ backgroundColor: C.blue, '&:hover': { backgroundColor: C.blueDark }, borderRadius: '6px', px: 3, py: 1.25, fontWeight: 600 }}>
           Add Schedule
         </Button>
       </Box>
@@ -191,7 +191,7 @@ export default function DoctorAvailabilityPage() {
         <Box sx={{ backgroundColor: C.paper, p: 6, borderRadius: '8px', border: `1px solid ${C.border}`, textAlign: 'center' }}>
           <EventAvailableIcon sx={{ fontSize: 48, color: '#cbd5e1', mb: 2 }} />
           <Typography sx={{ color: C.slate, mb: 2 }}>No availability schedule set up yet.</Typography>
-          <Button variant="outlined" onClick={openAdd} sx={{ borderColor: '#37352F', color: C.ink, borderRadius: 2 }}>Add your first schedule</Button>
+          <Button variant="outlined" onClick={openAdd} sx={{ borderColor: C.border, color: C.ink, borderRadius: 2 }}>Add your first schedule</Button>
         </Box>
       ) : (
         <Box sx={{ backgroundColor: C.paper, borderRadius: '8px', border: `1px solid ${C.border}`, boxShadow: 'none', overflow: 'hidden' }}>

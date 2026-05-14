@@ -136,7 +136,7 @@ export default function DoctorSlotsPage() {
                 </TextField>
               )}
               <Button type="submit" variant="contained" disabled={generating}
-                sx={{ mt: 1, py: 1.25, backgroundColor: '#1a365d', '&:hover': { backgroundColor: '#37352F' }, borderRadius: '6px', fontWeight: 600 }}>
+                sx={{ mt: 1, py: 1.25, backgroundColor: C.blue, '&:hover': { backgroundColor: C.blueDark }, borderRadius: '6px', fontWeight: 600 }}>
                 {generating ? 'Generating…' : 'Generate Slots'}
               </Button>
             </Box>
