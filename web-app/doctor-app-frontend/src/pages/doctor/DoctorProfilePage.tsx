@@ -1,7 +1,7 @@
 import { C } from '../../styles/theme';
 import { useEffect, useState, type FormEvent } from 'react';
 import {
-  Box, Button, TextField, Typography, Switch, FormControlLabel,
+  Box, Button, TextField, Typography,
   CircularProgress, Alert, Grid, Avatar, Divider,
 } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
@@ -101,17 +101,19 @@ export default function DoctorProfilePage() {
                 <Typography sx={{ fontWeight: 700, fontSize: '1.125rem', color: C.ink, fontFamily: 'inherit' }}>{displayName || '—'}</Typography>
                 <Typography sx={{ fontSize: '0.8125rem', color: C.slate, mb: 2 }}>{profile?.email}</Typography>
                 <Divider sx={{ mb: 2 }} />
+                {/* Availability toggle */}
                 <Box
                   onClick={() => setIsAvailable(v => !v)}
                   sx={{
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                    px: 1.5, py: 1.25, borderRadius: '8px', cursor: 'pointer',
+                    gap: 1.5, px: 1.75, py: 1.25, borderRadius: '8px', cursor: 'pointer',
                     backgroundColor: isAvailable ? C.greenBg : C.borderSub,
-                    border: `1px solid ${isAvailable ? C.green + '30' : C.border}`,
-                    transition: 'all 0.15s',
+                    border: `1px solid ${isAvailable ? '#86EFAC' : C.border}`,
+                    transition: 'background-color 0.2s, border-color 0.2s',
+                    userSelect: 'none',
                   }}
                 >
-                  <Box>
+                  <Box sx={{ textAlign: 'left' }}>
                     <Typography sx={{ fontSize: '0.8125rem', fontWeight: 700, color: isAvailable ? C.green : C.slate, lineHeight: 1.2 }}>
                       {isAvailable ? 'Accepting patients' : 'Not available'}
                     </Typography>
@@ -119,13 +121,20 @@ export default function DoctorProfilePage() {
                       {isAvailable ? 'Visible to new patients' : 'Hidden from bookings'}
                     </Typography>
                   </Box>
-                  <Switch
-                    checked={isAvailable}
-                    onChange={(e) => { e.stopPropagation(); setIsAvailable(e.target.checked); }}
-                    onClick={(e) => e.stopPropagation()}
-                    size="small"
-                    sx={{ ml: 1, flexShrink: 0 }}
-                  />
+                  {/* Custom pill toggle */}
+                  <Box sx={{
+                    width: 42, height: 24, borderRadius: 12, flexShrink: 0,
+                    backgroundColor: isAvailable ? C.green : C.subtle,
+                    position: 'relative', transition: 'background-color 0.2s',
+                  }}>
+                    <Box sx={{
+                      position: 'absolute', top: 3, width: 18, height: 18,
+                      borderRadius: '50%', backgroundColor: '#fff',
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+                      left: isAvailable ? 21 : 3,
+                      transition: 'left 0.2s',
+                    }} />
+                  </Box>
                 </Box>
               </Box>
             </Grid>
