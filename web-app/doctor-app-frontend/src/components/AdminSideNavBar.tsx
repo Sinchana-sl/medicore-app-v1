@@ -1,51 +1,47 @@
 import { useState } from 'react';
 import { Box, Typography, Drawer, IconButton } from '@mui/material';
-import GridViewIcon from '@mui/icons-material/GridViewRounded';
+import DashboardIcon from '@mui/icons-material/GridViewRounded';
+import PeopleIcon from '@mui/icons-material/PeopleOutlineRounded';
+import DoctorIcon from '@mui/icons-material/LocalHospitalOutlined';
+import ClinicIcon from '@mui/icons-material/MapsHomeWorkOutlined';
 import CalendarIcon from '@mui/icons-material/CalendarMonthOutlined';
-import SparkleIcon from '@mui/icons-material/AutoAwesomeOutlined';
-import ChatIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
-import FolderIcon from '@mui/icons-material/FolderOpenOutlined';
-import SettingsIcon from '@mui/icons-material/SettingsOutlined';
+import PaymentsIcon from '@mui/icons-material/PaymentsOutlined';
+import HelpIcon from '@mui/icons-material/HelpOutlineRounded';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { C } from '../styles/theme';
 import BrandLogo from './BrandLogo';
 
-interface NavGroup {
-  section?: string;
-  items: { label: string; icon: React.ReactNode; path: string | null; id?: string }[];
-}
+interface NavItem { label: string; icon: React.ReactNode; path: string; }
+interface NavGroup { section?: string; items: NavItem[]; }
 
 const GROUPS: NavGroup[] = [
   {
     items: [
-      { label: 'Dashboard',    icon: <GridViewIcon sx={{ fontSize: 15 }} />, path: '/dashboard' },
-      { label: 'Appointments', icon: <CalendarIcon sx={{ fontSize: 15 }} />, path: '/appointments' },
+      { label: 'Dashboard',    icon: <DashboardIcon sx={{ fontSize: 15 }} />, path: '/admin' },
     ],
   },
   {
-    section: 'Tools',
+    section: 'Management',
     items: [
-      { label: 'AI Assistant', icon: <SparkleIcon sx={{ fontSize: 15 }} />, path: null, id: 'chat' },
-      { label: 'Messages',     icon: <ChatIcon    sx={{ fontSize: 15 }} />, path: '/chat' },
-      { label: 'Reports',      icon: <FolderIcon  sx={{ fontSize: 15 }} />, path: '/reports' },
+      { label: 'Users',        icon: <PeopleIcon   sx={{ fontSize: 15 }} />, path: '/admin/users' },
+      { label: 'Doctors',      icon: <DoctorIcon   sx={{ fontSize: 15 }} />, path: '/admin/doctors' },
+      { label: 'Clinics',      icon: <ClinicIcon   sx={{ fontSize: 15 }} />, path: '/admin/clinics' },
+      { label: 'Appointments', icon: <CalendarIcon sx={{ fontSize: 15 }} />, path: '/admin/appointments' },
     ],
   },
   {
-    section: 'Account',
+    section: 'Finance',
     items: [
-      { label: 'Settings', icon: <SettingsIcon sx={{ fontSize: 15 }} />, path: '/settings' },
+      { label: 'Revenue',      icon: <PaymentsIcon sx={{ fontSize: 15 }} />, path: '/admin/revenue' },
     ],
   },
 ];
 
-interface Props {
-  onChatClick?: () => void;
-  chatActive?: boolean;
-}
-
-function NavItem({ label, icon, active, onClick }: { label: string; icon: React.ReactNode; active: boolean; onClick: () => void }) {
+function NavItem({ label, icon, active, onClick }: {
+  label: string; icon: React.ReactNode; active: boolean; onClick: () => void;
+}) {
   return (
     <Box
       component="button"
@@ -58,32 +54,28 @@ function NavItem({ label, icon, active, onClick }: { label: string; icon: React.
         backgroundColor: active ? C.sidebarActive : 'transparent',
         color: active ? C.sidebarActiveText : C.sidebarText,
         transition: 'background-color 0.1s ease, color 0.1s ease',
-        '&:hover': {
-          backgroundColor: C.sidebarHover,
-          color: C.sidebarActiveText,
-        },
+        '&:hover': { backgroundColor: C.sidebarHover, color: C.sidebarActiveText },
         flexShrink: 0,
       }}
     >
       <Box sx={{ flexShrink: 0, display: 'flex', color: 'inherit' }}>{icon}</Box>
-      <Typography sx={{
-        fontSize: '0.8125rem', fontWeight: active ? 500 : 400,
-        color: 'inherit', lineHeight: 1,
-      }}>
+      <Typography sx={{ fontSize: '0.8125rem', fontWeight: active ? 500 : 400, color: 'inherit', lineHeight: 1 }}>
         {label}
       </Typography>
     </Box>
   );
 }
 
-export default function SideNavBar({ onChatClick, chatActive = false }: Props) {
+export default function AdminSideNavBar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const isActive = (path: string) =>
+    path === '/admin' ? pathname === '/admin' : pathname.startsWith(path);
+
   const navContent = (onItemClick?: () => void) => (
     <>
-      {/* Logo */}
       <Box sx={{
         height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: 2,
         borderBottom: `1px solid ${C.sidebarBorder}`, flexShrink: 0,
@@ -96,8 +88,20 @@ export default function SideNavBar({ onChatClick, chatActive = false }: Props) {
         )}
       </Box>
 
-      {/* Nav groups */}
-      <Box sx={{ flex: 1, overflowY: 'auto', px: 1, py: 1.5, display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ px: 1.5, pt: 1.5, pb: 0.5 }}>
+        <Box sx={{
+          px: 1, py: 0.5, borderRadius: '4px',
+          backgroundColor: '#8b5cf618',
+          display: 'inline-flex', alignItems: 'center', gap: 0.5,
+        }}>
+          <Box sx={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#8b5cf6' }} />
+          <Typography sx={{ fontSize: '0.625rem', fontWeight: 700, color: '#8b5cf6', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+            Admin Panel
+          </Typography>
+        </Box>
+      </Box>
+
+      <Box sx={{ flex: 1, overflowY: 'auto', px: 1, py: 0.5, display: 'flex', flexDirection: 'column' }}>
         {GROUPS.map((group, gi) => (
           <Box key={gi} sx={{ mb: 0.5 }}>
             {group.section && (
@@ -110,33 +114,30 @@ export default function SideNavBar({ onChatClick, chatActive = false }: Props) {
               </Typography>
             )}
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.125 }}>
-              {group.items.map(({ label, icon, path, id }) => {
-                const active = id === 'chat'
-                  ? chatActive
-                  : (path ? (pathname === path || (pathname.startsWith(path) && path !== '/dashboard')) : false);
-                return (
-                  <NavItem
-                    key={label} label={label} icon={icon} active={active}
-                    onClick={() => {
-                      onItemClick?.();
-                      if (id === 'chat') { if (onChatClick) onChatClick(); else navigate('/dashboard', { state: { openChat: true } }); }
-                      else if (path) navigate(path);
-                    }}
-                  />
-                );
-              })}
+              {group.items.map(({ label, icon, path }) => (
+                <NavItem
+                  key={label} label={label} icon={icon} active={isActive(path)}
+                  onClick={() => { onItemClick?.(); navigate(path); }}
+                />
+              ))}
             </Box>
           </Box>
         ))}
       </Box>
 
-      {/* Footer */}
       <Box sx={{ px: 1, py: 1.25, borderTop: `1px solid ${C.sidebarBorder}`, flexShrink: 0 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, px: 1.25, py: 0.75, borderRadius: '4px' }}>
-          <Box sx={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#22C55E', flexShrink: 0 }} />
-          <Typography sx={{ fontSize: '0.6875rem', color: C.muted, fontWeight: 400 }}>
-            All systems operational
-          </Typography>
+        <Box
+          component="button"
+          sx={{
+            display: 'flex', alignItems: 'center', gap: 1.5,
+            width: '100%', height: 30, px: 1.25,
+            border: 'none', cursor: 'pointer', borderRadius: '4px',
+            backgroundColor: 'transparent', color: C.muted,
+            '&:hover': { backgroundColor: C.sidebarHover, color: C.sidebarActiveText },
+          }}
+        >
+          <HelpIcon sx={{ fontSize: 15 }} />
+          <Typography sx={{ fontSize: '0.8125rem', fontWeight: 400 }}>Help & support</Typography>
         </Box>
       </Box>
     </>
@@ -144,7 +145,6 @@ export default function SideNavBar({ onChatClick, chatActive = false }: Props) {
 
   return (
     <>
-      {/* Hamburger button — mobile only */}
       <IconButton
         onClick={() => setMobileOpen(true)}
         sx={{
@@ -160,7 +160,6 @@ export default function SideNavBar({ onChatClick, chatActive = false }: Props) {
         <MenuIcon sx={{ fontSize: 20 }} />
       </IconButton>
 
-      {/* Mobile drawer */}
       <Drawer
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
@@ -177,7 +176,6 @@ export default function SideNavBar({ onChatClick, chatActive = false }: Props) {
         {navContent(() => setMobileOpen(false))}
       </Drawer>
 
-      {/* Desktop sidebar */}
       <Box
         component="nav"
         sx={{

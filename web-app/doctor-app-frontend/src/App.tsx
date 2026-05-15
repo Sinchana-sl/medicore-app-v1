@@ -10,6 +10,7 @@ import PatientDashboard from './pages/PatientDashboard';
 import PatientAppointmentsPage from './pages/PatientAppointmentsPage';
 import PatientSettingsPage from './pages/PatientSettingsPage';
 import PatientChatPage from './pages/PatientChatPage';
+import PatientReportsPage from './pages/PatientReportsPage';
 import DoctorDashboard from './pages/DoctorDashboard';
 import DoctorProfilePage from './pages/doctor/DoctorProfilePage';
 import DoctorSchedulePage from './pages/doctor/DoctorSchedulePage';
@@ -18,6 +19,12 @@ import DoctorChatPage from './pages/doctor/DoctorChatPage';
 import DoctorAppointmentsPage from './pages/doctor/DoctorAppointmentsPage';
 import DoctorAvailabilityPage from './pages/doctor/DoctorAvailabilityPage';
 import DoctorSlotsPage from './pages/doctor/DoctorSlotsPage';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminUsersPage from './pages/admin/AdminUsersPage';
+import AdminDoctorsPage from './pages/admin/AdminDoctorsPage';
+import AdminClinicsPage from './pages/admin/AdminClinicsPage';
+import AdminAppointmentsPage from './pages/admin/AdminAppointmentsPage';
+import AdminRevenuePage from './pages/admin/AdminRevenuePage';
 
 function DoctorRoutes() {
   return (
@@ -40,7 +47,16 @@ export default function App() {
             <Route path="/dashboard"    element={<PatientDashboard />} />
             <Route path="/appointments" element={<PatientAppointmentsPage />} />
             <Route path="/settings"     element={<PatientSettingsPage />} />
-            <Route path="/chat"         element={<PatientChatPage />} />
+            <Route path="/chat"          element={<PatientChatPage />} />
+            <Route path="/reports"      element={<PatientReportsPage />} />
+
+            {/* Admin routes */}
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/users" element={<AdminUsersPage />} />
+            <Route path="/admin/doctors" element={<AdminDoctorsPage />} />
+            <Route path="/admin/clinics" element={<AdminClinicsPage />} />
+            <Route path="/admin/appointments" element={<AdminAppointmentsPage />} />
+            <Route path="/admin/revenue" element={<AdminRevenuePage />} />
 
             {/* All doctor routes share the DoctorProvider context */}
             <Route element={<DoctorRoutes />}>

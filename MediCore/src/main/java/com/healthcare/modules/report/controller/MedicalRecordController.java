@@ -11,6 +11,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 import java.util.List;
 
 @RestController
@@ -32,5 +34,13 @@ public class MedicalRecordController {
             @Valid @RequestBody CreateMedicalRecordRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(medicalRecordService.createRecord(userDetails.getUsername(), request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRecord(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @PathVariable UUID id) {
+        medicalRecordService.deleteRecord(userDetails.getUsername(), id);
+        return ResponseEntity.noContent().build();
     }
 }

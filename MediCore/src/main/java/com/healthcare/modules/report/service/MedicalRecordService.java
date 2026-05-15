@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,6 +53,17 @@ public class MedicalRecordService {
                 .build();
 
         return toResponse(recordRepository.save(record));
+    }
+
+    @Transactional
+    public void deleteRecord(String email, UUID recordId) {
+        User user = getUser(email);
+        AppMedicalRecord record = recordRepository.findById(recordId)
+                .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Record not found"));
+        if (!record.getPatientId().equals(user.getId())) {
+            throw new org.springframework.security.access.AccessDeniedException("Access denied");
+        }
+        recordRepository.delete(record);
     }
 
     private User getUser(String email) {

@@ -468,7 +468,7 @@ export default function PatientDashboard() {
       />
       <Box sx={{ display: 'flex', pt: '52px' }}>
         <SideNavBar onChatClick={() => setChatOpen(o => !o)} chatActive={chatOpen} />
-        <Box component="main" sx={{ ml: '240px', flex: 1, display: 'flex', flexDirection: 'column', backgroundColor: C.paper }}>
+        <Box component="main" sx={{ ml: { xs: 0, md: '240px' }, flex: 1, display: 'flex', flexDirection: 'column', backgroundColor: C.paper }}>
           {/* Full chat view */}
           {chatOpen ? (
             <Box sx={{ flex: 1, height: 'calc(100vh - 52px)', display: 'flex', flexDirection: 'column', backgroundColor: C.surface }}>

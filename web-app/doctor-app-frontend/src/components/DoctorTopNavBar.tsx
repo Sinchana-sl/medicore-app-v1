@@ -34,14 +34,14 @@ export default function DoctorTopNavBar({ displayName = '', email = '', onProfil
       position="fixed"
       elevation={0}
       sx={{
-        left: 240, width: 'calc(100% - 240px)',
+        left: { xs: 0, md: 240 }, width: { xs: '100%', md: 'calc(100% - 240px)' },
         backgroundColor: C.paper,
         borderBottom: `1px solid ${C.border}`,
         boxShadow: 'none',
         zIndex: 1100,
       }}
     >
-      <Toolbar sx={{ minHeight: '52px !important', px: 3, gap: 2, justifyContent: 'space-between' }}>
+      <Toolbar sx={{ minHeight: '52px !important', px: { xs: 7, md: 3 }, gap: 2, justifyContent: 'space-between' }}>
         <SearchBox>
           <SearchIcon sx={{ fontSize: 14, color: C.muted, flexShrink: 0 }} />
           <InputBase

@@ -151,7 +151,7 @@ export default function PatientAppointmentsPage() {
       <Box sx={{ display: 'flex' }}>
         <SideNavBar />
 
-        <Box component="main" sx={{ ml: '240px', flex: 1, mt: '52px', p: { xs: 3, md: 4 } }}>
+        <Box component="main" sx={{ ml: { xs: 0, md: '240px' }, flex: 1, mt: '52px', p: { xs: 3, md: 4 } }}>
           <Box sx={{ maxWidth: 1280, mx: 'auto' }}>
 
             {/* ── Page header ── */}

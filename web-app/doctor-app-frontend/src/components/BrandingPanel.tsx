@@ -1,5 +1,4 @@
 import { Box, Typography } from '@mui/material';
-import { C } from '../styles/theme';
 import BrandLogo from './BrandLogo';
 
 const QUOTES = [
@@ -9,10 +8,10 @@ const QUOTES = [
 ];
 const quote = QUOTES[new Date().getDate() % QUOTES.length];
 
-const stats = [
-  { label: 'Appointments booked', value: '50K+' },
-  { label: 'Verified providers',   value: '1.2K+' },
-  { label: 'Patient satisfaction', value: '98%' },
+const PERKS = [
+  { title: 'Smart scheduling', desc: 'AI fills your calendar automatically' },
+  { title: 'Unified records', desc: 'All patient data in one secure place' },
+  { title: 'Instant payments', desc: 'Razorpay-powered, zero friction' },
 ];
 
 export default function BrandingPanel() {
@@ -21,70 +20,90 @@ export default function BrandingPanel() {
       component="aside"
       sx={{
         display: { xs: 'none', md: 'flex' },
-        flex: '0 0 400px',
+        flex: '0 0 480px',
         flexDirection: 'column',
-        justifyContent: 'space-between',
-        p: 5,
+        p: '48px 52px',
         position: 'relative',
         overflow: 'hidden',
-        background: 'linear-gradient(155deg, #071A2E 0%, #0D2137 40%, #0A3040 70%, #071A2E 100%)',
+        background: '#08111F',
       }}
     >
-      {/* Glow accents */}
-      <Box sx={{ position: 'absolute', top: -80, right: -80, width: 300, height: 300, borderRadius: '50%', background: `radial-gradient(circle, rgba(13,148,136,0.15) 0%, transparent 65%)`, pointerEvents: 'none' }} />
-      <Box sx={{ position: 'absolute', bottom: -60, left: -60, width: 250, height: 250, borderRadius: '50%', background: `radial-gradient(circle, rgba(45,212,191,0.08) 0%, transparent 65%)`, pointerEvents: 'none' }} />
+      {/* Soft colour blobs */}
+      <Box sx={{ position: 'absolute', top: -140, right: -140, width: 440, height: 440, borderRadius: '50%', background: 'rgba(13,148,136,0.35)', filter: 'blur(110px)', pointerEvents: 'none' }} />
+      <Box sx={{ position: 'absolute', bottom: -100, left: -100, width: 400, height: 400, borderRadius: '50%', background: 'rgba(45,212,191,0.18)', filter: 'blur(100px)', pointerEvents: 'none' }} />
 
-      {/* Subtle dot grid */}
-      <Box sx={{
-        position: 'absolute', inset: 0, opacity: 0.04,
-        backgroundImage: 'radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px)',
-        backgroundSize: '28px 28px',
-        pointerEvents: 'none',
-      }} />
-
-      {/* Top — Logo */}
-      <Box sx={{ position: 'relative', zIndex: 1 }}>
-        <BrandLogo white />
-        <Box sx={{ mt: 1.5, display: 'inline-flex', alignItems: 'center', gap: 0.75, px: 1.25, py: 0.5, borderRadius: '20px', border: `1px solid rgba(45,212,191,0.25)`, backgroundColor: 'rgba(45,212,191,0.08)' }}>
-          <Box sx={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: C.sidebarActiveText }} />
-          <Typography sx={{ fontSize: '0.6875rem', fontWeight: 600, color: C.sidebarActiveText, letterSpacing: '0.04em' }}>
-            Healthcare Platform
-          </Typography>
+      {/* ── Logo ── */}
+      <Box sx={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 1.25 }}>
+        <Box sx={{
+          width: 34, height: 34, borderRadius: '9px',
+          background: 'linear-gradient(135deg, #0D9488, #0F766E)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          boxShadow: '0 0 20px rgba(13,148,136,0.5)',
+        }}>
+          <svg width="15" height="15" viewBox="0 0 14 14" fill="none">
+            <path d="M6 1H8V5H12V7H8V13H6V7H2V5H6V1Z" fill="white"/>
+          </svg>
         </Box>
-      </Box>
-
-      {/* Center — Quote */}
-      <Box sx={{ position: 'relative', zIndex: 1 }}>
-        <Box sx={{ width: 32, height: 3, borderRadius: 99, background: `linear-gradient(90deg, ${C.blue}, ${C.sidebarActiveText})`, mb: 2.5 }} />
-        <Typography sx={{ fontSize: '1.3125rem', fontWeight: 700, color: '#fff', lineHeight: 1.45, letterSpacing: '-0.02em', mb: 1.5 }}>
-          "{quote.q}"
-        </Typography>
-        <Typography sx={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.4)', fontWeight: 500 }}>
-          — {quote.a}
+        <Typography sx={{ fontWeight: 800, fontSize: '1rem', color: '#fff', letterSpacing: '-0.02em' }}>
+          MediCore
         </Typography>
       </Box>
 
-      {/* Bottom — Stats */}
-      <Box sx={{ position: 'relative', zIndex: 1 }}>
-        <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.07)', pt: 3, display: 'flex', gap: 0 }}>
-          {stats.map(({ label, value }, i) => (
-            <Box
-              key={label}
-              sx={{
-                flex: 1, pr: 2,
-                borderRight: i < stats.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none',
-                mr: i < stats.length - 1 ? 2 : 0,
-              }}
-            >
-              <Typography sx={{ fontSize: '1.125rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1 }}>
-                {value}
-              </Typography>
-              <Typography sx={{ fontSize: '0.6875rem', color: 'rgba(255,255,255,0.35)', mt: 0.5, fontWeight: 500 }}>
-                {label}
-              </Typography>
+      {/* ── Main copy ── */}
+      <Box sx={{ position: 'relative', zIndex: 1, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <Typography sx={{
+          fontSize: '0.75rem', fontWeight: 700, color: '#2DD4BF',
+          letterSpacing: '0.1em', textTransform: 'uppercase', mb: 2,
+        }}>
+          Join MediCore
+        </Typography>
+
+        <Typography sx={{
+          fontSize: '2.375rem', fontWeight: 900, color: '#fff',
+          lineHeight: 1.1, letterSpacing: '-0.045em', mb: 3,
+        }}>
+          Your practice,<br />
+          <Box component="span" sx={{ color: '#2DD4BF' }}>elevated.</Box>
+        </Typography>
+
+        <Typography sx={{ fontSize: '0.9375rem', color: 'rgba(255,255,255,0.38)', lineHeight: 1.75, mb: 5 }}>
+          Everything your clinic needs — from first appointment to final receipt.
+        </Typography>
+
+        {/* Perk list */}
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+          {PERKS.map(({ title, desc }, i) => (
+            <Box key={i} sx={{ display: 'flex', gap: 2, alignItems: 'flex-start' }}>
+              <Box sx={{
+                width: 32, height: 32, borderRadius: '8px', flexShrink: 0, mt: 0.25,
+                background: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(255,255,255,0.09)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <Typography sx={{ fontSize: '0.75rem', fontWeight: 800, color: '#2DD4BF' }}>{i + 1}</Typography>
+              </Box>
+              <Box>
+                <Typography sx={{ fontSize: '0.875rem', fontWeight: 700, color: '#fff', mb: 0.25 }}>{title}</Typography>
+                <Typography sx={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.35)', lineHeight: 1.5 }}>{desc}</Typography>
+              </Box>
             </Box>
           ))}
         </Box>
+      </Box>
+
+      {/* ── Quote ── */}
+      <Box sx={{
+        position: 'relative', zIndex: 1,
+        p: 2.5, borderRadius: '14px',
+        background: 'rgba(255,255,255,0.04)',
+        border: '1px solid rgba(255,255,255,0.07)',
+      }}>
+        <Typography sx={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.65, fontStyle: 'italic', mb: 1.25 }}>
+          "{quote.q}"
+        </Typography>
+        <Typography sx={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.3)', fontWeight: 600 }}>
+          — {quote.a}
+        </Typography>
       </Box>
     </Box>
   );

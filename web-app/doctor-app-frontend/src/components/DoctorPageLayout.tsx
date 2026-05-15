@@ -25,7 +25,7 @@ export default function DoctorPageLayout({ children, title, subtitle, fab, actio
     <Box sx={{ backgroundColor: C.paper, minHeight: '100vh', display: 'flex' }}>
       <DoctorSideNavBar />
 
-      <Box sx={{ flex: 1, ml: { md: '240px' }, display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <Box sx={{ flex: 1, ml: { xs: 0, md: '240px' }, display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <DoctorTopNavBar
           displayName={doctorName}
           email={profile?.email}

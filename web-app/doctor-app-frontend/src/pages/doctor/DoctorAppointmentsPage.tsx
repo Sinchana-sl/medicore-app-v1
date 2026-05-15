@@ -3,11 +3,17 @@ import { useEffect, useState, useMemo } from 'react';
 import {
   Box, Typography, Chip, Button, CircularProgress,
   TextField, MenuItem, Grid, InputAdornment, Tabs, Tab,
+  Dialog, DialogTitle, DialogContent, DialogActions, IconButton, Divider,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import CloseIcon from '@mui/icons-material/Close';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutlined';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
+import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined';
 import DoctorPageLayout from '../../components/DoctorPageLayout';
 import { getDoctorAllAppointments, completeAppointment, type DoctorAppointment } from '../../services/doctorService';
 import { useToast } from '../../contexts/ToastContext';
@@ -37,9 +43,113 @@ const STATUS_STYLE: Record<string, { label: string; bg: string; color: string }>
   CANCELLED: { label: 'Cancelled', bg: C.redBg, color: '#dc2626' },
 };
 
+function ConsultationDialog({ appt, onClose, onCompleted }: {
+  appt: DoctorAppointment;
+  onClose: () => void;
+  onCompleted: (updated: DoctorAppointment) => void;
+}) {
+  const toast = useToast();
+  const [completing, setCompleting] = useState(false);
+  const [notes, setNotes] = useState('');
+
+  const handleComplete = async () => {
+    setCompleting(true);
+    try {
+      const updated = await completeAppointment(appt.id);
+      onCompleted(updated);
+      toast('Appointment marked as complete', 'success');
+      onClose();
+    } catch {
+      toast('Failed to update appointment', 'error');
+    } finally {
+      setCompleting(false);
+    }
+  };
+
+  return (
+    <Dialog open onClose={onClose} maxWidth="sm" fullWidth PaperProps={{ sx: { borderRadius: '12px', boxShadow: '0 20px 60px rgba(0,0,0,0.15)' } }}>
+      <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pb: 1.5, pt: 2.5, px: 3 }}>
+        <Box>
+          <Typography sx={{ fontSize: '1.125rem', fontWeight: 700, color: C.ink, fontFamily: 'inherit' }}>
+            Consultation
+          </Typography>
+          <Typography sx={{ fontSize: '0.8125rem', color: C.muted, mt: 0.25 }}>
+            {fmtDate(appt.appointmentDate)} · {appt.startTime}
+          </Typography>
+        </Box>
+        <IconButton onClick={onClose} size="small" sx={{ color: C.muted }}>
+          <CloseIcon sx={{ fontSize: 18 }} />
+        </IconButton>
+      </DialogTitle>
+      <Divider />
+      <DialogContent sx={{ px: 3, pt: 2.5, pb: 1 }}>
+        {/* Patient info */}
+        <Box sx={{ backgroundColor: C.surface, borderRadius: '8px', p: 2, mb: 2.5 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+            <PersonOutlineIcon sx={{ fontSize: '1rem', color: C.slate }} />
+            <Typography sx={{ fontSize: '0.9375rem', fontWeight: 700, color: C.ink, fontFamily: 'inherit' }}>
+              {appt.patientName || 'Patient'}
+            </Typography>
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.75 }}>
+            <EmailOutlinedIcon sx={{ fontSize: '0.875rem', color: C.muted }} />
+            <Typography sx={{ fontSize: '0.8125rem', color: C.slate }}>{appt.patientEmail}</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.75 }}>
+            <AccessTimeOutlinedIcon sx={{ fontSize: '0.875rem', color: C.muted }} />
+            <Typography sx={{ fontSize: '0.8125rem', color: C.slate }}>{appt.startTime}</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <VideocamOutlinedIcon sx={{ fontSize: '0.875rem', color: C.muted }} />
+            <Typography sx={{ fontSize: '0.8125rem', color: C.slate }}>{appt.consultationType.replace('_', ' ')}</Typography>
+          </Box>
+        </Box>
+
+        {/* Reason */}
+        {appt.reason && (
+          <Box sx={{ mb: 2.5 }}>
+            <Typography sx={{ fontSize: '0.75rem', fontWeight: 600, color: C.muted, textTransform: 'uppercase', letterSpacing: '0.05em', mb: 0.75 }}>
+              Reason for Visit
+            </Typography>
+            <Typography sx={{ fontSize: '0.875rem', color: C.ink }}>{appt.reason}</Typography>
+          </Box>
+        )}
+
+        {/* Notes */}
+        <Box>
+          <Typography sx={{ fontSize: '0.75rem', fontWeight: 600, color: C.muted, textTransform: 'uppercase', letterSpacing: '0.05em', mb: 0.75 }}>
+            Consultation Notes
+          </Typography>
+          <TextField
+            fullWidth multiline rows={4}
+            placeholder="Enter consultation notes, diagnosis, prescription…"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            sx={{ '& .MuiOutlinedInput-root': { borderRadius: '8px', fontSize: '0.875rem' } }}
+          />
+        </Box>
+      </DialogContent>
+      <DialogActions sx={{ px: 3, pb: 2.5, pt: 1.5, gap: 1 }}>
+        <Button onClick={onClose} variant="outlined" sx={{ borderColor: C.border, color: C.slate, borderRadius: '8px', textTransform: 'none', fontWeight: 600 }}>
+          Close
+        </Button>
+        <Button
+          variant="contained"
+          onClick={handleComplete}
+          disabled={completing}
+          sx={{ backgroundColor: C.green, borderRadius: '8px', textTransform: 'none', fontWeight: 600, px: 3, '&:hover': { backgroundColor: '#15803d' } }}
+        >
+          {completing ? <CircularProgress size={16} sx={{ color: '#fff' }} /> : 'Mark Complete'}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
 function AppointmentRow({ appt, onCompleted }: { appt: DoctorAppointment; onCompleted: (updated: DoctorAppointment) => void }) {
   const toast = useToast();
   const [completing, setCompleting] = useState(false);
+  const [consultationOpen, setConsultationOpen] = useState(false);
   const s = STATUS_STYLE[appt.status.toUpperCase()] ?? { label: appt.status, bg: '#F1F0EF', color: C.slate };
   const isActive = !['COMPLETED', 'CANCELLED'].includes(appt.status.toUpperCase());
 
@@ -116,6 +226,7 @@ function AppointmentRow({ appt, onCompleted }: { appt: DoctorAppointment; onComp
               <Button
                 variant="contained"
                 size="small"
+                onClick={() => setConsultationOpen(true)}
                 sx={{ backgroundColor: C.blue, borderRadius: '6px', fontSize: '0.8125rem', px: 2.5, py: 0.75, '&:hover': { backgroundColor: C.blueDark } }}
               >
                 Start Consultation
@@ -130,6 +241,13 @@ function AppointmentRow({ appt, onCompleted }: { appt: DoctorAppointment; onComp
                 {completing ? <CircularProgress size={14} sx={{ color: C.green }} /> : 'Mark Complete'}
               </Button>
             </Box>
+          )}
+          {consultationOpen && (
+            <ConsultationDialog
+              appt={appt}
+              onClose={() => setConsultationOpen(false)}
+              onCompleted={(updated) => { onCompleted(updated); setConsultationOpen(false); }}
+            />
           )}
         </Box>
       </Box>

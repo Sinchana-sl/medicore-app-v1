@@ -199,7 +199,7 @@ export default function PatientChatPage() {
         <Box
           component="main"
           sx={{
-            ml: '240px',
+            ml: { xs: 0, md: '240px' },
             mt: '52px',
             flex: 1,
             display: 'flex',

@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AppointmentRepository extends JpaRepository<AppAppointment, UUID> {
+    long countByStatus(String status);
+    List<AppAppointment> findTop10ByOrderByCreatedAtDesc();
+    List<AppAppointment> findAllByOrderByCreatedAtDesc();
+    List<AppAppointment> findByStatusOrderByCreatedAtDesc(String status);
     List<AppAppointment> findByPatientIdOrderByAppointmentDateAscStartTimeAsc(UUID patientId);
 
     @Query("SELECT a FROM AppAppointment a WHERE a.doctorId = :doctorId ORDER BY a.appointmentDate ASC, a.startTime ASC")

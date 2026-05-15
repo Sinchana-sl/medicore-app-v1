@@ -1,4 +1,5 @@
-import { Box, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Box, Typography, Drawer, IconButton } from '@mui/material';
 import GridViewIcon from '@mui/icons-material/GridViewRounded';
 import CalendarIcon from '@mui/icons-material/CalendarMonthOutlined';
 import PersonIcon from '@mui/icons-material/PersonOutlineRounded';
@@ -8,6 +9,8 @@ import ChatIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
 import ClockIcon from '@mui/icons-material/AccessTimeOutlined';
 import SlotIcon from '@mui/icons-material/ViewWeekOutlined';
 import HelpIcon from '@mui/icons-material/HelpOutlineRounded';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { C } from '../styles/theme';
 import BrandLogo from './BrandLogo';
@@ -81,25 +84,21 @@ function NavItem({ label, icon, active, onClick }: { label: string; icon: React.
 export default function DoctorSideNavBar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  return (
-    <Box
-      component="nav"
-      sx={{
-        width: 240, flexShrink: 0, position: 'fixed',
-        top: 0, left: 0, height: '100vh',
-        backgroundColor: C.sidebarBg,
-        borderRight: `1px solid ${C.sidebarBorder}`,
-        display: { xs: 'none', md: 'flex' }, flexDirection: 'column',
-        zIndex: 1200,
-      }}
-    >
+  const navContent = (onItemClick?: () => void) => (
+    <>
       {/* Logo */}
       <Box sx={{
-        height: 52, display: 'flex', alignItems: 'center', px: 2,
+        height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: 2,
         borderBottom: `1px solid ${C.sidebarBorder}`, flexShrink: 0,
       }}>
         <BrandLogo />
+        {onItemClick && (
+          <IconButton size="small" onClick={onItemClick} sx={{ color: C.muted }}>
+            <CloseIcon sx={{ fontSize: 18 }} />
+          </IconButton>
+        )}
       </Box>
 
       {/* Nav groups */}
@@ -119,7 +118,10 @@ export default function DoctorSideNavBar() {
               {group.items.map(({ label, icon, path }) => {
                 const active = pathname === path || (pathname.startsWith(path) && path !== '/doctor-dashboard');
                 return (
-                  <NavItem key={label} label={label} icon={icon} active={active} onClick={() => navigate(path)} />
+                  <NavItem
+                    key={label} label={label} icon={icon} active={active}
+                    onClick={() => { onItemClick?.(); navigate(path); }}
+                  />
                 );
               })}
             </Box>
@@ -143,6 +145,58 @@ export default function DoctorSideNavBar() {
           <Typography sx={{ fontSize: '0.8125rem', fontWeight: 400 }}>Help & support</Typography>
         </Box>
       </Box>
-    </Box>
+    </>
+  );
+
+  return (
+    <>
+      {/* Hamburger button — mobile only */}
+      <IconButton
+        onClick={() => setMobileOpen(true)}
+        sx={{
+          display: { xs: 'flex', md: 'none' },
+          position: 'fixed', top: 10, left: 12,
+          zIndex: 1300, backgroundColor: C.paper,
+          border: `1px solid ${C.border}`,
+          borderRadius: '8px', width: 36, height: 36,
+          color: C.ink, boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+          '&:hover': { backgroundColor: C.surface },
+        }}
+      >
+        <MenuIcon sx={{ fontSize: 20 }} />
+      </IconButton>
+
+      {/* Mobile drawer */}
+      <Drawer
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        ModalProps={{ keepMounted: true }}
+        sx={{
+          display: { xs: 'block', md: 'none' },
+          '& .MuiDrawer-paper': {
+            width: 240, backgroundColor: C.sidebarBg,
+            borderRight: `1px solid ${C.sidebarBorder}`,
+            display: 'flex', flexDirection: 'column',
+          },
+        }}
+      >
+        {navContent(() => setMobileOpen(false))}
+      </Drawer>
+
+      {/* Desktop sidebar */}
+      <Box
+        component="nav"
+        sx={{
+          width: 240, flexShrink: 0, position: 'fixed',
+          top: 0, left: 0, height: '100vh',
+          backgroundColor: C.sidebarBg,
+          borderRight: `1px solid ${C.sidebarBorder}`,
+          display: { xs: 'none', md: 'flex' }, flexDirection: 'column',
+          zIndex: 1200,
+        }}
+      >
+        {navContent()}
+      </Box>
+    </>
   );
 }

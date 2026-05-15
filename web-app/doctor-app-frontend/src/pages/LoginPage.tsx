@@ -8,7 +8,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import TagIcon from '@mui/icons-material/Tag';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { sendOtp, verifyOtp } from '../services/authService';
@@ -18,16 +18,10 @@ import { C } from '../styles/theme';
 type LoginTab = 'password' | 'otp';
 type OtpStep = 'email' | 'code';
 
-const FEATURES = [
-  'AI-powered appointment scheduling',
-  'Real-time patient queue management',
-  'Secure medical records & analytics',
-];
-
 const STATS = [
-  { value: '50K+',  label: 'Appointments' },
+  { value: '50K+', label: 'Appointments' },
   { value: '1.2K+', label: 'Providers' },
-  { value: '98%',   label: 'Satisfaction' },
+  { value: '98%', label: 'Satisfaction' },
 ];
 
 export default function LoginPage() {
@@ -97,65 +91,27 @@ export default function LoginPage() {
       <Box
         sx={{
           display: { xs: 'none', lg: 'flex' },
-          flex: '0 0 480px',
+          flex: '0 0 500px',
           flexDirection: 'column',
-          justifyContent: 'space-between',
-          p: '52px 56px',
+          p: '48px 56px',
           position: 'relative',
           overflow: 'hidden',
-          background: 'linear-gradient(145deg, #021F1C 0%, #032B27 20%, #054F49 55%, #076960 80%, #0D9488 100%)',
+          background: '#08111F',
         }}
       >
-        {/* Background: dot grid */}
-        <Box sx={{
-          position: 'absolute', inset: 0, opacity: 0.055,
-          backgroundImage: 'radial-gradient(rgba(255,255,255,0.9) 1px, transparent 1px)',
-          backgroundSize: '26px 26px',
-          pointerEvents: 'none',
-        }} />
+        {/* Soft colour blobs */}
+        <Box sx={{ position: 'absolute', top: -140, right: -140, width: 440, height: 440, borderRadius: '50%', background: 'rgba(13,148,136,0.35)', filter: 'blur(110px)', pointerEvents: 'none' }} />
+        <Box sx={{ position: 'absolute', bottom: -100, left: -100, width: 400, height: 400, borderRadius: '50%', background: 'rgba(45,212,191,0.18)', filter: 'blur(100px)', pointerEvents: 'none' }} />
 
-        {/* Background: large circle top-right */}
-        <Box sx={{
-          position: 'absolute', top: -120, right: -120,
-          width: 420, height: 420, borderRadius: '50%',
-          border: '1.5px solid rgba(255,255,255,0.07)',
-          pointerEvents: 'none',
-        }} />
-        <Box sx={{
-          position: 'absolute', top: -30, right: -30,
-          width: 220, height: 220, borderRadius: '50%',
-          border: '1px solid rgba(255,255,255,0.05)',
-          pointerEvents: 'none',
-        }} />
-
-        {/* Background: large medical cross bottom-left (decoration) */}
-        <Box sx={{
-          position: 'absolute', bottom: -80, left: -60,
-          width: 280, height: 280, opacity: 0.04, pointerEvents: 'none',
-        }}>
-          <svg viewBox="0 0 100 100" fill="white">
-            <path d="M38 0H62V38H100V62H62V100H38V62H0V38H38Z"/>
-          </svg>
-        </Box>
-
-        {/* Background: glow spot */}
-        <Box sx={{
-          position: 'absolute', bottom: '25%', right: '10%',
-          width: 280, height: 280, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(45,212,191,0.1) 0%, transparent 65%)',
-          pointerEvents: 'none',
-        }} />
-
-        {/* Logo */}
+        {/* ── Logo ── */}
         <Box sx={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 1.25 }}>
           <Box sx={{
-            width: 36, height: 36, borderRadius: '10px',
-            background: 'rgba(255,255,255,0.15)',
-            backdropFilter: 'blur(8px)',
-            border: '1px solid rgba(255,255,255,0.2)',
+            width: 34, height: 34, borderRadius: '9px',
+            background: 'linear-gradient(135deg, #0D9488, #0F766E)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: '0 0 20px rgba(13,148,136,0.5)',
           }}>
-            <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
+            <svg width="15" height="15" viewBox="0 0 14 14" fill="none">
               <path d="M6 1H8V5H12V7H8V13H6V7H2V5H6V1Z" fill="white"/>
             </svg>
           </Box>
@@ -164,88 +120,82 @@ export default function LoginPage() {
           </Typography>
         </Box>
 
-        {/* Main content */}
-        <Box sx={{ position: 'relative', zIndex: 1 }}>
-          {/* Accent line */}
-          <Box sx={{ width: 40, height: 3, borderRadius: 99, background: `linear-gradient(90deg, ${C.blueBright}, ${C.blue})`, mb: 3 }} />
+        {/* ── Main copy ── */}
+        <Box sx={{ position: 'relative', zIndex: 1, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <Typography sx={{
+            fontSize: '0.75rem', fontWeight: 700, color: '#2DD4BF',
+            letterSpacing: '0.1em', textTransform: 'uppercase', mb: 2,
+          }}>
+            Healthcare Platform
+          </Typography>
 
           <Typography sx={{
-            fontSize: '2.25rem', fontWeight: 800, color: '#fff',
-            lineHeight: 1.15, letterSpacing: '-0.035em', mb: 2,
+            fontSize: '2.75rem', fontWeight: 900, color: '#fff',
+            lineHeight: 1.08, letterSpacing: '-0.05em', mb: 3,
           }}>
-            Healthcare<br/>
-            management<br/>
-            <Box component="span" sx={{ color: C.blueBright }}>made simple.</Box>
+            Better care,<br />
+            every single<br />
+            <Box component="span" sx={{ color: '#2DD4BF' }}>day.</Box>
           </Typography>
 
-          <Typography sx={{ fontSize: '0.9375rem', color: 'rgba(255,255,255,0.5)', mb: 4, lineHeight: 1.7, maxWidth: 340 }}>
-            Everything your clinic needs to run smoothly — appointments, records, and AI — in one unified platform.
+          <Typography sx={{ fontSize: '1rem', color: 'rgba(255,255,255,0.4)', lineHeight: 1.75, maxWidth: 340 }}>
+            The all-in-one platform for appointments, records, payments, and AI-powered insights.
           </Typography>
 
-          {/* Feature bullets */}
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-            {FEATURES.map(f => (
-              <Box key={f} sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                <CheckCircleIcon sx={{ fontSize: 17, color: C.blueBright, flexShrink: 0 }} />
-                <Typography sx={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.65)', fontWeight: 500 }}>
-                  {f}
-                </Typography>
-              </Box>
-            ))}
-          </Box>
-        </Box>
+          {/* Divider */}
+          <Box sx={{ my: 4, width: 48, height: 2, borderRadius: 99, background: 'linear-gradient(90deg, #2DD4BF, transparent)' }} />
 
-        {/* Stats */}
-        <Box sx={{ position: 'relative', zIndex: 1 }}>
-          <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.08)', pt: 3, display: 'flex', gap: 0 }}>
-            {STATS.map(({ value, label }, i) => (
-              <Box key={label} sx={{
-                flex: 1,
-                borderRight: i < STATS.length - 1 ? '1px solid rgba(255,255,255,0.08)' : 'none',
-                pr: i < STATS.length - 1 ? 3 : 0,
-                mr: i < STATS.length - 1 ? 3 : 0,
-              }}>
-                <Typography sx={{ fontSize: '1.5rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1 }}>
+          {/* Stats */}
+          <Box sx={{ display: 'flex', gap: 4 }}>
+            {STATS.map(({ value, label }) => (
+              <Box key={label}>
+                <Typography sx={{ fontSize: '1.75rem', fontWeight: 900, color: '#fff', letterSpacing: '-0.04em', lineHeight: 1 }}>
                   {value}
                 </Typography>
-                <Typography sx={{ fontSize: '0.6875rem', color: 'rgba(255,255,255,0.35)', mt: 0.5, fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.07em' }}>
+                <Typography sx={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.35)', mt: 0.5, fontWeight: 500 }}>
                   {label}
                 </Typography>
               </Box>
             ))}
           </Box>
         </Box>
+
+        {/* ── Bottom label ── */}
+        <Box sx={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Box sx={{ width: 7, height: 7, borderRadius: '50%', background: '#2DD4BF', boxShadow: '0 0 8px #2DD4BF' }} />
+          <Typography sx={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.3)', fontWeight: 500 }}>
+            Trusted by 1,200+ healthcare providers
+          </Typography>
+        </Box>
       </Box>
 
       {/* ── RIGHT PANEL ─────────────────────────────────────── */}
-      <Box
-        sx={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          backgroundColor: C.paper,
-          position: 'relative',
-        }}
-      >
+      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', backgroundColor: '#FAFAF9' }}>
+
         {/* Top bar */}
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', px: { xs: 3, sm: 5 }, py: 2.5, borderBottom: `1px solid ${C.border}` }}>
+        <Box sx={{
+          display: 'flex', justifyContent: 'flex-end', alignItems: 'center',
+          px: { xs: 3, sm: 5 }, py: 2.5,
+          borderBottom: `1px solid ${C.border}`,
+          backgroundColor: '#fff',
+        }}>
           <Typography sx={{ fontSize: '0.8125rem', color: C.muted }}>
             Don&apos;t have an account?{' '}
             <Link component="button" onClick={() => navigate('/register')}
               sx={{ fontSize: '0.8125rem', fontWeight: 700, color: C.blue, background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
-              Sign up free
+              Sign up free →
             </Link>
           </Typography>
         </Box>
 
-        {/* Form area — centered */}
-        <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', px: { xs: 3, sm: 5, md: 6 }, py: 5 }}>
-          <Box sx={{ width: '100%', maxWidth: 420 }}>
+        {/* Form area */}
+        <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', px: { xs: 3, sm: 5, md: 6 }, py: 6 }}>
+          <Box sx={{ width: '100%', maxWidth: 440 }}>
 
             {/* Mobile logo */}
-            <Box sx={{ display: { xs: 'flex', lg: 'none' }, alignItems: 'center', gap: 1.25, mb: 4 }}>
-              <Box sx={{ width: 32, height: 32, borderRadius: '8px', background: `linear-gradient(135deg, ${C.blue}, ${C.blueDark})`, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 3px 10px ${C.blue}40` }}>
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <Box sx={{ display: { xs: 'flex', lg: 'none' }, alignItems: 'center', gap: 1.25, mb: 5 }}>
+              <Box sx={{ width: 36, height: 36, borderRadius: '10px', background: `linear-gradient(135deg, ${C.blue}, ${C.blueDark})`, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 4px 12px ${C.blue}40` }}>
+                <svg width="15" height="15" viewBox="0 0 14 14" fill="none">
                   <path d="M6 1H8V5H12V7H8V13H6V7H2V5H6V1Z" fill="white"/>
                 </svg>
               </Box>
@@ -253,56 +203,62 @@ export default function LoginPage() {
             </Box>
 
             {/* Heading */}
-            <Box sx={{ mb: 4 }}>
-              <Typography sx={{ fontSize: '1.75rem', fontWeight: 800, color: C.ink, letterSpacing: '-0.03em', lineHeight: 1.2, mb: 0.75 }}>
+            <Box sx={{ mb: 5 }}>
+              <Typography sx={{ fontSize: '2.25rem', fontWeight: 800, color: C.ink, letterSpacing: '-0.04em', lineHeight: 1.1, mb: 1 }}>
                 Welcome back
               </Typography>
-              <Typography sx={{ fontSize: '0.9rem', color: C.muted, lineHeight: 1.6 }}>
-                Sign in to access your MediCore portal.
+              <Typography sx={{ fontSize: '0.9375rem', color: C.slate, lineHeight: 1.6 }}>
+                Sign in to your MediCore account.
               </Typography>
             </Box>
 
-            {/* Tab switcher */}
-            <Box sx={{ display: 'flex', gap: 0, mb: 3.5, borderBottom: `2px solid ${C.border}` }}>
+            {/* Tab switcher — segmented control */}
+            <Box sx={{
+              display: 'flex', mb: 4,
+              p: '5px',
+              backgroundColor: C.surface,
+              borderRadius: '12px',
+              border: `1px solid ${C.border}`,
+            }}>
               {(['password', 'otp'] as const).map((t) => (
                 <Box
                   key={t}
                   component="button"
                   onClick={() => switchTab(t)}
                   sx={{
-                    flex: 1, py: 1, px: 0.5,
+                    flex: 1, py: 1, px: 2,
                     border: 'none', cursor: 'pointer',
-                    background: 'none',
+                    borderRadius: '8px',
                     fontFamily: "'Plus Jakarta Sans', sans-serif",
-                    fontSize: '0.8125rem', fontWeight: tab === t ? 700 : 500,
-                    color: tab === t ? C.blue : C.muted,
-                    borderBottom: `2px solid ${tab === t ? C.blue : 'transparent'}`,
-                    marginBottom: '-2px',
+                    fontSize: '0.8125rem', fontWeight: 600,
+                    color: tab === t ? C.ink : C.muted,
+                    backgroundColor: tab === t ? '#fff' : 'transparent',
+                    boxShadow: tab === t ? '0 1px 3px rgba(55,53,47,0.1), 0 0 0 1px rgba(55,53,47,0.04)' : 'none',
                     transition: 'all 0.15s ease',
-                    pb: 1.25,
                   }}
                 >
-                  {t === 'password' ? 'Password' : 'OTP Login'}
+                  {t === 'password' ? 'Password Login' : 'Email OTP'}
                 </Box>
               ))}
             </Box>
 
             {/* Password form */}
             {tab === 'password' && (
-              <Box component="form" onSubmit={handlePasswordLogin} noValidate sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                {error && <Alert severity="error" sx={{ py: 0.5 }}>{error}</Alert>}
+              <Box component="form" onSubmit={handlePasswordLogin} noValidate sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+                {error && <Alert severity="error">{error}</Alert>}
 
                 <Box>
-                  <Typography sx={{ fontSize: '0.8125rem', fontWeight: 600, color: C.inkMid, mb: 0.75 }}>Email address</Typography>
+                  <Typography sx={{ fontSize: '0.8125rem', fontWeight: 600, color: C.inkMid, mb: 1 }}>Email address</Typography>
                   <TextField
-                    fullWidth type="email" placeholder="you@example.com"
+                    fullWidth type="email" placeholder="you@example.com" size="medium"
                     value={email} onChange={e => setEmail(e.target.value)} required
-                    InputProps={{ startAdornment: <InputAdornment position="start"><EmailOutlinedIcon sx={{ color: C.muted, fontSize: 17 }} /></InputAdornment> }}
+                    sx={{ '& .MuiOutlinedInput-root': { height: 48, backgroundColor: '#fff' } }}
+                    InputProps={{ startAdornment: <InputAdornment position="start"><EmailOutlinedIcon sx={{ color: C.muted, fontSize: 18 }} /></InputAdornment> }}
                   />
                 </Box>
 
                 <Box>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.75 }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
                     <Typography sx={{ fontSize: '0.8125rem', fontWeight: 600, color: C.inkMid }}>Password</Typography>
                     <Link component="button" type="button" onClick={() => navigate('/forgot-password')}
                       sx={{ fontSize: '0.8125rem', color: C.blue, fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
@@ -310,14 +266,15 @@ export default function LoginPage() {
                     </Link>
                   </Box>
                   <TextField
-                    fullWidth type={showPass ? 'text' : 'password'} placeholder="••••••••"
+                    fullWidth type={showPass ? 'text' : 'password'} placeholder="Your password" size="medium"
                     value={password} onChange={e => setPassword(e.target.value)} required
+                    sx={{ '& .MuiOutlinedInput-root': { height: 48, backgroundColor: '#fff' } }}
                     InputProps={{
-                      startAdornment: <InputAdornment position="start"><LockOutlinedIcon sx={{ color: C.muted, fontSize: 17 }} /></InputAdornment>,
+                      startAdornment: <InputAdornment position="start"><LockOutlinedIcon sx={{ color: C.muted, fontSize: 18 }} /></InputAdornment>,
                       endAdornment: (
                         <InputAdornment position="end">
                           <IconButton onClick={() => setShowPass(p => !p)} size="small" sx={{ color: C.muted }}>
-                            {showPass ? <VisibilityOffIcon sx={{ fontSize: 17 }} /> : <VisibilityIcon sx={{ fontSize: 17 }} />}
+                            {showPass ? <VisibilityOffIcon sx={{ fontSize: 18 }} /> : <VisibilityIcon sx={{ fontSize: 18 }} />}
                           </IconButton>
                         </InputAdornment>
                       ),
@@ -325,28 +282,40 @@ export default function LoginPage() {
                   />
                 </Box>
 
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: -0.5 }}>
-                  <FormControlLabel
-                    control={<Checkbox checked={remember} onChange={e => setRemember(e.target.checked)} size="small" sx={{ color: C.border, '&.Mui-checked': { color: C.blue }, p: 0.5, mr: 0.5 }} />}
-                    label={<Typography sx={{ fontSize: '0.8125rem', color: C.slate }}>Stay signed in</Typography>}
-                    sx={{ m: 0 }}
-                  />
-                </Box>
+                <FormControlLabel
+                  control={<Checkbox checked={remember} onChange={e => setRemember(e.target.checked)} size="small" sx={{ color: C.border, '&.Mui-checked': { color: C.blue }, p: 0.5, mr: 0.5 }} />}
+                  label={<Typography sx={{ fontSize: '0.8125rem', color: C.slate }}>Stay signed in</Typography>}
+                  sx={{ m: 0, mt: -1 }}
+                />
 
-                <Button type="submit" fullWidth variant="contained" size="large" disabled={loading} sx={{ mt: 0.5 }}>
-                  {loading ? <CircularProgress size={16} color="inherit" /> : 'Sign in'}
+                <Button
+                  type="submit" fullWidth variant="contained" disabled={loading}
+                  sx={{
+                    height: 50, borderRadius: '12px',
+                    fontSize: '0.9375rem', fontWeight: 700,
+                    background: `linear-gradient(135deg, ${C.blue} 0%, ${C.blueDark} 100%)`,
+                    boxShadow: `0 4px 16px ${C.blue}35`,
+                    '&:hover': { background: `linear-gradient(135deg, ${C.blueDark} 0%, #0B5E57 100%)`, boxShadow: `0 6px 20px ${C.blue}45` },
+                    '&:disabled': { opacity: 0.6, background: `linear-gradient(135deg, ${C.blue} 0%, ${C.blueDark} 100%)` },
+                  }}
+                >
+                  {loading ? <CircularProgress size={18} color="inherit" /> : 'Sign in'}
                 </Button>
 
-                {/* Divider */}
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                   <Box sx={{ flex: 1, height: 1, backgroundColor: C.border }} />
-                  <Typography sx={{ fontSize: '0.75rem', color: C.muted, fontWeight: 500 }}>or continue with</Typography>
+                  <Typography sx={{ fontSize: '0.75rem', color: C.muted, fontWeight: 500 }}>or</Typography>
                   <Box sx={{ flex: 1, height: 1, backgroundColor: C.border }} />
                 </Box>
 
-                {/* Google */}
-                <Button fullWidth variant="outlined" size="large"
-                  sx={{ gap: 1.5, borderColor: C.border, color: C.inkMid }}
+                <Button
+                  fullWidth variant="outlined" size="large"
+                  sx={{
+                    height: 48, gap: 1.5, borderColor: C.border,
+                    color: C.inkMid, borderRadius: '12px',
+                    backgroundColor: '#fff',
+                    '&:hover': { backgroundColor: C.surface, borderColor: C.subtle },
+                  }}
                   startIcon={
                     <svg width="18" height="18" viewBox="0 0 24 24">
                       <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -354,62 +323,100 @@ export default function LoginPage() {
                       <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                       <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                     </svg>
-                  }>
-                  Google
+                  }
+                >
+                  Continue with Google
                 </Button>
+
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.75 }}>
+                  <ShieldOutlinedIcon sx={{ fontSize: 13, color: C.muted }} />
+                  <Typography sx={{ fontSize: '0.6875rem', color: C.muted }}>
+                    256-bit SSL encryption · HIPAA compliant
+                  </Typography>
+                </Box>
               </Box>
             )}
 
             {/* OTP form */}
             {tab === 'otp' && (
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                {otpError && <Alert severity="error" sx={{ py: 0.5 }}>{otpError}</Alert>}
-                {otpSuccess && <Alert severity="success" sx={{ py: 0.5 }}>{otpSuccess}</Alert>}
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+                {otpError && <Alert severity="error">{otpError}</Alert>}
+                {otpSuccess && <Alert severity="success">{otpSuccess}</Alert>}
 
                 <Box>
-                  <Typography sx={{ fontSize: '0.8125rem', fontWeight: 600, color: C.inkMid, mb: 0.75 }}>Email address</Typography>
+                  <Typography sx={{ fontSize: '0.8125rem', fontWeight: 600, color: C.inkMid, mb: 1 }}>Email address</Typography>
                   <TextField
-                    fullWidth type="email" placeholder="you@example.com"
+                    fullWidth type="email" placeholder="you@example.com" size="medium"
                     value={otpEmail} onChange={e => setOtpEmail(e.target.value)}
                     disabled={otpStep === 'code'}
-                    InputProps={{ startAdornment: <InputAdornment position="start"><EmailOutlinedIcon sx={{ color: C.muted, fontSize: 17 }} /></InputAdornment> }}
+                    sx={{ '& .MuiOutlinedInput-root': { height: 48, backgroundColor: '#fff' } }}
+                    InputProps={{ startAdornment: <InputAdornment position="start"><EmailOutlinedIcon sx={{ color: C.muted, fontSize: 18 }} /></InputAdornment> }}
                   />
                 </Box>
 
                 {otpStep === 'email' && (
-                  <Button fullWidth variant="contained" size="large" disabled={otpLoading || !otpEmail} onClick={handleSendOtp}>
-                    {otpLoading ? <CircularProgress size={16} color="inherit" /> : 'Send OTP'}
+                  <Button
+                    fullWidth variant="contained" disabled={otpLoading || !otpEmail}
+                    onClick={handleSendOtp}
+                    sx={{
+                      height: 50, borderRadius: '12px', fontSize: '0.9375rem', fontWeight: 700,
+                      background: `linear-gradient(135deg, ${C.blue} 0%, ${C.blueDark} 100%)`,
+                      boxShadow: `0 4px 16px ${C.blue}35`,
+                      '&:hover': { background: `linear-gradient(135deg, ${C.blueDark} 0%, #0B5E57 100%)` },
+                      '&:disabled': { opacity: 0.6, background: `linear-gradient(135deg, ${C.blue} 0%, ${C.blueDark} 100%)` },
+                    }}
+                  >
+                    {otpLoading ? <CircularProgress size={18} color="inherit" /> : 'Send verification code'}
                   </Button>
                 )}
 
                 {otpStep === 'code' && (
                   <>
                     <Box>
-                      <Typography sx={{ fontSize: '0.8125rem', fontWeight: 600, color: C.inkMid, mb: 0.75 }}>6-digit code</Typography>
+                      <Typography sx={{ fontSize: '0.8125rem', fontWeight: 600, color: C.inkMid, mb: 1 }}>6-digit verification code</Typography>
                       <TextField
-                        fullWidth placeholder="123456"
+                        fullWidth placeholder="000000" size="medium"
                         value={otpCode}
                         onChange={e => setOtpCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                        inputProps={{ maxLength: 6, inputMode: 'numeric', style: { letterSpacing: '0.35em', textAlign: 'center', fontSize: '1.125rem' } }}
-                        InputProps={{ startAdornment: <InputAdornment position="start"><TagIcon sx={{ color: C.muted, fontSize: 17 }} /></InputAdornment> }}
+                        inputProps={{ maxLength: 6, inputMode: 'numeric', style: { letterSpacing: '0.5em', textAlign: 'center', fontSize: '1.25rem', fontWeight: 700 } }}
+                        sx={{ '& .MuiOutlinedInput-root': { height: 56, backgroundColor: '#fff' } }}
+                        InputProps={{ startAdornment: <InputAdornment position="start"><TagIcon sx={{ color: C.muted, fontSize: 18 }} /></InputAdornment> }}
                       />
                     </Box>
-                    <Button fullWidth variant="contained" size="large" disabled={otpLoading || otpCode.length !== 6} onClick={handleVerifyOtp}>
-                      {otpLoading ? <CircularProgress size={16} color="inherit" /> : 'Verify & Sign In'}
+                    <Button
+                      fullWidth variant="contained" disabled={otpLoading || otpCode.length !== 6}
+                      onClick={handleVerifyOtp}
+                      sx={{
+                        height: 50, borderRadius: '12px', fontSize: '0.9375rem', fontWeight: 700,
+                        background: `linear-gradient(135deg, ${C.blue} 0%, ${C.blueDark} 100%)`,
+                        boxShadow: `0 4px 16px ${C.blue}35`,
+                        '&:hover': { background: `linear-gradient(135deg, ${C.blueDark} 0%, #0B5E57 100%)` },
+                        '&:disabled': { opacity: 0.6, background: `linear-gradient(135deg, ${C.blue} 0%, ${C.blueDark} 100%)` },
+                      }}
+                    >
+                      {otpLoading ? <CircularProgress size={18} color="inherit" /> : 'Verify & Sign In'}
                     </Button>
                     <Button fullWidth variant="text" size="small" disabled={otpLoading}
-                      onClick={() => { setOtpStep('email'); setOtpCode(''); setOtpError(null); setOtpSuccess(null); }}>
+                      onClick={() => { setOtpStep('email'); setOtpCode(''); setOtpError(null); setOtpSuccess(null); }}
+                      sx={{ color: C.blue, fontWeight: 600 }}>
                       ← Resend code
                     </Button>
                   </>
                 )}
+
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.75 }}>
+                  <ShieldOutlinedIcon sx={{ fontSize: 13, color: C.muted }} />
+                  <Typography sx={{ fontSize: '0.6875rem', color: C.muted }}>
+                    256-bit SSL encryption · HIPAA compliant
+                  </Typography>
+                </Box>
               </Box>
             )}
           </Box>
         </Box>
 
         {/* Footer */}
-        <Box sx={{ px: { xs: 3, sm: 5 }, py: 2, borderTop: `1px solid ${C.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Box sx={{ px: { xs: 3, sm: 5 }, py: 2.5, borderTop: `1px solid ${C.border}`, backgroundColor: '#fff', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Box sx={{ display: 'flex', gap: 2.5 }}>
             {['Privacy', 'Terms', 'Support'].map(label => (
               <Link key={label} href="#" sx={{ fontSize: '0.75rem', color: C.muted, textDecoration: 'none', '&:hover': { color: C.slate } }}>

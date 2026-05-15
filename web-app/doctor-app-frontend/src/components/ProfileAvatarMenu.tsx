@@ -3,7 +3,7 @@ import { Avatar, Box, Divider, Menu, MenuItem, Typography } from '@mui/material'
 import PersonIcon from '@mui/icons-material/PersonOutlineRounded';
 import LogoutIcon from '@mui/icons-material/LogoutRounded';
 import SettingsIcon from '@mui/icons-material/SettingsOutlined';
-import { logout } from '../services/authService';
+import { logout, getRole } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
 import { C } from '../styles/theme';
 
@@ -22,6 +22,9 @@ function initials(name: string) {
 export default function ProfileAvatarMenu({ displayName = '', email = '', onProfileClick }: Props) {
   const [anchor, setAnchor] = useState<null | HTMLElement>(null);
   const navigate = useNavigate();
+  const isDoctor = getRole() === 'DOCTOR_ROLE';
+  const settingsPath = isDoctor ? '/doctor/profile' : '/settings';
+  const profilePath  = isDoctor ? '/doctor/profile' : '/settings';
 
   const close = () => setAnchor(null);
 
@@ -65,10 +68,10 @@ export default function ProfileAvatarMenu({ displayName = '', email = '', onProf
 
         <Divider />
 
-        <MenuItem onClick={() => { close(); if (onProfileClick) onProfileClick(); else navigate('/settings'); }} sx={{ gap: 1.25 }}>
+        <MenuItem onClick={() => { close(); if (onProfileClick) onProfileClick(); else navigate(profilePath); }} sx={{ gap: 1.25 }}>
           <PersonIcon sx={{ fontSize: 15, color: C.slate }} /> My Profile
         </MenuItem>
-        <MenuItem onClick={() => { close(); navigate('/settings'); }} sx={{ gap: 1.25 }}>
+        <MenuItem onClick={() => { close(); navigate(settingsPath); }} sx={{ gap: 1.25 }}>
           <SettingsIcon sx={{ fontSize: 15, color: C.slate }} /> Settings
         </MenuItem>
 

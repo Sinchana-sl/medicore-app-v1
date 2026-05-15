@@ -28,3 +28,7 @@ export async function createMedicalRecord(request: CreateMedicalRecordRequest): 
   const { data } = await api.post<MedicalRecord>('/api/medical-records', request);
   return data;
 }
+
+export async function deleteMedicalRecord(id: string): Promise<void> {
+  await api.delete(`/api/medical-records/${id}`);
+}

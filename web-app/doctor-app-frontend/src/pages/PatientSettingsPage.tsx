@@ -985,7 +985,7 @@ export default function PatientSettingsPage() {
       />
       <Box sx={{ display: 'flex' }}>
         <SideNavBar />
-        <Box component="main" sx={{ ml: '240px', flex: 1, mt: '52px', p: { xs: 3, md: 4 }, backgroundColor: C.paper }}>
+        <Box component="main" sx={{ ml: { xs: 0, md: '240px' }, flex: 1, mt: '52px', p: { xs: 3, md: 4 }, backgroundColor: C.paper }}>
           <Box sx={{ maxWidth: 1100, mx: 'auto' }}>
 
             {/* Page header */}
