@@ -27,7 +27,6 @@ function persistSession(data: AuthResponse) {
 
 export function logout() {
   localStorage.clear();
-  window.location.href = '/login';
 }
 
 export function isTokenExpired(): boolean {

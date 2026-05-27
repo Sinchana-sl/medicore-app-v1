@@ -77,7 +77,7 @@ export default function ProfileAvatarMenu({ displayName = '', email = '', onProf
 
         <Divider />
 
-        <MenuItem onClick={() => { close(); logout(); }} sx={{ gap: 1.25, color: `${C.red} !important`, '&:hover': { backgroundColor: C.redBg } }}>
+        <MenuItem onClick={() => { close(); logout(); navigate('/login'); }} sx={{ gap: 1.25, color: `${C.red} !important`, '&:hover': { backgroundColor: C.redBg } }}>
           <LogoutIcon sx={{ fontSize: 15, color: C.red }} /> Sign out
         </MenuItem>
       </Menu>

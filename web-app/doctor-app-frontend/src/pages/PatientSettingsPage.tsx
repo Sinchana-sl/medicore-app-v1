@@ -1,5 +1,6 @@
 import { C } from '../styles/theme';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box, Typography, CircularProgress, Alert, TextField, MenuItem,
   Button, Switch, Avatar, Chip, Dialog, DialogTitle,
@@ -99,6 +100,7 @@ function SettingsRow({ label, description, control }: { label: string; descripti
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function PatientSettingsPage() {
+  const navigate = useNavigate();
   const toast = useToast();
   const [activeSection, setActiveSection] = useState('profile');
   const [profile, setProfile] = useState<PatientProfile | null>(null);
@@ -231,6 +233,7 @@ export default function PatientSettingsPage() {
       await api.delete('/api/patient/account');
     } catch { /* ignore — backend may not have this yet */ }
     logout();
+    navigate('/login');
   }
 
   const displayName = profile
@@ -721,7 +724,7 @@ export default function PatientSettingsPage() {
                 sx={{ flexShrink: 0, height: 22, fontSize: '0.65rem', fontWeight: 700, backgroundColor: C.greenBg, color: '#16a34a' }} />
             </Box>
 
-            <Box onClick={logout} sx={{
+            <Box onClick={() => { logout(); navigate('/login'); }} sx={{
               display: 'flex', alignItems: 'center', gap: 2, p: 2.5,
               borderRadius: '8px', border: '2px solid #fecaca', cursor: 'pointer',
               backgroundColor: C.redBg,
@@ -933,7 +936,7 @@ export default function PatientSettingsPage() {
                 You will be redirected to the login page. Your data is safely stored and you can log back in at any time.
               </Typography>
             </Box>
-            <Button onClick={logout} variant="outlined" startIcon={<LogoutIcon />}
+            <Button onClick={() => { logout(); navigate('/login'); }} variant="outlined" startIcon={<LogoutIcon />}
               sx={{ flexShrink: 0, borderColor: '#0D9488', color: '#0D9488', borderRadius: '6px', fontWeight: 700,
                 '&:hover': { backgroundColor: '#F0FDFA', borderColor: '#0F766E' } }}>
               Sign Out
